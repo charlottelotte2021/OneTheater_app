@@ -1,0 +1,13 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+} 
+
+.top-menu {
+    height: 50px;
+    width: 210px;
+    display: flex;
+    background-color: #990D0D;
+} 

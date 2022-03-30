@@ -2,12 +2,24 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-
 } 
 
-.top-menu flex {
-    height: 50px;
-    width: 210px;
+.header {
+    height: 117px;
+    width: 390px;
     display: flex;
-    background-color: 990D0D;
+    background-color: #990D0D;
+    justify-content: center;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+}
+
+.login-icon {
+    justify-content:flex-end;
+    padding:5vh;
+    font-size: 20px;
+    color: white;
 }

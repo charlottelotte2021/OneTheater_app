@@ -4,35 +4,100 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/OneTheater_app/public/stylesheets/style.css">
+    <link rel="stylesheet" href="../public/stylesheets/style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <title>Homepage</title>
 </head>
 <body>
-    <div class="top-menu flex"> 
-            <div class="logo">logo</div>
-            <div class="login-icon">login-icon</div>
+    <!-- Header container  with logo and login icon-->
+<div class="header flex">
+    <div class="logo"> 
+        <img src="../assets/logo-white.svg" alt="logo">
     </div> 
-    <div>
-        <input type="text" placeholder="Type your search">
-    <br><button>Search</button>
+    <div class="login-icon"> 
+        <i class="fas fa-user"></i>
     </div>
-    <div>
-        <p>Sort by</p>  
-        <input type="date">
-        <form>  
-            <label> More options</label>  
-            <select>  
-            <option value = "">  
-            </option>  
-            </select>  
-            </form>  
-        </div>
-            <h2>Happening today</h2>
-<div>
-    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br>
-        Cum, exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-        Placeat accusamus quas magni quos!</p>
+</div> 
+
+<!-- Search bar with input and button-->
+<div class="search-bar flex">
+        <input type="text" class="search-input" placeholder="Type your search">
+    <div class="input-icon">
+        <i class="fas fa-search"></i>
+    </div>
+        <button class="search-btn">Search</button>
 </div>
-  
+
+
+<!--Homepage with sort by, more options and card -->
+<div>
+    <form>  
+        <label> Sort by </label>  
+    <select>  
+        <option value = "Date"> Date </option> 
+        <option value = "Price"> Price   </option>  
+        <option value = "Theatre"> Theatre </option>  
+        <option value = "Title"> Title </option>  
+    </select>  
+    </form>    
+</div>
+<div>
+    <form>  
+        <label> More options </label>  
+    <select>  
+        <option value = ""> </option>  
+            <input type="date">
+            <input type="text" placeholder="Choose your theatre(s)">
+            <input type="text" placeholder="Max. price">
+            <input type="text" placeholder="Max. distance">
+    </select>
+        <label> Genre</label>  
+    <select>
+            <option value="Drama">Drama</option>
+    </select>
+    </form> 
+</div>
+
+<!--Card for the plays-->
+<span>
+            <h2>Happening today</h2>
+</span>
+<div class="card flex">
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br>
+         exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
+        Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+        exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
+        Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+         exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
+        Placeat accusamus quas magni quos!
+    </p>
+    <div class="header-title-bookmark">
+		<div>Title</div>
+		<div>bookmark icon</div>
+	</div>
+    <div class="dates-theater">
+        <div>Dates</div>
+        <div>Theater</div>
+    </div>
+    <div>Summary</div>
+		<div class="pic-reviews">
+	<div>Picture</div>
+	<div>Reviews</div>
+	</div>
+</div>				
+
+<!-- Bottom Container for the menu -->
+<div class="container-bottom flex">
+    <div class="link light">
+        <a href="">Home</a>
+    </div>
+        <div class="link bold">
+            <a href="">Wishlist</a>
+    </div>
+        <div class="link light">
+            <a href="">Profile</a>
+    </div>
+</div>
 </body>
 </html>

@@ -3,8 +3,9 @@
     margin: 0;
     padding: 0;
 } 
-@media screen and (max-width: 600px) {
 
+@media screen and (max-width: 600px) {
+  
 .header {
     height: 18vh;
     width: 100vw;
@@ -66,6 +67,86 @@ color: #aaa;
     color: white;
 }
 
+
+.card {
+
+display: flex;
+flex-direction: row;
+width: 90vw;
+height: 60vh;
+flex-wrap: wrap;
+margin: 2em;
+border-style: groove;
+padding: 1em;
+
+
+} 
+
+.fa-bookmark::before {
+  content: "\f02e";
+  margin-right: 80px; }
+
+.content-card {
+    display: flex;
+    flex-direction: row;  
+    justify-content: space-between;
+width: 90vw;
+height: 50vh;
+}
+
+.title-card {
+    width: 85vw;
+height: 5vh; 
+display: flex;
+  
+  justify-content: space-between;
+
+}
+
+.play-affiche {
+width: 30vw;
+height: 30vh;
+}
+
+.summary {
+
+width: 50vw;
+height: 50vh;
+
+}
+
+.header-dates-summary-left {
+
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+
+}
+
+
+
+.pic-reviews {
+display: flex;
+flex-direction: column;
+text-align: center;
+justify-content: space-between;
+
+}
+
+
+.container-bottom {
+    display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  height: 3vh;
+    border-top-style: solid;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  align-items: center;
+}
+
+
+
 .sort-input {
     padding: 11px 8px;
     border-radius: 35px;
@@ -86,4 +167,5 @@ color: #aaa;
 label {
     color: #504f4f;
 }
+
 }

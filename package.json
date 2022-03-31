@@ -1,0 +1,23 @@
+{
+  "name": "onetheater_app",
+  "version": "1.0.0",
+  "description": "One App To Rule Them All",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charlottelotte2021/OneTheater_app.git"
+  },
+  "author": "Charlotte Gunther, Taguhi Karakashian, Robin Lejeune",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/charlottelotte2021/OneTheater_app/issues"
+  },
+  "homepage": "https://github.com/charlottelotte2021/OneTheater_app#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "mongoose": "^6.2.9"
+  }
+}

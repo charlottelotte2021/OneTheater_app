@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
 const PlaySchema = new mongoose.Schema({
-
     title: {
         type: String,
         required: true

@@ -5,19 +5,23 @@ const PlayInstanceSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Theater"
     },
-    dateStart: {
-        type: Date,
-        required: true
-    },
-    dateEnd: {
-        type: Date,
+    // dateStart: {
+    //     type: Date,
+    //     required: true
+    // },
+    // dateEnd: {
+    //     type: Date,
+    // },
+    date: {
+        type: String,
+        // required: true
     },
     image: {
         type: String,
     },
     summary: {
         type: String,
-        required: true
+        // required: true
     },
     time: {
         type: String,

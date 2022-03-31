@@ -11,10 +11,12 @@
 </head>
 <body>
     <!-- Header container  with logo and login icon-->
+
 <div class="header flex">
-    <div class="logo"> 
-        <img src="../assets/logo-white.svg" alt="logo">
-    </div> 
+    <div class="arrow-icon"> 
+         <i class="fas fa-angle-left"></i>
+    </div>
+         <img src="../assets/logo-white.svg" alt="" class="logo-img">
     <div class="login-icon"> 
         <i class="fas fa-user"></i>
     </div>
@@ -22,10 +24,10 @@
 
 <!-- Search bar with input and button-->
 <div class="search-bar flex">
-        <input type="text" class="search-input" placeholder="Type your search">
-    <div class="input-icon">
+        <input type="text" class="search-input" placeholder="Type your search" >
+    <div class="search-icon">
         <i class="fas fa-search"></i>
-    </div>
+         </div>
         <button class="search-btn">Search</button>
 </div>
 
@@ -34,28 +36,26 @@
 <div>
     <form>  
         <label> Sort by </label>  
-    <select>  
+    <select class=sort-input>  
         <option value = "Date"> Date </option> 
         <option value = "Price"> Price   </option>  
         <option value = "Theatre"> Theatre </option>  
         <option value = "Title"> Title </option>  
     </select>  
     </form>    
-</div>
-<div>
     <form>  
         <label> More options </label>  
-    <select>  
+    <select class="more-input">  
         <option value = ""> </option>  
-            <input type="date">
+            <!-- <input type="date">
             <input type="text" placeholder="Choose your theatre(s)">
             <input type="text" placeholder="Max. price">
-            <input type="text" placeholder="Max. distance">
+            <input type="text" placeholder="Max. distance"> -->
     </select>
-        <label> Genre</label>  
-    <select>
-            <option value="Drama">Drama</option>
-    </select>
+        <!-- <label> Genre</label>   -->
+    <!-- <select>
+             <option value="Drama">Drama</option> 
+    </select> -->
     </form> 
 </div>
 

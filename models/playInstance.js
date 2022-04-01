@@ -1,10 +1,8 @@
 const mongoose = require('mongoose')
+const { TheaterSchema } = require('./theater')
 
 const PlayInstanceSchema = new mongoose.Schema({
-    theaterId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Theater"
-    },
+    theater: TheaterSchema,
     // dateStart: {
     //     type: Date,
     //     required: true
@@ -36,4 +34,4 @@ const PlayInstanceSchema = new mongoose.Schema({
 
 const PlayInstance = mongoose.model('PlayInstance', PlayInstanceSchema)
 
-module.exports = PlayInstance
+module.exports = { PlayInstance, PlayInstanceSchema }

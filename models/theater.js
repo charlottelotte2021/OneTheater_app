@@ -19,4 +19,4 @@ const TheaterSchema = new mongoose.Schema({
 
 const Theater = mongoose.model('Theater', TheaterSchema)
 
-module.exports = Theater
+module.exports = { Theater, TheaterSchema }

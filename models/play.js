@@ -30,4 +30,4 @@ const PlaySchema = new mongoose.Schema({
 
 const Play = mongoose.model('Play', PlaySchema)
 
-module.exports = Play
+module.exports = { Play, PlaySchema }

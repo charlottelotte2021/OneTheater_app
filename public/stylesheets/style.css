@@ -1,15 +1,17 @@
+/* || General styles */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 } 
-  
- .frame {
+
+/* || HEADER & FOOTER */
+
+.frame {
     display: flex;
     flex-direction: column;
     padding-top: 18vh;
  } 
-
 .header {
     height: 18vh;
     width: 100vw;
@@ -19,11 +21,28 @@
     background-color: #990D0D;
     position: fixed;
     top: 0;
-
 }
+.container-bottom {
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    text-align: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    background-color: #ffffff;
+}
+
+
+
+/* || SITEWIDE */
+
 .logo-img {
     height: 15vh;
 }
+
+/* || ICONS */
+
 .login-icon {
     justify-content:flex-end;
     margin-right: 20px;
@@ -36,6 +55,30 @@
     font-size: 30px;
     color: white;  
 }
+.search-icon {
+    position: absolute;
+    color: #aaa;
+    margin-right: 270px;
+    top: 44px;
+    top: 13px;
+    margin-left: 10px;
+} 
+.fal fa-bookmark::before {
+    color: #448088;
+    content: "\f02e";
+}
+.fa-star::before {
+    content: "\f005";
+   }
+.fa-home {
+    color: white;
+}
+.fa-bookmark{
+    color: #990D0D ;
+}
+.fa-user{
+    color: #990D0D ;
+}
 .search-bar {
     display: flex;
     padding: 30px;
@@ -45,6 +88,9 @@
 .search-container {
     position: relative;
 }
+
+/* || INPUTS */
+
 .search-input{
     padding: 12px 20px;
     border-radius: 35px;
@@ -52,35 +98,8 @@
     letter-spacing: 1px;
     font-weight: lighter;
     border: 1px solid #aaa;
-    text-align: center;
-    
+    text-align: center;    
 }
-.search-icon {
-    position: absolute;
-    color: #aaa;
-    margin-right: 270px;
-    top: 44px;
-    top: 13px;
-    margin-left: 10px;
-} 
-.search-btn {
-    padding: 12px 18px;
-    border-radius: 35px;
-    font-size: 14px;
-    letter-spacing: 1px;
-    font-weight: lighter;
-    border: 1px solid;
-    background-color: #990D0D;
-    color: white;
-}
-
-
-.options {
-    display: flex; 
-    justify-content: space-around;
-    align-items: center;
-}
-
 .sort-input {
     padding: 8px 8px;
     margin-bottom: 10px;
@@ -91,136 +110,91 @@
     border: 1px solid #aaa;
     color: #504f4f;
 }
-
 .more-input {
     border: none;
     margin-bottom: 10px;
     font-size: 14px;
     letter-spacing: 1px;
     font-weight: lighter;
-    color: #504f4f;
-    
-    
+    color: #504f4f;  
 }
+
+/* || BUTTONS */
+
+.search-btn {
+    padding: 12px 18px;
+    border-radius: 35px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-weight: lighter;
+    border: 1px solid;
+    background-color: #990D0D;
+    color: white;
+}
+.bottom-button {
+    width: 33vw;
+}
+.options {
+    display: flex; 
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* || PLAY CARD */
+
 .card {
-
-display: flex;
-flex-direction: row;
-/*width: 90vw;
-height: 60vh;*/
-flex-wrap: wrap;
-margin: 1em;
-border-style: groove;
-padding: 1em;
-box-sizing: content-box;
-
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 1em;
+    border-style: groove;
+    padding: 1em;
+    box-sizing: content-box;
 } 
-
-.fa-bookmark::before {
-  content: "\f02e";
-   }
-
 .content-card {
     display: flex;
     flex-direction: row;  
     justify-content: space-between;
-width: 90vw;
-height: 30vh;
+    width: 90vw;
+    height: 30vh;
 }
-
 .title-card {
- width: 80vw;
-height: 5vh; 
-display: flex;
-justify-content: space-between;
-color: #448088;
-
-}
-
-.play-affiche {
-width: 150px;
-height: 150px;
-}
-
-.big-title {
+    width: 80vw;
+    height: 5vh; 
+    display: flex;
+    justify-content: space-between;
     color: #448088;
 }
-
+.play-affiche {
+    width: 150px;
+    height: 150px;
+}
+.big-title {
+    color: #448088;
+    margin-left: 20px;
+}
 .theater-dates {
     display: flex;
     flex-direction: space-between;
     width: 80vw;
     justify-content: space-between;
     height: 5vh;
-
 }
-
 .header-dates-summary-left {
-
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-padding-top: 9px;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 9px;
 }
-
-
-
 .pic-reviews {
-display: flex;
-flex-direction: column;
-text-align: center;
-justify-content: space-evenly;
-
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-evenly;
 }
-
-fa-star::before {
-  content: "\f005";
-  color: #448088; }
-
 .review-stars {
     color: #448088;
 }
-
-.container-bottom {
-    display: flex;
-  justify-content: space-between;
-  width: 100vw;
-    border-top-style: solid;
-  padding-top: 1em;
-  text-align: center;
-  align-items: center;
-  background-color: #990D0D;
-  position: fixed;
-bottom: 0;
-}
-
-
-.bottom-button {
-    border-style: solid;
-    border-color: black;
-    width: 33vw;
-}
-
-
-.sort-input {
-    padding: 11px 8px;
-    border-radius: 35px;
-    font-size: 14px;
-    letter-spacing: 1px;
-    font-weight: lighter;
-    border: 1px solid #aaa;
-    color: #504f4f;
-}
-.more-input {
-    padding: 3px 0px;
-    border-radius: 35px;
-    font-size: 14px;
-    font-weight: lighter;
-    color: #504f4f;
-    border: none;
-}
-
 label {
     color: #504f4f;
 }

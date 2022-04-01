@@ -1,0 +1,86 @@
+[
+	{
+        "name": "Théâtre de Poche",
+        "address": "Chemin du Gymnase 1a (Bois de la Cambre)",
+        "commune": "Bruxelles",
+        "url": "https://poche.be/"
+    },
+    {
+        "name": "Théâtre National",
+        "address": "Bd Émile Jacqmain 111-115",
+        "commune": "Bruxelles",
+        "url": "https://www.theatrenational.be/en/"
+    },
+    {
+        "name": "Théâtre royal du Parc",
+        "address": "Rue de la Loi 3",
+        "commune": "Bruxelles",
+        "url": "https://www.theatreduparc.be/"
+    },
+    {
+        "name": "Théâtre des Martyrs",
+        "address": "Place des Martyrs 22",
+        "commune": "Bruxelles",
+        "url": "https://theatre-martyrs.be/"
+    },
+    {
+        "name": "Les Tanneurs",
+        "address": "Rue des Tanneurs 75-77",
+        "commune": "Bruxelles",
+        "url": "https://www.lestanneurs.be/"
+    },
+    {
+        "name": "Les Riches-Claires",
+        "address": "Rue des Riches-Claires 24",
+        "commune": "Bruxelles",
+        "url": "https://lesrichesclaires.be/"
+    },
+    {
+        "name": "Le Petit Chapeau Rond Rouge",
+        "address": "Rue Père Eudore Devroye 12",
+        "commune": "Etterbeek",
+        "url": "https://lepetitchapeaurondrouge.be/"
+    },
+    {
+        "name": "La Balsamine",
+        "address": "Avenue Félix Marchal 1",
+        "commune": "Schaerbeek",
+        "url": "https://balsamine.be/"
+    },
+    {
+        "name": "Le Rideau de Bruxelles",
+        "address": "Rue Goffart 7a",
+        "commune": "Ixelles",
+        "url": "https://lerideau.brussels/"
+    },
+    {
+        "name": "Théâtre de la Toison d'Or",
+        "address": "Galeries de la Toison d’Or 396-398",
+        "commune": "Ixelles",
+        "url": "http://www.ttotheatre.com/"
+    },
+    {
+        "name": "Centre Culturel d'Auderghem",
+        "address": "Boulevard du Souverain 183",
+        "commune": "Auderghem",
+        "url": "https://ccauderghem.be/"
+    },
+    {
+        "name": "Théâtre de la Vie",
+        "address": "Rue Traversière 45",
+        "commune": "Saint-Josse-ten-Noode",
+        "url": "https://www.theatredelavie.be/"
+    },
+    {
+        "name": "Théâtre Varia",
+        "address": "Rue du Sceptre 78",
+        "commune": "Ixelles",
+        "url": "https://varia.be/"
+    },
+    {
+        "name": "Théâtre Royal des Galeries",
+        "address": "Galeries du Roi 32",
+        "commune": "Bruxelles",
+        "url": "https://trg.be/"
+    }
+]

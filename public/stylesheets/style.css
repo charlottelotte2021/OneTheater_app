@@ -1,201 +1,455 @@
-/* || General styles */
+/*
+============================ SUMMARY ============================
+
+0. Imports & custom properties
+
+1. GENERAL STYLES & RESET
+2. UTILITIES
+3. TYPOGRAPHY
+4. HEADER & FOOTER
+  4.1. Header
+  4.2. Menu bottom
+  4.3. Footer
+5. ICONS
+6. FORMS & INPUTS
+  6.1. General inputs
+  6.2. Search
+7. COMPONENTS
+  7.1. Buttons
+  7.2. Play card
+
+
+10. Dark theme
+
+*/
+
+/* ============================ 0. Imports & custom properties ============================ */
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Wendy+One&display=swap");
+
+:root {
+  --font-title: "Wendy One", sans-serif;
+  --font-general: "Nunito Sans", sans-serif;
+
+  --clr-primary: hsl(0, 84%, 33%);
+  --clr-primary-light: hsl(0, 56%, 47%);
+  --clr-secondary: #448088;
+  --grey-light: #f7f6f6;
+  --grey-middle: #aaa;
+  --grey-dark: hsl(0, 84%, 7%);
+  --clr-background: white;
+  --clr-main-text: var(--grey-dark);
+
+  --gradient-red: linear-gradient(
+    var(--clr-primary) 30%,
+    var(--clr-primary-light) 100%
+  );
+}
+
+/* ============================ 1. GENERAL STYLES & RESET ============================ */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-} 
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-/* || HEADER & FOOTER */
+body {
+  font-family: var(--font-general);
+  color: var(--clr-main-text);
+  background-color: var(--clr-background);
+  line-height:1.6;
+}
 
-.frame {
-    display: flex;
-    flex-direction: column;
-    padding-top: 18vh;
- } 
+main {
+    padding-inline: 1rem;
+}
+
+button {
+  background:transparent;
+  border:none;
+  font-size:inherit;
+  cursor:pointer;
+}
+select {
+  cursor:pointer;
+  border-radius:10px;
+  background-color: var(--clr-background);
+}
+
+/* ============================ 2. UTILITIES ============================ */
+
+.flex {
+  display:flex;
+  gap:1em;
+}
+.flex-col {
+  flex-direction: column;
+}
+.center-v {
+  align-items:center;
+}
+.center-h {
+  justify-content: center;
+}
+
+.m-r-auto {
+  margin-right:auto;
+}
+.m-l-auto {
+  margin-left:auto;
+}
+
+
+/* ============================ 3. TYPOGRAPHY ============================ */
+
+h1,
+h2 {
+  font-family: var(--font-title);
+  color: var(--clr-secondary);
+  margin-bottom: 1em;
+  line-height:1.1;
+  letter-spacing: -.5px;
+}
+h1 {
+  margin-top: 2em;
+}
+
+/* ============================ 4. HEADER & FOOTER ============================ */
+
+/* ============================ 4.1. Header ============================ */
 .header {
-    height: 18vh;
-    width: 100vw;
-    display: flex; 
-    justify-content: space-between;
-    align-items: center;
-    background-color: #990D0D;
-    position: fixed;
-    top: 0;
+  height: 18vh;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--gradient-red);
+  /* position: fixed;
+  top: 0; */
 }
-.container-bottom {
-    display: flex;
-    justify-content: space-between;
-    width: 100vw;
-    text-align: center;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
-    background-color: #ffffff;
-}
-
-
-
-/* || SITEWIDE */
-
-.logo-img {
-    height: 15vh;
-}
-
-/* || ICONS */
-
+.arrow-icon,
+.logo-img,
 .login-icon {
-    justify-content:flex-end;
-    margin-right: 20px;
-    font-size: 25px;
-    color: white;
+  color:white;
 }
 .arrow-icon {
-    justify-content:flex-start;
+    justify-content: flex-start;
     margin-left: 20px;
     font-size: 30px;
-    color: white;  
 }
-.search-icon {
-    position: absolute;
-    color: #aaa;
-    margin-right: 270px;
-    top: 44px;
-    top: 13px;
-    margin-left: 10px;
-} 
+.logo-img {
+  height: 15vh;
+}
+.login-icon {
+    justify-content: flex-end;
+    margin-right: 20px;
+    font-size: 25px;
+}
+
+/* ============================ 4.2. Menu bottom ============================ */
+.menu-bottom {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  color: var(--clr-primary);
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 -2px 5px rgba(0 0 0 / .15);
+  z-index:1000;
+}
+.menu-bottom .bottom-button {
+  padding-block: 1em;
+  color: var(--clr-primary);
+}
+.menu-bottom .bottom-button:not(.active) {
+  border-right: 1px solid var(--grey-middle);
+}
+.menu-bottom .bottom-button.active {
+  background-color: var(--clr-primary);
+  color:white;
+}
+.menu-bottom .bottom-button {
+  width: 33%;
+}
+
+/* ============================ 4.3. Footer ============================ */
+
+footer {
+  background: var(--grey-dark);
+  color:white;
+  padding: 2rem 1rem 5rem 1rem;
+  margin-top:2rem;
+}
+
+
+/* ============================ 5. ICONS ============================ */
+
 .fal fa-bookmark::before {
-    color: #448088;
-    content: "\f02e";
+  color: var(--clr-secondary);
+  content: "\f02e";
 }
 .fa-star::before {
-    content: "\f005";
-   }
-.fa-home {
-    color: white;
+  content: "\f005";
 }
-.fa-bookmark{
-    color: #990D0D ;
+
+/* ============================ 6. FORMS & INPUTS ============================ */
+/* ============================ 6.1. General inputs ============================ */
+
+input,
+select {
+  font-size:inherit;
+  font-weight: lighter;
+  color: var(--grey-dark);
+  border:1px solid var(--grey-middle);
 }
-.fa-user{
-    color: #990D0D ;
+
+input {
+    padding: 1em 1.5em;
+    border-radius: 999px;
 }
+
+select {
+  padding: .5em;
+}
+
+.row.flex input,
+.row.flex select {
+  width: 100%;
+}
+
+.inner-label-wrap {
+  position:relative;
+}
+.inner-label-wrap input {
+  padding-top: 1.3em;
+}
+.inner-label-wrap input::placeholder {
+  opacity:0;
+}
+.inner-label {
+  position:absolute;
+  top:.9em;
+  left:1.5em;
+  color:var(--grey-middle);
+  white-space: nowrap;
+  transition: .3s ease-out;
+  transform-origin: 0 0;
+}
+.inner-label-wrap input:focus + .inner-label,
+.inner-label-wrap input:not(:placeholder-shown) + .inner-label {
+  transform: scale(.8) translate(-.3em, -.9em);
+}
+
+/* ============================ 6.2. Search ============================ */
+
+.search-tools {
+  margin-bottom: 2rem;
+}
+
 .search-bar {
-    display: flex;
-    padding: 30px;
-    justify-content: space-around;
-    align-items: center;
+  display: flex;
+  gap: 1rem;
+  flex-wrap:wrap;
+  padding-block: 2em;
+  justify-content: space-between;
 }
 .search-container {
     position: relative;
+    display:flex;
+    align-items:center;
+}
+.search-input {
+  padding: .5em 1em .5em 2em;
+  width: 25ch;
+}
+.search-icon {
+    position: absolute;
+    color: var(--grey-middle);
+    margin-left: 10px;
 }
 
-/* || INPUTS */
-
-.search-input{
-    padding: 12px 20px;
-    border-radius: 35px;
-    font-size: 14px;
-    letter-spacing: 1px;
-    font-weight: lighter;
-    border: 1px solid #aaa;
-    text-align: center;    
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.sort-input {
-    padding: 8px 8px;
-    margin-bottom: 10px;
-    border-radius: 35px;
-    font-size: 14px;
-    letter-spacing: 1px;
-    font-weight: lighter;
-    border: 1px solid #aaa;
-    color: #504f4f;
+
+.options-sort {
+  display:flex;
+  gap:1rem;
+  align-items: center;
 }
 .more-input {
-    border: none;
-    margin-bottom: 10px;
-    font-size: 14px;
-    letter-spacing: 1px;
-    font-weight: lighter;
-    color: #504f4f;  
+  border: none;
+  /* margin-bottom: 10px; */
+}
+.options-more-btn {
+  font-weight: 200;
+}
+.options-more-btn > i {
+  margin-left: .5em;
+}
+.options-more .options-more-form {
+  display:none;
+  position: absolute;
+  right: 1rem;
+  width: 90vw;
+  max-width: 400px;
+  margin-top: 1em;
+  padding: 2em;
+  background-color: var(--grey-light);
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0 0 0 / .15);
+  z-index: 1;
+}
+.options-more.active .options-more-form {
+  display:block;
 }
 
-/* || BUTTONS */
+/* ============================ 7. COMPONENTS ============================ */
 
-.search-btn {
-    padding: 12px 18px;
-    border-radius: 35px;
-    font-size: 14px;
-    letter-spacing: 1px;
-    font-weight: lighter;
-    border: 1px solid;
-    background-color: #990D0D;
-    color: white;
-}
-.bottom-button {
-    width: 33vw;
-}
-.options {
-    display: flex; 
-    justify-content: space-around;
-    align-items: center;
+/* ============================ 7.1. Buttons ============================ */
+
+.btn {
+    padding: .5em 1em;
+    font-weight: 700;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--btn-color);
+    background-color: var(--btn-color);
+    border-radius: 999px;
+    color: var(--text-color);
+    transition: .3s ease-out;
+    cursor:pointer;
 }
 
-/* || PLAY CARD */
+.btn-primary {
+    --btn-color: var(--clr-primary);
+    --text-color: white;
+}
+.btn-primary:hover {
+  --btn-color: var(--clr-primary-light);
+  --text-color: white;
+}
 
+.btn-secondary {
+  --btn-color: var(--clr-secondary-light);
+  --text-color: white;
+}
+
+/* ============================ 7.2. Play card ============================ */
+
+.cards-container {
+  display:flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 .card {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 1em;
-    border-style: groove;
-    padding: 1em;
-    box-sizing: content-box;
-} 
-.content-card {
-    display: flex;
-    flex-direction: row;  
-    justify-content: space-between;
-    width: 90vw;
-    height: 30vh;
-}
-.title-card {
-    width: 80vw;
-    height: 5vh; 
-    display: flex;
-    justify-content: space-between;
-    color: #448088;
-}
-.play-affiche {
-    width: 150px;
-    height: 150px;
-}
-.big-title {
-    color: #448088;
-    margin-left: 20px;
-}
-.theater-dates {
-    display: flex;
-    flex-direction: space-between;
-    width: 80vw;
-    justify-content: space-between;
-    height: 5vh;
-}
-.header-dates-summary-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-top: 9px;
-}
-.pic-reviews {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: space-evenly;
-}
-.review-stars {
-    color: #448088;
-}
-label {
-    color: #504f4f;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  background-color: #FAFFFF;
+  border-radius:10px;
+  box-shadow: 3px 3px 10px rgba(0 0 0 / .1);
 }
 
+.card-header {
+  display:grid;
+  grid-template-columns: 1fr 2rem;
+  align-items:center;
+  margin-bottom: 1.5rem;
+}
+.card-title {
+  margin-bottom:unset;
+  color: var(--clr-secondary);
+}
+.card-bookmark {
+  text-align:right;
+  font-size:2rem;
+  color: var(--clr-secondary);
+}
+
+.card-content {
+  --gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--gap);
+}
+.card-row {
+  display: grid;
+  grid-template-columns: calc(60% - var(--gap)/2) calc(40% - var(--gap)/2);
+  gap: var(--gap);
+  align-items:start;
+}
+.card-dates,
+.card-theater {
+  color: #666666;
+  font-style:italic;
+}
+.card-summary {
+  display: flex;
+  flex-direction: column;
+  margin-bottom:2rem;
+
+}
+.card-summary p {
+  overflow: hidden;
+  max-height: 10rem; /* to be changed in JS */
+  transition: max-height .3s ease-out;
+}
+.card-summary-seemore {
+  font-size:1.2rem;
+  color: #666;
+  opacity:1;
+  transform: rotate(0);
+  transition: .3s ease-out;
+}
+.card-summary.active p {
+  max-height: max-content;
+}
+.card-summary.active .card-summary-seemore {
+  opacity:0;
+  transform: rotate(180deg);
+}
+
+
+/* .big-title {
+  color: var(--clr-secondary);
+  margin-left: 20px;
+} */
+/* .theater-dates {
+  display: flex;
+  width: 80vw;
+  justify-content: space-between;
+  height: 5vh;
+} */
+.card-poster {
+  max-width:100%;
+  object-fit: contain;
+  margin-bottom:2rem;
+}
+.reviews-link {
+  color:var(--clr-secondary);
+  text-decoration: none;
+  text-align:center;
+  font-size:.8rem;
+}
+/* .review-stars {
+  color: var(--clr-secondary);
+} */
+label {
+  color: #504f4f;
+}
+
+
+/* ============================ 10. DARK THEME ============================ */
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --clr-background: var(--grey-dark);
+    --clr-main-text: white;
+  }
+} */

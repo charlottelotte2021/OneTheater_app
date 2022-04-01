@@ -1,66 +1,98 @@
 <%- include('partials/search') %>
 
+<h1>Happening today</h1>
+
 <!--Card for the plays-->
-<span>
-            <h2>Happening today</h2>
-</span>
-
-<div class="card flex">
-
-        <div class="title-card flex"> <div>Title </div>
-        <div><i class="fas fa-bookmark"></i></div>
+<section class="cards-container">
+    <article class="card">
+        <div class="card-header">
+            <h2 class="card-title">Title</h2>
+            <button class="card-bookmark"><i class="fas fa-bookmark"></i></button>
         </div> 
 
-        <div class="content-card flex">
+        <div class="card-content">
+            <div class="card-row">
+                <div class="card-dates">Dates</div>
 
-            <div class="header-dates-summary-left flex">
-        
-                  <div>Dates</div>
-                
-               <div class="summary"> <p >Lorem ipsum dolor, sit     amet consectetur adipisicing elit. <br>
-             exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-            Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-            exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-                 </p> </div> 
-
-                <div>Director</div>              
-                <div>Actors</div>
-
+                <div class="card-theater">Theater</div>
             </div>
-
-                 
-              
-                    
-           
-
-                 <div class="pic-reviews flex">
-                    
-                     <div>Theater</div>
-             
-                     <div><img class="play-affiche" src="https://picsum.photos/200/300" alt=""></div>
-                      <div class="reviews-small flex">Read * Reviews</div>  
-                        <div>
-        <div class="review-stars">
-            <a href="">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            </a>
-        </div>
-                         
+            <div class="card-row">
+                <div class="">
+                    <div class="card-summary"> 
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br>
+                        exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
+                        Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+                        exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
+                        </p>
+                        <button class="card-summary-seemore"><i class="fas fa-angle-down"></i></button>
+                    </div> 
+    
+                    <div>Director</div>  
+                    <div>Actors</div>
                 </div>
-        </div>
-                 
 
-</div>	
-</div>
-<!-- Bottom Container for the menu -->
+                <div class="pic-reviews">
+                    <img class="card-poster" src="https://picsum.photos/200/300" alt="">
+                    <div class="card-reviews">
+                        <a href="#" class="reviews-link">
+                            <p>Read × reviews</p>
+                            <div class="review-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>    
+            </div>
+        </div>	
+    </article>
 
-<div class="container-bottom flex">
-    <a class="bottom-button" href=""><i class="fas fa-home"></i></a>
-            <a class="bottom-button" href=""><i class="fas fa-bookmark"></i></a>
-            <a class="bottom-button" href=""><i class="fas fa-user"></i></a>
-    </div>
-</div>
+    <article class="card">
+        <div class="card-header">
+            <h2 class="card-title">Title</h2>
+            <button class="card-bookmark"><i class="fas fa-bookmark"></i></button>
+        </div> 
+
+        <div class="card-content">
+            <div class="card-row">
+                <div class="card-dates">Dates</div>
+
+                <div class="card-theater">Theater</div>
+            </div>
+            <div class="card-row">
+                <div class="">
+                    <div class="card-summary"> 
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br>
+                        exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
+                        Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+                        exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
+                        </p>
+                        <button class="card-summary-seemore"><i class="fas fa-angle-down"></i></button>
+                    </div> 
+    
+                    <div>Director</div>  
+                    <div>Actors</div>
+                </div>
+
+                <div class="pic-reviews">
+                    <img class="card-poster" src="https://picsum.photos/200/300" alt="">
+                    <div class="card-reviews">
+                        <a href="#" class="reviews-link">
+                            <p>Read × reviews</p>
+                            <div class="review-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>    
+            </div>
+        </div>	
+    </article>
+</section>

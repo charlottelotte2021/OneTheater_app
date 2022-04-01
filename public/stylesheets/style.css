@@ -6,6 +6,12 @@
 
 @media screen and (max-width: 600px) {
   
+ .frame {
+    display: flex;
+    flex-direction: column;
+    padding-top: 18vh;
+ } 
+
 .header {
     height: 18vh;
     width: 100vw;
@@ -13,7 +19,8 @@
     justify-content: space-between;
     align-items: center;
     background-color: #990D0D;
-    
+    position: fixed;
+    top: 0;
 }
 
 .logo-img {
@@ -72,46 +79,52 @@ color: #aaa;
 
 display: flex;
 flex-direction: row;
-width: 90vw;
-height: 60vh;
+/*width: 90vw;
+height: 60vh;*/
 flex-wrap: wrap;
-margin: 2em;
+margin: 1em;
 border-style: groove;
 padding: 1em;
-
+box-sizing: content-box;
 
 } 
 
 .fa-bookmark::before {
   content: "\f02e";
-  margin-right: 80px; }
+   }
 
 .content-card {
     display: flex;
     flex-direction: row;  
     justify-content: space-between;
 width: 90vw;
-height: 50vh;
+height: 30vh;
 }
 
 .title-card {
-    width: 85vw;
+ width: 80vw;
 height: 5vh; 
 display: flex;
-  
-  justify-content: space-between;
+justify-content: space-between;
+color: #448088;
 
 }
 
 .play-affiche {
-width: 30vw;
-height: 30vh;
+width: 150px;
+height: 150px;
 }
 
-.summary {
+.big-title {
+    color: #448088;
+}
 
-width: 50vw;
-height: 50vh;
+.theater-dates {
+    display: flex;
+    flex-direction: space-between;
+    width: 80vw;
+    justify-content: space-between;
+    height: 5vh;
 
 }
 
@@ -120,6 +133,7 @@ height: 50vh;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
+padding-top: 9px;
 
 }
 
@@ -129,22 +143,39 @@ justify-content: space-between;
 display: flex;
 flex-direction: column;
 text-align: center;
-justify-content: space-between;
+justify-content: space-evenly;
 
 }
 
+fa-star::before {
+  content: "\f005";
+  color: #448088; }
+
+.review-stars {
+    color: #448088;
+}
 
 .container-bottom {
     display: flex;
   justify-content: space-between;
   width: 100vw;
-  height: 3vh;
+ 
     border-top-style: solid;
   padding-top: 1em;
-  padding-bottom: 1em;
+  text-align: center;
   align-items: center;
+  background-color: #990D0D;
+  position: fixed;
+bottom: 0;
 }
 
+
+
+.bottom-button {
+    border-style: solid;
+    border-color: black;
+    width: 33vw;
+}
 
 
 .sort-input {

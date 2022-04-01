@@ -12,7 +12,7 @@
 </head>
 <body>
     <!-- Header container  with logo and login icon-->
-
+<div class="frame flex">
 <div class="header flex">
     <div class="arrow-icon"> 
          <i class="fas fa-angle-left"></i>
@@ -62,25 +62,30 @@
 
 <!--Card for the plays-->
 <span>
-            <h2>Happening today</h2>
+            <h2 class="big-title">Happening today</h2>
 </span>
 
 <div class="card flex">
 
         <div class="title-card flex"> <div>Title </div>
+
         <div><i class="fas fa-bookmark"></i></div>
         </div> 
+
+        <div class="theater-dates flex">
+            <div class="theater-name">Theater</div>
+            <div>Dates</div>
+        </div>
 
         <div class="content-card flex">
 
             <div class="header-dates-summary-left flex">
         
-                  <div>Dates</div>
+                 
                 
                <div class="summary"> <p >Lorem ipsum dolor, sit     amet consectetur adipisicing elit. <br>
              exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-            Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-            exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
+           
                  </p> </div> 
 
                 <div>Director</div>              
@@ -95,7 +100,7 @@
 
                  <div class="pic-reviews flex">
                     
-                     <div>Theater</div>
+                     
              
                      <div><img class="play-affiche" src="https://picsum.photos/200/300" alt=""></div>
                       <div class="reviews-small flex">Read * Reviews</div>  
@@ -123,6 +128,7 @@
             <a class="bottom-button" href=""><i class="fas fa-bookmark"></i></a>
             <a class="bottom-button" href=""><i class="fas fa-user"></i></a>
     </div>
+</div>
 </div>
 </body>
 </html>

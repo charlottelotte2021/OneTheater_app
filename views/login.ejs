@@ -1,0 +1,45 @@
+<%- include('partials/header') %>
+
+
+
+<div class="frame flex">
+<div class="container-middle flex"> 
+	<div class="title">log In h1</div>
+
+	<%- include ('./partials/messages') %>
+
+		<form action="/users/login" method="POST">   
+			<div>	
+				<label for="email">E-Mail</label>
+  					<input placeholder="Enter E-Mail" type="email" name="email"/>
+  						 <br>
+  			</div>
+  			<div>
+  				<label for="password">Password</label>
+					<input placeholder="Enter Password" type="password" name="password" value="<%= typeof password != 'undefined' ? password : '' %>>"/>
+  				</div>		
+		<button type="submit">Log in </button> 
+		</form>
+		
+
+			<div class="link light">
+			<a href="">Forgot your password?</a>
+		</div>
+			<div class="link bold">
+				<a href="">Sign up</a>
+			</div>
+</div>
+
+
+
+<div class="container-bottom flex">
+			<div class="container-bottom flex">
+    <a class="bottom-button" href="" style="background-color: #990D0D;">
+        <i class="fas fa-home"></i></a>
+    <a class="bottom-button" href="">
+        <i class="fas fa-bookmark"></i></a>
+    <a class="bottom-button" href="">
+        <i class="fas fa-user"></i></a>
+    </div>
+</div>
+</div>

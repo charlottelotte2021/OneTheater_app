@@ -14,7 +14,7 @@
     <!-- Header container  with logo and login icon-->
 <div class="frame flex">
 <div class="header flex">
-    <div class="arrow-icon"> 
+    <div class="arrow-icon" style="visibility: hidden;"> 
          <i class="fas fa-angle-left"></i>
     </div>
          <img src="../assets/logo-white.svg" alt="" class="logo-img">
@@ -25,38 +25,41 @@
 
 <!-- Search bar with input and button-->
 <div class="search-bar flex">
-        <input type="text" class="search-input" placeholder="Type your search" >
-    <div class="search-icon">
-        <i class="fas fa-search"></i>
-         </div>
+        <div class="search-container">
+            <input type="text"  class="search-input" placeholder="Type your search" >
+            <div class="search-icon">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
         <button class="search-btn">Search</button>
+    </div>
 </div>
 
 
 <!--Homepage with sort by, more options and card -->
-<div>
+<div class="options flex">
     <form>  
         <label> Sort by </label>  
-    <select class=sort-input>  
-        <option value = "Date"> Date </option> 
-        <option value = "Price"> Price   </option>  
-        <option value = "Theatre"> Theatre </option>  
-        <option value = "Title"> Title </option>  
-    </select>  
+        <select class="sort-input">  
+            <option value = "Date"> Date </option> 
+            <option value = "Price"> Price   </option>  
+            <option value = "Theatre"> Theatre </option>  
+            <option value = "Title"> Title </option>  
+        </select>  
     </form>    
     <form>  
         <label> More options </label>  
     <select class="more-input">  
-        <option value = ""> </option>  
-            <!-- <input type="date">
-            <input type="text" placeholder="Choose your theatre(s)">
-            <input type="text" placeholder="Max. price">
-            <input type="text" placeholder="Max. distance"> -->
+        <!-- <option value = ""> </option>  
+             <input type="date" >
+            <input type="text"   placeholder="Choose your theatre(s)" >
+            <input type="text"  placeholder="Max. price" >
+            <input type="text"  placeholder="Max. distance" >
+    </select class="more-input">
+        <label> Genre</label>  
+     <select >
+             <option value="Drama">Drama</option>   -->
     </select>
-        <!-- <label> Genre</label>   -->
-    <!-- <select>
-             <option value="Drama">Drama</option> 
-    </select> -->
     </form> 
 </div>
 

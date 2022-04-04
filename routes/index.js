@@ -26,6 +26,25 @@ router.get('/signup', (req,res)=>{
     res.render("signup", { layout: "layouts/no-footer", title: "Sign up" })
 })
 
+// play page 
+router.get("/play", (req,res) => {
+  res.render("play", {title:"Plays"})
+})
+
+//// play review page
+router.get("/playreview", (req,res) => {
+  res.render("playreview", {title:"Reviews"})
+})
+
+//profile page 
+router.get("/profile", (req, res) => {
+  res.render("profile", {title:"Profile page"})
+})
+
+//wishlist page 
+router.get("/wishlist", (req,res) => {
+  res.render("wishlist", {title:"Wishlist"})
+} )
 
 // router.get('/', (req,res)=>{
 //   Play.find({}, (err, allPlays) => {

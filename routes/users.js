@@ -93,6 +93,11 @@ if(errors.length > 0 ) {
 
 })
 
+}
+})
+
+
+
 
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {

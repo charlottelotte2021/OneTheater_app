@@ -1,32 +1,55 @@
-<main class="full-height-container main-container">
+<main class="main-gradient-background main-container">
+  <div class="container-middle">
+    <h1 class="title-bg-dark">Create a new account</h1>
 
-	<div class="container-middle">
-		<h1 class="title">Register</h1>
-		<%- include ('./partials/messages') %>
-			
-	<form action="/users/signup" method="POST">
-	<div class="inner-label-wrap">
-  			<input type="username" id="username" name="username" placeholder="username" value="<%= typeof username != 'undefined' ? username : '' %>"> 
-				<label class="inner-label" for="username">Username</label>
-			</div>
-	<div class="inner-label-wrap">
-  			<input type="email" id="email" name="email" placeholder="Email" value="<%= typeof email != 'undefined' ? email : '' %>">
-				<label class="inner-label" for="email">Email</label>
-			</div>
-			<div class="inner-label-wrap">
-				<input type="password" id="password" name="password" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>>"/>
-				<label class="inner-label" for="password">Password</label>
-			</div>
-				<div class="inner-label-wrap">
-				<input type="password" id="password" name="password2" placeholder="Password" value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
-				<label class="inner-label" for="password">Confirm Password</label>
-			</div>
-  						<input type="submit" value="Register">
-		</form>
-</div>
+    <%- include ('./partials/messages') %>
 
-
-
-			
-
-</main>	
+    <form class="flex flex-col" action="/users/signup" method="POST">
+      <div class="inner-label-wrap">
+        <input
+		class="full-width"
+          type="username"
+          id="username"
+          name="username"
+          placeholder="username"
+          value="<%= typeof username != 'undefined' ? username : '' %>"
+        />
+        <label class="inner-label" for="username">Username</label>
+      </div>
+      <div class="inner-label-wrap">
+        <input
+		class="full-width"
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          value="<%= typeof email != 'undefined' ? email : '' %>"
+        />
+        <label class="inner-label" for="email">Email</label>
+      </div>
+      <div class="inner-label-wrap">
+        <input
+		class="full-width"
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          value="<%= typeof password != 'undefined' ? password : '' %>"
+        />
+        <label class="inner-label" for="password">Password</label>
+      </div>
+      <div class="inner-label-wrap">
+        <input
+		class="full-width"
+          type="password"
+          id="password"
+          name="password2"
+          placeholder="Password"
+          value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
+        />
+        <label class="inner-label" for="password">Confirm Password</label>
+      </div>
+      <input class="btn btn-white self-center mt-2"  type="submit" value="SIGN UP" />
+    </form>
+  </div>
+</main>

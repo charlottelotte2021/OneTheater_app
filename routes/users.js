@@ -18,9 +18,9 @@ router.get("/signup", (req, res) => {
 
 
 
-router.post('/signup',(req,res)=> {
-	const {username,email, password, password2} = req.body;
+router.post('/signup', (req,res) => {
 
+	const {username,email, password, password2} = req.body;
 	let errors = [];
 
 	console.log(' Name ' + username+ ' email :' + email+ ' pass:' + password);
@@ -28,7 +28,7 @@ router.post('/signup',(req,res)=> {
 	if(!username || !email || !password || !password2) {
     	errors.push({msg : "Please fill in all fields"})
 	}
-//check if match
+    //check if match
 	if(password !== password2) {
 		errors.push({msg : "passwords dont match"});
 	}
@@ -45,7 +45,7 @@ if(errors.length > 0 ) {
     	email : email,
     	password : password,
     	password2 : password2,
-	layout: 'layouts/no-footer',
+	    layout: 'layouts/no-footer',
         title: 'Sign up'})
 	} else {
     //validation passed
@@ -59,7 +59,7 @@ if(errors.length > 0 ) {
     	email : email,
     	password : password,
     	password2 : password2,
-	layout: 'layouts/no-footer',
+	       layout: 'layouts/no-footer',
         title: 'Sign up'});
         
        } 
@@ -86,9 +86,13 @@ if(errors.length > 0 ) {
             .catch(value=> console.log(value));
                       
                 }));
+    }
+    })
+
 }
 
 })
+
 
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {

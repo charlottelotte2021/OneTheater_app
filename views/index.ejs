@@ -4,108 +4,56 @@
 
     <h1>Happening today</h1>
 
-
+<section class="cards-container">
 
     <% allplays.forEach((Play) => { %>
-  <h4><%= Play.title %></h4>
-  <p><%= Play.director %></p>
+      <%  Play.playsInstances.forEach((playInstance) => { %>
+        <article class="card play-card">
+            <div class="play-card-header">
+                <h2 class="play-card-title"><%= Play.title%></h2>
+                <button class="play-card-bookmark"><i class="fas fa-bookmark"></i></button>
+            </div> 
+
+            <div class="play-card-content">
+                <div class="card-row">
+                    <div class="play-card-dates"><%= playInstance.date%></div>
+
+                    <div class="play-card-theater"><%= playInstance.theater.name %></div>
+                </div>
+                <div class="card-row">
+                    <div class="">
+                        <div class="play-card-summary"> 
+                            <p><%= playInstance.summary%> <br>
+                            </p>
+                            <button class="play-card-summary-seemore"><i class="fas fa-angle-down"></i></button>
+                        </div> 
+        
+                        <div><%= Play.director%></div>  
+                        <div><%= Play.production%>  
+                        </div>
+                    </div>
+
+                    <div class="pic-reviews">
+                        <img class="play-card-poster" src=<%= playInstance.image%> alt="">
+                        <div class="play-card-reviews">
+                            <a href="#" class="reviews-link">
+                                <p>Read × reviews</p>
+                                <div class="review-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>    
+                </div>
+            </div>  
+        </article>
 <% }) %>
+<% }) %>
+</section>
 
-
-    <!--Card for the plays-->
-    <section class="cards-container">
-        <article class="card play-card">
-            <div class="play-card-header">
-                <h2 class="play-card-title">Title</h2>
-                <button class="play-card-bookmark"><i class="fas fa-bookmark"></i></button>
-            </div> 
-
-            <div class="play-card-content">
-                <div class="card-row">
-                    <div class="play-card-dates">Dates</div>
-
-                    <div class="play-card-theater">Theater</div>
-                </div>
-                <div class="card-row">
-                    <div class="">
-                        <div class="play-card-summary"> 
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br>
-                            exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-                            Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                            exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-                            </p>
-                            <button class="play-card-summary-seemore"><i class="fas fa-angle-down"></i></button>
-                        </div> 
-        
-                        <div>Director</div>  
-                        <div>Actors</div>
-                    </div>
-
-                    <div class="pic-reviews">
-                        <img class="play-card-poster" src="https://picsum.photos/200/300" alt="">
-                        <div class="play-card-reviews">
-                            <a href="#" class="reviews-link">
-                                <p>Read × reviews</p>
-                                <div class="review-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                            </a>
-                        </div>
-                    </div>    
-                </div>
-            </div>	
-        </article>
-
-        <article class="card play-card">
-            <div class="play-card-header">
-                <h2 class="play-card-title">Title</h2>
-                <button class="play-card-bookmark"><i class="fas fa-bookmark"></i></button>
-            </div> 
-
-            <div class="play-card-content">
-                <div class="card-row">
-                    <div class="play-card-dates">Dates</div>
-
-                    <div class="play-card-theater">Theater</div>
-                </div>
-                <div class="card-row">
-                    <div class="">
-                        <div class="play-card-summary"> 
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br>
-                            exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-                            Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                            exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-                            </p>
-                            <button class="play-card-summary-seemore"><i class="fas fa-angle-down"></i></button>
-                        </div> 
-        
-                        <div>Director</div>  
-                        <div>Actors</div>
-                    </div>
-
-                    <div class="pic-reviews">
-                        <img class="play-card-poster" src="https://picsum.photos/200/300" alt="">
-                        <div class="play-card-reviews">
-                            <a href="#" class="reviews-link">
-                                <p>Read × reviews</p>
-                                <div class="review-stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                            </a>
-                        </div>
-                    </div>    
-                </div>
-            </div>	
-        </article>
-
-    </section>
 
 </main>

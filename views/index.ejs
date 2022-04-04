@@ -4,6 +4,14 @@
 
     <h1>Happening today</h1>
 
+
+
+    <% allplays.forEach((Play) => { %>
+  <h4><%= Play.title %></h4>
+  <p><%= Play.director %></p>
+<% }) %>
+
+
     <!--Card for the plays-->
     <section class="cards-container">
         <article class="card play-card">

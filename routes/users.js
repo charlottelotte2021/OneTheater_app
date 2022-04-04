@@ -10,21 +10,21 @@ router.get('/login',(req,res)=>{
     res.render('login');
 })
 
-router.get('/register',(req,res)=>{
-    res.render('register')
+router.get('/signup',(req,res)=>{
+    res.render('signup')
     })
 
 
 //Register handle
 
-router.post('/register',(req,res)=> {
-	const {name,email, password, password2} = req.body;
+router.post('/signup',(req,res)=> {
+	const {username,email, password, password2} = req.body;
 
 	let errors = [];
 
-	console.log(' Name ' + name+ ' email :' + email+ ' pass:' + password);
+	console.log(' Name ' + username+ ' email :' + email+ ' pass:' + password);
 
-	if(!name || !email || !password || !password2) {
+	if(!username || !email || !password || !password2) {
     	errors.push({msg : "Please fill in all fields"})
 	}
 //check if match
@@ -38,9 +38,9 @@ router.post('/register',(req,res)=> {
 	}
 
 if(errors.length > 0 ) {
-	res.render('register', {
+	res.render('signup', {
     	errors : errors,
-    	name : name,
+    	username : username,
     	email : email,
     	password : password,
     	password2 : password2})
@@ -50,9 +50,9 @@ if(errors.length > 0 ) {
     console.log(user);   
     if(user) {
         errors.push({msg: 'email already registered'});
-        res.render('register', {
+        res.render('signup', {
     	errors : errors,
-    	name : name,
+    	username : username,
     	email : email,
     	password : password,
     	password2 : password2});
@@ -60,7 +60,7 @@ if(errors.length > 0 ) {
        } 
        else {
         const newUser = new User({
-            name : name,
+            username : username,
             email : email,
             password : password
         });
@@ -76,7 +76,7 @@ if(errors.length > 0 ) {
             .then((value)=>{
             console.log(value)
             req.flash('success_msg','You have now registered!')
-            res.redirect('users/login');
+            res.redirect('/');
                     })
             .catch(value=> console.log(value));
                       

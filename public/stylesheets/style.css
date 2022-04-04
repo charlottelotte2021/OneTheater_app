@@ -16,7 +16,9 @@
   6.2. Search
 7. COMPONENTS
   7.1. Buttons
-  7.2. Play card
+  7.2. Cards
+  7.3. Play card
+  7.4. Play page
 
 
 10. Dark theme
@@ -33,8 +35,10 @@
   --clr-primary: hsl(0, 84%, 33%);
   --clr-primary-light: hsl(0, 56%, 47%);
   --clr-secondary: #448088;
+  --clr-secondary-light: #449C9C;
   --grey-light: #f7f6f6;
   --grey-middle: #aaa;
+  --grey-middle-text: #666;
   --grey-dark: hsl(0, 84%, 7%);
   --clr-background: white;
   --clr-main-text: var(--grey-dark);
@@ -57,10 +61,20 @@ body {
   color: var(--clr-main-text);
   background-color: var(--clr-background);
   line-height:1.6;
+
+  /* For mobiles, to make sure the footer is always at the bottom if the page is shorter than 100vh */
+  display:flex;
+  flex-direction: column;
+  min-height:100vh;
 }
 
 main {
+  flex-grow: 1;
+}
+
+.main-container {
     padding-inline: 1rem;
+    padding-block: 2rem;
 }
 
 button {
@@ -77,6 +91,11 @@ select {
 
 /* ============================ 2. UTILITIES ============================ */
 
+.full-height-container {
+  /* min-height: 82vh;
+  padding-block:.01em; */
+}
+
 .flex {
   display:flex;
   gap:1em;
@@ -90,12 +109,20 @@ select {
 .center-h {
   justify-content: center;
 }
+.expand {
+  justify-content: space-between;
+}
 
 .m-r-auto {
   margin-right:auto;
 }
 .m-l-auto {
   margin-left:auto;
+}
+
+
+.flip {
+  transform: rotate(180deg);
 }
 
 
@@ -123,9 +150,23 @@ h1 {
   justify-content: space-between;
   align-items: center;
   background: var(--gradient-red);
-  /* position: fixed;
-  top: 0; */
+  animation: height .3s ease-out;
+  z-index: 1000;
 }
+.header.scroll-down {
+  position: fixed;
+  top: 0;
+  height:max-content;
+  padding-block:1rem;
+}
+.header.scroll-down .logo-img {
+  height:7vh;
+}
+
+.header.scroll-down + .buffer {
+  height:18vh;
+}
+
 .arrow-icon,
 .logo-img,
 .login-icon {
@@ -180,9 +221,47 @@ footer {
   background: var(--grey-dark);
   color:white;
   padding: 2rem 1rem 5rem 1rem;
-  margin-top:2rem;
 }
 
+/* ============================ 4.4. Play page - Hero section ============================ */
+
+.hero-play {
+  width:100vw;
+  aspect-ratio: 2 / 1;
+  background-image: url("https://picsum.photos/400/600");
+  background-position:center;
+  overflow:hidden;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding:2rem 1rem;
+  position:relative;
+}
+
+.hero-play-dark-layer {
+  position:absolute;
+  background:linear-gradient(to top, rgba(0 0 0 / 1) 0%, rgba(0 0 0 / 0) 70%);
+  inset:0;
+}
+
+.hero-play-text {
+  color:white;
+  z-index:1;
+}
+
+.hero-play-text h1,
+.hero-play-stars {
+  color:white;
+}
+
+.hero-play-text h1 {
+  margin-bottom:0;
+}
+
+.hero-play-stars > * {
+  font-size:1.5rem;
+  cursor:pointer;
+}
 
 /* ============================ 5. ICONS ============================ */
 
@@ -232,7 +311,7 @@ select {
   position:absolute;
   top:.9em;
   left:1.5em;
-  color:var(--grey-middle);
+  color:var(--grey-middle-text);
   white-space: nowrap;
   transition: .3s ease-out;
   transform-origin: 0 0;
@@ -252,8 +331,8 @@ select {
   display: flex;
   gap: 1rem;
   flex-wrap:wrap;
-  padding-block: 2em;
   justify-content: space-between;
+  margin-bottom: 2em;
 }
 .search-container {
     position: relative;
@@ -321,6 +400,7 @@ select {
     background-color: var(--btn-color);
     border-radius: 999px;
     color: var(--text-color);
+    text-decoration: none;
     transition: .3s ease-out;
     cursor:pointer;
 }
@@ -331,47 +411,55 @@ select {
 }
 .btn-primary:hover {
   --btn-color: var(--clr-primary-light);
-  --text-color: white;
 }
 
 .btn-secondary {
-  --btn-color: var(--clr-secondary-light);
+  --btn-color: var(--clr-secondary);
   --text-color: white;
 }
 
-/* ============================ 7.2. Play card ============================ */
+.btn-secondary:hover {
+  --btn-color: var(--clr-secondary-light);
+}
+
+/* ============================ 7.2. Cards ============================ */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  border-radius:10px;
+  box-shadow: 3px 3px 10px rgba(0 0 0 / .1);
+}
+
+/* ============================ 7.3. Play card ============================ */
 
 .cards-container {
   display:flex;
   flex-direction: column;
   gap: 2rem;
 }
-.card {
-  display: flex;
-  flex-direction: column;
-  padding: 1em;
+.play-card {
   background-color: #FAFFFF;
-  border-radius:10px;
-  box-shadow: 3px 3px 10px rgba(0 0 0 / .1);
 }
 
-.card-header {
+.play-card-header {
   display:grid;
   grid-template-columns: 1fr 2rem;
   align-items:center;
   margin-bottom: 1.5rem;
 }
-.card-title {
+.play-card-title {
   margin-bottom:unset;
   color: var(--clr-secondary);
 }
-.card-bookmark {
+.play-card-bookmark {
   text-align:right;
   font-size:2rem;
   color: var(--clr-secondary);
 }
 
-.card-content {
+.play-card-content {
   --gap: 1rem;
   display: flex;
   flex-direction: column;
@@ -384,34 +472,33 @@ select {
   gap: var(--gap);
   align-items:start;
 }
-.card-dates,
-.card-theater {
-  color: #666666;
+.play-card-dates,
+.play-card-theater {
+  color: var(--grey-middle-text);
   font-style:italic;
 }
-.card-summary {
+.play-card-summary {
   display: flex;
   flex-direction: column;
   margin-bottom:2rem;
 
 }
-.card-summary p {
+.play-card-summary p {
   overflow: hidden;
   max-height: 10rem; /* to be changed in JS */
   transition: max-height .3s ease-out;
 }
-.card-summary-seemore {
+.play-card-summary-seemore {
   font-size:1.2rem;
   color: #666;
   opacity:1;
   transform: rotate(0);
   transition: .3s ease-out;
 }
-.card-summary.active p {
+.play-card-summary.active p {
   max-height: max-content;
 }
-.card-summary.active .card-summary-seemore {
-  opacity:0;
+.play-card-summary.active .play-card-summary-seemore {
   transform: rotate(180deg);
 }
 
@@ -426,7 +513,7 @@ select {
   justify-content: space-between;
   height: 5vh;
 } */
-.card-poster {
+.play-card-poster {
   max-width:100%;
   object-fit: contain;
   margin-bottom:2rem;
@@ -444,7 +531,91 @@ label {
   color: #504f4f;
 }
 
+/* ============================ 7.4. Play page ============================ */
 
+.play-interactivity {
+  display:flex;
+  justify-content:space-between;
+  align-items: center;
+  color: var(--clr-secondary);
+  margin-bottom:2rem;
+}
+.play-interactivity-bookmark {
+  font-size:2rem;
+}
+
+.play-content {
+  display:flex;
+  flex-direction: column;
+  gap:1rem;
+}
+
+.play-row-highlight {
+  display:flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+.play-theater {
+  font-style:italic;
+}
+.play-price {
+  color: var(--clr-secondary);
+}
+.play-dates {
+  color: var(--grey-middle-text);
+}
+.play-summary {
+  margin-top:1rem;
+}
+
+/* ============================ 7.5. Reviews ============================ */
+/* ============================ 7.5.1. Review container ============================ */
+.reviews-container {
+  display: flex;
+  flex-direction: column;
+  margin-block:4rem 2rem;
+}
+
+.reviews-container > .card + .card {
+  margin-top: 2rem;
+}
+
+/* ============================ 7.5.2. Review cards ============================ */
+
+.card.review {
+  background-color: var(--grey-light);
+  gap:1rem;
+}
+
+.review-header {
+  display:grid;
+  grid-template-areas: 
+    "profile-pic name name name"
+    "profile-pic stars stars stars";
+  margin-bottom:1rem;
+}
+.review-profile-pic {
+  aspect-ratio: 1;
+  border-radius:50%;
+  width:64px;
+  object-fit: cover;
+  grid-area: profile-pic;
+}
+.review-username {
+  grid-area: name;
+  font-weight: 700;
+}
+.review-stars {
+  grid-area: stars;
+  color: var(--clr-secondary);
+  font-size:.8rem;
+}
+
+.review-dateseen {
+  font-style:italic;
+  color: var(--grey-middle-text);
+}
 /* ============================ 10. DARK THEME ============================ */
 
 /* @media (prefers-color-scheme: dark) {

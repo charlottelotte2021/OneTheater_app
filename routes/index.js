@@ -10,7 +10,7 @@ const Play = require("../models/play").Play
 //home page
 router.get('/', (req,res)=>{
   Play.find({}, (err, allPlays) => {
-    res.render("index", { title: "Home" }; { allplays: allPlays })
+    res.render("index", { title: "Home", allplays: allPlays })
   })    
 
 })

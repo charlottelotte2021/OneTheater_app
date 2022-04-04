@@ -44,7 +44,9 @@ if(errors.length > 0 ) {
     	username : username,
     	email : email,
     	password : password,
-    	password2 : password2})
+    	password2 : password2,
+	layout: 'layouts/no-footer',
+        title: 'Sign up'})
 	} else {
     //validation passed
    	User.findOne({email : email}).exec((err,user)=> {
@@ -56,7 +58,9 @@ if(errors.length > 0 ) {
     	username : username,
     	email : email,
     	password : password,
-    	password2 : password2});
+    	password2 : password2,
+	layout: 'layouts/no-footer',
+        title: 'Sign up'});
         
        } 
        else {

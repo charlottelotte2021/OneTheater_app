@@ -6,11 +6,11 @@
 			
 	<form action="/users/signup" method="POST">
 	<div class="inner-label-wrap">
-  			<input type="username" id="username" name="username" placeholder="username">
+  			<input type="username" id="username" name="username" placeholder="username" value="<%= typeof username != 'undefined' ? username : '' %>"> 
 				<label class="inner-label" for="username">Username</label>
 			</div>
 	<div class="inner-label-wrap">
-  			<input type="email" id="email" name="email" placeholder="Email">
+  			<input type="email" id="email" name="email" placeholder="Email" value="<%= typeof email != 'undefined' ? email : '' %>">
 				<label class="inner-label" for="email">Email</label>
 			</div>
 			<div class="inner-label-wrap">
@@ -18,7 +18,7 @@
 				<label class="inner-label" for="password">Password</label>
 			</div>
 				<div class="inner-label-wrap">
-				<input type="password" id="password" name="password" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>>"/>
+				<input type="password" id="password" name="password2" placeholder="Password" value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
 				<label class="inner-label" for="password">Confirm Password</label>
 			</div>
   						<input type="submit" value="Register">

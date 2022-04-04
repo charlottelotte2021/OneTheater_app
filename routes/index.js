@@ -1,6 +1,7 @@
 const express = require('express');
 const router  = express.Router();
 const {ensureAuthenticated} = require("../config/auth.js")
+const Play = require("../models/play").Play
 
 // const dotenv = require(“dotenv”);
 // dotenv.config();
@@ -9,6 +10,9 @@ const {ensureAuthenticated} = require("../config/auth.js")
 //home page
 router.get('/', (req,res)=>{
     res.render('index');
+Play.find({}, (err, allPlays) => {
+    res.render('index', {allplays: allPlays});
+  })    
 })
 
 
@@ -18,6 +22,11 @@ router.get('/signup', (req,res)=>{
 })
 
 
+// router.get('/', (req,res)=>{
+//   Play.find({}, (err, allPlays) => {
+//     res.render('index', {allplays: allPlays});
+//   })
+// })
 
 
 

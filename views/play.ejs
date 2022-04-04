@@ -3,7 +3,7 @@
     <div class="hero-play-dark-layer"></div> <!-- Black layer for readability -->
     
     <div class="hero-play-text">
-        <h1>In Solidum</h1>
+        <h1><%= Play.title%></h1>
 
         <div class="hero-play-stars">
             <i class="far fa-star"></i>
@@ -29,25 +29,20 @@
             <i class="fas fa-star"></i>
         </div>
         <div class="link light">
-            <a href="" class="btn btn-secondary"">Book your place</a>
+            <a href="<%= playsInstances.bookingUrl%>" class="btn btn-secondary"">Book your place</a>
         </div>
     </div>
 
     <!--Summary of the play-->
     <div class="play-content">
         <div class="play-row-highlight">
-            <p class="play-theater">Théâtre de Poche</p>
-            <p class="play-price">16 €</p>
+            <p class="play-theater"><%= playInstance.theater.name %></p>
+            <p class="play-price"><%= playInstance.price%></p>
         </div>
 
-        <p class="play-dates">From 19 April 2022 to 7 May 2022</p>
-        <p class="play-summary">Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br>
-            exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-            Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-            exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-            Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-            exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-            Placeat accusamus quas magni quos!
+        <p class="play-dates"><%= playInstance.date%></p>
+        <p class="play-summary"> <%= playInstance.summary%> <br>
+            
         </p>
     </div>
         

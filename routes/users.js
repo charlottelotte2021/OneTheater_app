@@ -6,85 +6,84 @@ const bcrypt = require("bcrypt")
 const passport = require("passport")
 
 //login handle
+
 router.get("/login", (req, res) => {
   res.render("login", { layout: "layouts/no-footer", title: "Log in" })
 })
 
-router.get("/register", (req, res) => {
-  res.render("register", { layout: "layouts/no-footer", title: "Sign up" })
+//Register handle
+router.get("/signup", (req, res) => {
+  res.render("signup", { layout: "layouts/no-footer", title: "Sign up" })
 })
 
-//Register handle
 
-router.post("/register", (req, res) => {
-  const { name, email, password, password2 } = req.body
 
-  let errors = []
+router.post('/signup',(req,res)=> {
+	const {username,email, password, password2} = req.body;
 
-  console.log(" Name " + name + " email :" + email + " pass:" + password)
+	let errors = [];
 
-  if (!name || !email || !password || !password2) {
-    errors.push({ msg: "Please fill in all fields" })
-  }
-  //check if match
-  if (password !== password2) {
-    errors.push({ msg: "passwords dont match" })
-  }
+	console.log(' Name ' + username+ ' email :' + email+ ' pass:' + password);
 
-  //check if password is more than 6 characters
-  if (password.length < 6) {
-    errors.push({ msg: "password atleast 6 characters" })
-  }
+	if(!username || !email || !password || !password2) {
+    	errors.push({msg : "Please fill in all fields"})
+	}
+//check if match
+	if(password !== password2) {
+		errors.push({msg : "passwords dont match"});
+	}
 
-  if (errors.length > 0) {
-    res.render("register", {
-      errors: errors,
-      name: name,
-      email: email,
-      password: password,
-      password2: password2,
-    })
-  } else {
+//check if password is more than 6 characters
+	if(password.length < 6 ) {
+    	errors.push({msg : 'password atleast 6 characters'})
+	}
+
+if(errors.length > 0 ) {
+	res.render('signup', {
+    	errors : errors,
+    	username : username,
+    	email : email,
+    	password : password,
+    	password2 : password2})
+	} else {
     //validation passed
-    User.findOne({ email: email }).exec((err, user) => {
-      console.log(user)
-      if (user) {
-        errors.push({ msg: "email already registered" })
-        res.render("register", {
-          errors: errors,
-          name: name,
-          email: email,
-          password: password,
-          password2: password2,
-          layout: 'layouts/no-footer',
-          title: 'Sign up'
-        })
-      } else {
+   	User.findOne({email : email}).exec((err,user)=> {
+    console.log(user);   
+    if(user) {
+        errors.push({msg: 'email already registered'});
+        res.render('signup', {
+    	errors : errors,
+    	username : username,
+    	email : email,
+    	password : password,
+    	password2 : password2});
+        
+       } 
+       else {
         const newUser = new User({
-          name: name,
-          email: email,
-          password: password,
-        })
+            username : username,
+            email : email,
+            password : password
+        });
 
-        bcrypt.genSalt(10, (err, salt) =>
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err
-            //save pass to hash
-            newUser.password = hash
-            //save user
-            newUser
-              .save()
-              .then((value) => {
-                console.log(value)
-                req.flash("success_msg", "You have now registered!")
-                res.redirect("users/login")
-              })
-              .catch((value) => console.log(value))
-          })
-        )
-      }
-    })
-  }
+        bcrypt.genSalt(10,(err,salt)=> 
+            bcrypt.hash(newUser.password,salt,
+                (err,hash)=> {
+                    if(err) throw err;
+                        //save pass to hash
+                        newUser.password = hash;
+                    //save user
+       newUser.save()
+            .then((value)=>{
+            console.log(value)
+            req.flash('success_msg','You have now registered!')
+            res.redirect('/');
+                    })
+            .catch(value=> console.log(value));
+                      
+                }));
+}
+
 })
 
 router.post("/login", (req, res, next) => {

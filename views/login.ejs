@@ -1,14 +1,18 @@
+<%- include('partials/header') %>
+
 <main class="full-height-container main-container">
 
 	<div class="container-middle">
 		<h1 class="title">Log In</h1>
-		<form action="post" method="">
+		<%- include ('./partials/messages') %>
+
+		<form action="/users/login" method="POST">
 			<div class="inner-label-wrap">
 				<input type="email" id="email" name="email" placeholder="Email">
 				<label class="inner-label" for="email">Email</label>
 			</div>
 			<div class="inner-label-wrap">
-				<input type="password" id="password" name="password" placeholder="Password">
+				<input type="password" id="password" name="password" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>>"/>
 				<label class="inner-label" for="password">Password</label>
 			</div>
 			<input type="submit" value="LOG IN" />

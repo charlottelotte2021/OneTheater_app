@@ -93,11 +93,6 @@ if(errors.length > 0 ) {
 
 })
 
-}
-})
-
-
-
 
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {
@@ -106,6 +101,19 @@ router.post("/login", (req, res, next) => {
     failureFlash: true,
   })(req, res, next)
 })
+
+//profile page 
+router.get("/profile", (req, res) => {
+  res.render("profile", {title:"Profile page"})
+})
+
+//wishlist page 
+router.get("/wishlist", (req,res) => {
+  res.render("wishlist", {title:"Wishlist"})
+} )
+
+
+
 
 //logout
 router.get("/logout", (req, res) => {

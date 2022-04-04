@@ -28,7 +28,7 @@ router.get('/signup', (req,res)=>{
 
 // play page 
 router.get("/play", (req,res) => {
-  res.render("play", {title:"Plays"})
+  res.render("play", {title:"Plays", allplays: allPlays })
 })
 
 //// play review page

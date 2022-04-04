@@ -1,32 +1,26 @@
-<%- include('partials/header') %>
-
-<main class="full-height-container main-container">
+<main class="main-gradient-background main-container">
 
 	<div class="container-middle">
-		<h1 class="title">Log In</h1>
+		<h1 class="title-bg-dark">Log In</h1>
+
 		<%- include ('./partials/messages') %>
 
-		<form action="/users/login" method="POST">
+		<form action="/users/login" method="POST" class="flex flex-col">
 			<div class="inner-label-wrap">
-				<input type="email" id="email" name="email" placeholder="Email">
+				<input class="full-width" type="email" id="email" name="email" placeholder="Email">
 				<label class="inner-label" for="email">Email</label>
 			</div>
 			<div class="inner-label-wrap">
-				<input type="password" id="password" name="password" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>>"/>
+				<input class="full-width" type="password" id="password" name="password" placeholder="Password" value="<%= typeof password != 'undefined' ? password : '' %>"/>
 				<label class="inner-label" for="password">Password</label>
 			</div>
-			<input type="submit" value="LOG IN" />
+			<input class="btn btn-white self-center mt-2" type="submit" value="LOG IN" />
 		</form>
 	</div>
 	
-	<div class="container-bottom">
-		<div class="link light">
-			<a href="">Forgot your password?</a>
-		</div>
-	
-		<div class="link bold">
-			<a href="/signup">Sign up</a>
-		</div>
+	<div class="container-bottom flex flex-col center-axis2">
+		<a href="">Forgot your password?</a>
+		<a class="highlight" href="/signup">Sign up</a>
 	</div>
 
 </main>	

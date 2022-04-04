@@ -9,16 +9,15 @@ const Play = require("../models/play").Play
 
 //home page
 router.get('/', (req,res)=>{
-    res.render('index');
-Play.find({}, (err, allPlays) => {
-    res.render('index', {allplays: allPlays});
+  Play.find({}, (err, allPlays) => {
+    res.render("index", { title: "Home" }; { allplays: allPlays })
   })    
-})
 
+})
 
 // signup page
 router.get('/signup', (req,res)=>{
-    res.render('signup');
+    res.render("signup", { layout: "layouts/no-footer", title: "Sign up" })
 })
 
 

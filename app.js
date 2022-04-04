@@ -22,6 +22,7 @@ mongoose.connect(process.env.DB_CONNECT,{ useNewUrlParser: true, useUnifiedTopol
 app.use("/static", express.static("public"))
 //EJS
 app.set('view engine','ejs')
+app.set("layout", "layouts/main", "layouts/no-footer")
 app.use(expressEjsLayout)
 
 //BodyParser

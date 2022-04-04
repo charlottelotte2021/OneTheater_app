@@ -8,13 +8,13 @@ const {ensureAuthenticated} = require("../config/auth.js")
 
 //home page
 router.get('/', (req,res)=>{
-    res.render('index');
+    res.render("index", { title: "Home" })
 })
 
 
 // signup page
 router.get('/signup', (req,res)=>{
-    res.render('signup');
+    res.render("signup", { layout: "layouts/no-footer", title: "Sign up" })
 })
 
 

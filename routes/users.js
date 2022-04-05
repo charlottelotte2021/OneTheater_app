@@ -4,97 +4,121 @@ const mongoose = require("mongoose")
 const User = require("../models/user.js")
 const bcrypt = require("bcrypt")
 const passport = require("passport")
-const {ensureAuthenticated} = require("../config/auth.js")
+const { ensureAuthenticated } = require("../config/auth.js")
 
 
 //login handle
 
 router.get("/login", (req, res) => {
-  res.render("login", { layout: "layouts/no-footer", title: "Log in" })
+  res.render("login", {
+    layout: "layouts/no-footer",
+    title: "Log in",
+    user: req.user,
+  })
 })
 
 //Register handle
 router.get("/signup", (req, res) => {
-  res.render("signup", { layout: "layouts/no-footer", title: "Sign up" })
+  res.render("signup", {
+    layout: "layouts/no-footer",
+    title: "Sign up",
+    user: req.user,
+  })
 })
 
+router.post("/signup", (req, res) => {
+  const { username, email, password, password2 } = req.body
+  let errors = []
 
+  // console.log(" Name " + username + " email :" + email + " pass:" + password)
 
-router.post('/signup', (req,res) => {
+  if (!username || !email || !password || !password2) {
+    errors.push({ msg: "Please fill in all fields" })
+  }
+  //check if match
+  if (password !== password2) {
+    errors.push({ msg: "The passwords don't match" })
+  }
 
-	const {username,email, password, password2} = req.body;
-	let errors = [];
+  //check if password is more than 6 characters
+  if (password.length < 6) {
+    errors.push({ msg: "Your password should be at least 6 characters long" })
+  }
 
-	console.log(' Name ' + username+ ' email :' + email+ ' pass:' + password);
-
-	if(!username || !email || !password || !password2) {
-    	errors.push({msg : "Please fill in all fields"})
-	}
-    //check if match
-	if(password !== password2) {
-		errors.push({msg : "passwords dont match"});
-	}
-
-//check if password is more than 6 characters
-	if(password.length < 6 ) {
-    	errors.push({msg : 'password atleast 6 characters'})
-	}
-
-if(errors.length > 0 ) {
-	res.render('signup', {
-    	errors : errors,
-    	username : username,
-    	email : email,
-    	password : password,
-    	password2 : password2,
-	    layout: 'layouts/no-footer',
-        title: 'Sign up'})
-	} else {
-    //validation passed
-   	User.findOne({email : email}).exec((err,user)=> {
-    console.log(user);   
-    if(user) {
-        errors.push({msg: 'email already registered'});
-        res.render('signup', {
-    	errors : errors,
-    	username : username,
-    	email : email,
-    	password : password,
-    	password2 : password2,
-	       layout: 'layouts/no-footer',
-        title: 'Sign up'});
-        
-       } 
-       else {
-        const newUser = new User({
-            username : username,
-            email : email,
-            password : password
-        });
-
-        bcrypt.genSalt(10, (err,salt) => 
-            bcrypt.hash(newUser.password,salt,
-                (err,hash)=> {
-                    if(err) throw err;
-                        //save pass to hash
-                        newUser.password = hash;
-                    //save user
-       newUser.save()
-            .then((value)=>{
-            console.log(value)
-            req.flash('success_msg','You have now registered!')
-            res.redirect('/users/login');
-                    })
-            .catch(value=> console.log(value));
-                      
-                }));
-    }
+  if (errors.length > 0) {
+    res.render("signup", {
+      errors: errors,
+      username: username,
+      email: email,
+      password: password,
+      password2: password2,
+      layout: "layouts/no-footer",
+      title: "Sign up",
+      user: req.user,
     })
+  } else {
+    //validation passed
+    User.findOne({ email }).exec((err, user) => {
+      // console.log(user)
+      if (user) {
+        errors.push({
+          msg: `An account with the email ${email} already exists`,
+        })
+        res.render("signup", {
+          errors: errors,
+          username: username,
+          email: email,
+          password: password,
+          password2: password2,
+          layout: "layouts/no-footer",
+          user: req.user,
+          title: "Sign up",
+        })
+      } else {
+        User.findOne({ username }).exec((err, user) => {
+          if (user) {
+            errors.push({
+              msg: `An account with the name ${username} already exists, please choose another one.`,
+            })
+            res.render("signup", {
+              errors: errors,
+              username: username,
+              email: email,
+              password: password,
+              password2: password2,
+              layout: "layouts/no-footer",
+              user: req.user,
+              title: "Sign up",
+            })
+          } else {
+            const newUser = new User({
+              username: username,
+              email: email,
+              password: password,
+            })
 
-}
-
+            bcrypt.genSalt(10, (err, salt) =>
+              bcrypt.hash(newUser.password, salt, (err, hash) => {
+                if (err) throw err
+                //save pass to hash
+                newUser.password = hash
+                //save user
+                newUser
+                  .save()
+                  .then((value) => {
+                    console.log(value)
+                    req.flash("success_msg", "You have now registered!")
+                    res.redirect("/")
+                  })
+                  .catch((value) => console.log(value))
+              })
+            )
+          }
+        })
+      }
+    })
+  }
 })
-
 
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {
@@ -104,10 +128,11 @@ router.post("/login", (req, res, next) => {
   })(req, res, next)
 })
 
-//profile page 
+//profile page
 router.get("/profile", ensureAuthenticated, (req, res) => {
-  res.render("profile", {title:"Profile page"})
+  res.render("profile", { title: "Profile page", user: req.user })
 })
+
 
 //wishlist page 
 router.get("/wishlist", (req,res) => {
@@ -177,11 +202,19 @@ bcrypt.genSalt(10, (err,salt) =>
 }
 }) 
 
+
+//wishlist page
+router.get("/wishlist", (req, res) => {
+  res.render("wishlist", { title: "Wishlist", user: req.user })
+})
+
+
+
 //logout
 router.get("/logout", (req, res) => {
   req.logout()
   req.flash("success_msg", "Now logged out")
-  res.redirect("/login")
+  res.redirect("/users/login")
 })
 
 module.exports = router

@@ -54,14 +54,14 @@ router.get("/playreview", (req,res) => {
 })
 
 //profile page 
-router.get("/profile", (req, res) => {
-  res.render("profile", {title:"Profile page"})
-})
+// router.get("/profile", (req, res) => {
+//   res.render("profile", {title:"Profile page"})
+// })
 
 //wishlist page 
-router.get("/wishlist", (req,res) => {
-  res.render("wishlist", {title:"Wishlist"})
-} )
+// router.get("/wishlist", (req,res) => {
+//   res.render("wishlist", {title:"Wishlist"})
+// } )
 
 // router.get('/', (req,res)=>{
 //   Play.find({}, (err, allPlays) => {

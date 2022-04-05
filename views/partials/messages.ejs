@@ -1,7 +1,9 @@
 <% if(typeof errors!= 'undefined') { %>
-<%    errors.forEach(function(error){ %>
-<p> <%= error.msg %></p>
+  <ul class="error"><i class="error-icon fas fa-circle-exclamation"></i>
+  <%    errors.forEach(function(error){ %>
+  <li><%= error.msg %></li>
 <%    })        %>
+  </ul>  
 <% } %>
 
 

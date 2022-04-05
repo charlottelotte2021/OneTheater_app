@@ -1,12 +1,22 @@
     <!-- Header container  with logo and login icon-->
 
     <header class="header flex">
-        <a class="arrow-icon" href="javascript:history.back()">
+        <a class="arrow-icon" href="javascript:history.back()" title="Previous page">
              <i class="fas fa-angle-left"></i>
         </a>
-             <img src="/static/assets/logo-white.svg" alt="" class="logo-img">
-        <a class="login-icon" href="/users/login">
+
+        <a href="/" title="Homepage">
+            <img src="/static/assets/logo-white.svg" alt="" class="logo-img">
+        </a>
+        
+        <% if (user) { %>
+        <a class="login-icon" href="/users/logout" title="Logout">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </a>
+        <% } else { %>
+        <a class="login-icon" href="/users/login" title="Log in">
             <i class="fas fa-user"></i>
         </a>
+        <% } %>
     </header> 
     <div class="buffer"></div>

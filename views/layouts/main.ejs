@@ -17,6 +17,9 @@
     <%- body %>
 
     <%- include('../partials/footer') %>
-    <%- include('../partials/menu-bottom') %>
+
+    <% if (user) { %>
+        <%- include('../partials/menu-bottom') %>
+    <% } %>
 </body>
 </html>

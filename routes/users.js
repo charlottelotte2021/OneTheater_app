@@ -133,42 +133,82 @@ router.get("/profile", ensureAuthenticated, (req, res) => {
   res.render("profile", { title: "Profile page", user: req.user })
 })
 
+
+//wishlist page 
+router.get("/wishlist", (req,res) => {
+  res.render("wishlist", {title:"Wishlist"})
+} )
+
+
+//profile page - update information 
+
+router.post('/profile', ensureAuthenticated, async (req, res) => {
+    console.log(req.body)
+// router.post ("/profile", (req, res) => {
+   
+const {username,email, password, password2} = req.body;
+ let errors = [];
+
+ const updatedUser = {
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      password2: req.body.password2
+    }
+
+    if(!username || !email || !password || !password2) {
+        errors.push({msg : "Please fill in all fields"})
+    } 
+
+    if(password !== password2) {
+        errors.push({msg : "passwords dont match"});
+    }
+
+    if(password.length < 6 ) {
+        errors.push({msg : 'password atleast 6 characters'})
+    }
+
+    if(errors.length > 0 ) {
+    res.render('profile', {
+        errors : errors,
+        username : username,
+        email : email,
+        password : password,
+        password2 : password2,
+        title: "Profile page"})
+    } else {
+
+const user = await User.findById(req.user._id)
+await User.findByIdAndUpdate({ _id: req.user._id }, updatedUser) 
+
+
+bcrypt.genSalt(10, (err,salt) => 
+            bcrypt.hash(user.password,salt,
+                (err,hash) => {
+                    if(err) throw err;
+                        //save pass to hash
+                        user.password = hash;
+                    //save user
+            user.save()
+            .then((value)=>{
+            console.log(value)
+            req.flash('success_msg','You have now updated!')
+            res.redirect("/users/profile");
+                    })
+            .catch(value=> console.log(value));
+                      
+                }));
+
+}
+}) 
+
+
 //wishlist page
 router.get("/wishlist", (req, res) => {
   res.render("wishlist", { title: "Wishlist", user: req.user })
 })
 
 
-//profile page - update information
-router.post("/profile", ensureAuthenticated, async (req, res) => {
-  console.log(req.body)
-  // router.post ("/profile", (req, res) => {
-  const user = await User.findById(req.user._id)
-
-  const updatedUser = {
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-  }
-  await User.findByIdAndUpdate({ _id: req.user._id }, updatedUser)
-
-  bcrypt.genSalt(10, (err, salt) =>
-    bcrypt.hash(user.password, salt, (err, hash) => {
-      if (err) throw err
-      //save pass to hash
-      user.password = hash
-      //save user
-      user
-        .save()
-        .then((value) => {
-          console.log(value)
-          req.flash("success_msg", "You have now updated!")
-          res.redirect("/users/profile")
-        })
-        .catch((value) => console.log(value))
-    })
-  )
-})
 
 //logout
 router.get("/logout", (req, res) => {

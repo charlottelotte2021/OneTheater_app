@@ -26,7 +26,7 @@
   8.2. Play page
     8.2.1. Play page - Hero section
     8.2.2. Play page - Main content
-
+    8.3. Profile page
 
 10. Dark theme
 
@@ -110,6 +110,11 @@ select {
 .flex-col {
   flex-direction: column;
 }
+.flex-col2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
 .center-axis2 {
   align-items:center;
 }
@@ -176,7 +181,15 @@ h1 {
 .title-bg-dark {
   color: white;
 }
-
+.title-bg-red {
+  color: var(--clr-primary);
+}
+.title-main {
+  font-family: var(--font-general);
+  color: var(--clr-main-text);
+  margin-bottom: 1em;
+  letter-spacing: 1px;
+}
 a {
   text-decoration: none;
 }
@@ -425,6 +438,9 @@ select {
   --btn-color: var(--clr-secondary);
   --border-color: var(--clr-secondary);
   --text-color: white;
+}
+.btn-tertiary{
+  color: var(--clr-secondary-light);
 }
 
 .btn-secondary:hover {
@@ -692,6 +708,22 @@ label {
 .play-summary {
   margin-top:1rem;
 }
+
+/* ============================ 8.3. PROFILE PAGE ============================ */
+
+.add-prof-pic{
+  color: var(--clr-primary);
+  font-size: 3em;
+}
+
+.prof-pic-container {
+  display: grid;
+  grid-template-columns: 1fr 5rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+
 
 /* ============================ 10. DARK THEME ============================ */
 

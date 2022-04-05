@@ -4,6 +4,8 @@ const mongoose = require("mongoose")
 const User = require("../models/user.js")
 const bcrypt = require("bcrypt")
 const passport = require("passport")
+const {ensureAuthenticated} = require("../config/auth.js")
+
 
 //login handle
 
@@ -70,7 +72,7 @@ if(errors.length > 0 ) {
             password : password
         });
 
-        bcrypt.genSalt(10,(err,salt)=> 
+        bcrypt.genSalt(10, (err,salt) => 
             bcrypt.hash(newUser.password,salt,
                 (err,hash)=> {
                     if(err) throw err;
@@ -81,7 +83,7 @@ if(errors.length > 0 ) {
             .then((value)=>{
             console.log(value)
             req.flash('success_msg','You have now registered!')
-            res.redirect('/');
+            res.redirect('/users/login');
                     })
             .catch(value=> console.log(value));
                       
@@ -103,7 +105,7 @@ router.post("/login", (req, res, next) => {
 })
 
 //profile page 
-router.get("/profile", (req, res) => {
+router.get("/profile", ensureAuthenticated, (req, res) => {
   res.render("profile", {title:"Profile page"})
 })
 
@@ -113,6 +115,39 @@ router.get("/wishlist", (req,res) => {
 } )
 
 
+//profile page - update information 
+
+router.post('/profile', ensureAuthenticated, async (req, res) => {
+    console.log(req.body)
+// router.post ("/profile", (req, res) => {
+    const user = await User.findById(req.user._id)
+
+ const updatedUser = {
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password
+    }
+await User.findByIdAndUpdate({ _id: req.user._id }, updatedUser)
+
+
+bcrypt.genSalt(10, (err,salt) => 
+            bcrypt.hash(user.password,salt,
+                (err,hash) => {
+                    if(err) throw err;
+                        //save pass to hash
+                        user.password = hash;
+                    //save user
+            user.save()
+            .then((value)=>{
+            console.log(value)
+            req.flash('success_msg','You have now updated!')
+            res.redirect("/users/profile");
+                    })
+            .catch(value=> console.log(value));
+                      
+                }));
+
+}) 
 
 
 //logout

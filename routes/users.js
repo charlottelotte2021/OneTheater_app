@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt")
 const passport = require("passport")
 const { ensureAuthenticated } = require("../config/auth.js")
 
+
 //login handle
 
 router.get("/login", (req, res) => {
@@ -137,8 +138,8 @@ router.get("/wishlist", (req, res) => {
   res.render("wishlist", { title: "Wishlist", user: req.user })
 })
 
-//profile page - update information
 
+//profile page - update information
 router.post("/profile", ensureAuthenticated, async (req, res) => {
   console.log(req.body)
   // router.post ("/profile", (req, res) => {

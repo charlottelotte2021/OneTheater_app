@@ -52,7 +52,7 @@ router.get("/playreview", (req, res) => {
   res.render("playreview", { title: "Reviews", user: req.user })
 })
 
-//profile page
+//profile page 
 // router.get("/profile", (req, res) => {
 //   res.render("profile", {title:"Profile page"})
 // })

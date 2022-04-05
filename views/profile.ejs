@@ -12,28 +12,22 @@
 		</div>
 
 <form class="flex-col2" action="/users/profile" method="POST">
-      <div class="inner-label-wrap">
         <input
-		class="full-width"
           type="username"
           id="username"
           name="username"
           placeholder="username"
           value="<%= typeof username != 'undefined' ? username : '' %>" />
 		<label class="inner-label" for="username">Username </label>
-      </div>
-      <div class="inner-label-wrap">
+      <br>
         <input
-		class="full-width"
           type="email"
           id="email"
           name="email"
           placeholder="Email"
           value="<%= typeof email != 'undefined' ? email : '' %>"
-        />
-        <label class="inner-label" for="email">Email</label>
-      </div>
-      <div class="inner-label-wrap">
+        /> <br>
+        <label for="email">Email</label>
         <input
 		class="full-width"
           type="password"
@@ -42,11 +36,9 @@
           placeholder="Password"
           value="<%= typeof password != 'undefined' ? password : '' %>"
         />
-        <label class="inner-label" for="password">Password</label>
-      </div>
-      <div class="inner-label-wrap">
+        <label class="inner-label" for="password">Password</label> <br>
         <input
-		class="full-width"
+
           type="password"
           id="password"
           name="password2"
@@ -54,7 +46,7 @@
           value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
         />
         <label class="inner-label" for="password">Confirm Password</label>
-      </div>
+  <br>
      <input class="btn btn-tertiary" type="submit" value="Confirm modifications" />
     </form>
 

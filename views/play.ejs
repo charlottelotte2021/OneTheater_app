@@ -3,7 +3,7 @@
     <div class="hero-play-dark-layer"></div> <!-- Black layer for readability -->
     
     <div class="hero-play-text">
-        <h1><%= Play.title%></h1>
+        <h1><%= play.play.title%></h1>
 
         <div class="hero-play-stars">
             <i class="far fa-star"></i>
@@ -29,19 +29,19 @@
             <i class="fas fa-star"></i>
         </div>
         <div class="link light">
-            <a href="<%= playsInstances.bookingUrl%>" class="btn btn-secondary"">Book your place</a>
+            <a href="<%= play.playInstance.bookingUrl %>" class="btn btn-secondary">Book your place</a>
         </div>
     </div>
 
     <!--Summary of the play-->
     <div class="play-content">
         <div class="play-row-highlight">
-            <p class="play-theater"><%= playInstance.theater.name %></p>
-            <p class="play-price"><%= playInstance.price%></p>
+            <p class="play-theater"><%= play.playInstance.theater.name %></p>
+            <p class="play-price"><%= play.playInstance.price%></p>
         </div>
 
-        <p class="play-dates"><%= playInstance.date%></p>
-        <p class="play-summary"> <%= playInstance.summary%> <br>
+        <p class="play-dates"><%= play.playInstance.date%></p>
+        <p class="play-summary"> <%= play.playInstance.summary%> <br>
             
         </p>
     </div>

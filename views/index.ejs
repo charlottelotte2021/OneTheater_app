@@ -12,7 +12,7 @@
       <%  Play.playsInstances.forEach((playInstance) => { %>
         <article class="card play-card">
             <div class="play-card-header">
-                <h2  ><a class="play-card-title" href="<%= Play.title%>"><%= Play.title%></a></h2>
+                <h2 ><a class="play-card-title" href="/play/<%= `${Play._id}/${playInstance._id}` %>"><%= Play.title%></a></h2>
                 <button class="play-card-bookmark"><i class="fas fa-bookmark"></i></button>
             </div> 
 

@@ -1,6 +1,4 @@
 const mongoose = require('mongoose')
-const ProfileSchema = require("./profile").ProfileSchema
-
 
 const UserSchema  = new mongoose.Schema({
   username: {
@@ -19,7 +17,21 @@ const UserSchema  = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  profile: ProfileSchema
+  picture: {
+    type: String
+  },
+  reviews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Review"
+    }
+  ],
+  wishlist: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Wishlist"
+    }
+  ]
 })
 
 const User= mongoose.model('User', UserSchema)

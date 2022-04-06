@@ -30,8 +30,6 @@ router.post("/signup", (req, res) => {
   const { username, email, password, password2 } = req.body
   let errors = []
 
-  // console.log(" Name " + username + " email :" + email + " pass:" + password)
-
   if (!username || !email || !password || !password2) {
     errors.push({ msg: "Please fill in all fields" })
   }
@@ -106,7 +104,7 @@ router.post("/signup", (req, res) => {
                 newUser
                   .save()
                   .then((value) => {
-                    console.log(value)
+                    // console.log(value)
                     req.flash("success_msg", "You are now registered!")
                     res.redirect("/")
                   })
@@ -266,15 +264,13 @@ router.post("/profile", ensureAuthenticated, async (req, res) => {
               user: req.user,
             })
           } else {
-            console.log(updatedUser)
             if (updatedUser.password) {
               bcrypt.genSalt(10, (err, salt) =>
                 bcrypt.hash(updatedUser.password, salt, (err, hash) => {
                   if (err) throw err
                   //save pass to hash
                   updatedUser.password = hash
-                  console.log(updatedUser)
-
+                  
                   User.findByIdAndUpdate({ _id: req.user._id }, updatedUser)
                     .then(() => {
                       req.flash(

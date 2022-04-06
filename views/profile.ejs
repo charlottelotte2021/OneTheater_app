@@ -15,17 +15,17 @@
 
 			<form class="profile-form" action="/users/profile" method="POST">
 				<label for="username"> Username </label> 
-					<input  type="username" id="username" name="Username" placeholder="Username"
+					<input type="username" id="username" name="username" placeholder="Username"
 						value="<%= typeof username != 'undefined' ? username : '' %>">
 				<label for="email"> Email </label>
 					<input type="email" id="email" name="email" placeholder="Email"
 						value="<%= typeof email != 'undefined' ? email : '' %>">
 				<label for="password"> Password </label> 
 					<input  type="password" id="password" name="password" placeholder="Password"
-						value="<%= typeof password != 'undefined' ? password : '' %>">
+						value="<%= typeof password != 'undefined' ? password : '' %>" >
 				<label for="password"> Confirm password </label> 
 					<input type="password" id="password" name="password2" placeholder="Password"
-						value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
+						value="<%= typeof password2 != 'undefined' ? password2 : '' %>" >
 				<input class="btn btn-tertiary" type="submit" value="Confirm modifications">
 			</form>
 

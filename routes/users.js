@@ -143,65 +143,87 @@ router.get("/wishlist", (req,res) => {
 //profile page - update information 
 
 router.post('/profile', ensureAuthenticated, async (req, res) => {
-    console.log(req.body)
-// router.post ("/profile", (req, res) => {
-   
-const {username,email, password, password2} = req.body;
- let errors = [];
 
- const updatedUser = {
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
-      password2: req.body.password2
-    }
+   const loggedUser = req.user
+    const {username,email, password, password2} = req.body;
+        let errors = [];
 
+        const updatedUser = {
+              username: req.body.username,
+              email: req.body.email,
+              password: req.body.password
+            }
+//check if all fields are filled
     if(!username || !email || !password || !password2) {
         errors.push({msg : "Please fill in all fields"})
     } 
-
+//check if passwords match 
     if(password !== password2) {
         errors.push({msg : "passwords dont match"});
     }
-
+//check if the password has at least 6 characters 
     if(password.length < 6 ) {
         errors.push({msg : 'password atleast 6 characters'})
-    }
+    } 
 
-    if(errors.length > 0 ) {
+     if(errors.length > 0 ) {
+        
     res.render('profile', {
         errors : errors,
         username : username,
         email : email,
         password : password,
         password2 : password2,
-        title: "Profile page"})
+        title: "Profile page",
+        user: req.user})
     } else {
 
-const user = await User.findById(req.user._id)
-await User.findByIdAndUpdate({ _id: req.user._id }, updatedUser) 
+//check if the e-mail already exists 
+    User.findOne({ email }).exec((err, user) => {
+      console.log(user) 
+      if (user) {
+        errors.push({
+          msg: `An account with the email ${email} already exists`,
+        })
+    } else {
 
+//check if username already exists 
+    User.findOne({ username }).exec( async (err, user) => {
+        console.log(user)
+          if (user) {
+            errors.push({
+              msg: `An account with the name ${username} already exists, please choose another one.`,
+            })
+        }  else {
+            
+           await User.findByIdAndUpdate({ _id: req.user._id }, updatedUser)
+                 
+                     console.log(updatedUser)
+                const user = await User.findById(req.user._id)
 
-bcrypt.genSalt(10, (err,salt) => 
-            bcrypt.hash(user.password,salt,
+                bcrypt.genSalt(10, (err,salt) => 
+                bcrypt.hash(user.password,salt,
                 (err,hash) => {
                     if(err) throw err;
                         //save pass to hash
                         user.password = hash;
-                    //save user
-            user.save()
-            .then((value)=>{
-            console.log(value)
-            req.flash('success_msg','You have now updated!')
-            res.redirect("/users/profile");
-                    })
-            .catch(value=> console.log(value));
-                      
-                }));
+                        //save user
+                        user.save()
+                        .then((value)=>{
+                        console.log("g reusiis a update")
+                        req.flash('success_msg','You have now updated!')
+                        res.redirect("/users/profile");
+                                })
+                        .catch(value=> console.log(value));
 
-}
-}) 
 
+                                  
+             }));
+            }          
+})}})}})
+
+
+ 
 
 //wishlist page
 router.get("/wishlist", (req, res) => {

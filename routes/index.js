@@ -1,6 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const { ensureAuthenticated } = require("../config/auth.js")
+const User = require('../models/user')
+const { Wishlist } = require("../models/wishlist.js")
 const Play = require("../models/play").Play
 const PlayInstance = require("../models/playInstance").PlayInstance
 const Theater = require("../models/theater").Theater
@@ -23,8 +25,12 @@ const getOnePlay = async (playId, playInstanceId) => {
 //home page
 router.get("/", async (req, res) => {
   let allPlays = await getAllPlays()
+  let user
+  if (req.user) {
+    user = await User.findOne({_id: req.user._id}).populate('wishlist')
+  }
   // Play.find({}, (err, allPlays) => {
-  res.render("index", { title: "Home", user: req.user, allplays: allPlays })
+  res.render("index", { title: "Home", user: user || req.user, allplays: allPlays })
   // })
 })
 

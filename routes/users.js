@@ -1,7 +1,9 @@
 const express = require("express")
 const router = express.Router()
 const mongoose = require("mongoose")
-const User = require("../models/user.js")
+const { ObjectId } = require('mongodb')
+const User = require("../models/user")
+const { Wishlist } = require('../models/wishlist')
 const bcrypt = require("bcrypt")
 const passport = require("passport")
 const { ensureAuthenticated } = require("../config/auth.js")
@@ -94,8 +96,8 @@ if (errors.length > 0) {
             const newUser = new User({
               username: username,
               email: email,
-              password: password,
-          })
+              password: password
+            })
 
             bcrypt.genSalt(10, (err, salt) =>
               bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -135,10 +137,48 @@ router.get("/profile", ensureAuthenticated, (req, res) => {
 
 
 //wishlist page 
-router.get("/wishlist", (req,res) => {
-  res.render("wishlist", {title:"Wishlist"})
+router.get("/wishlist", ensureAuthenticated, (req,res) => {
+  res.render("wishlist", { title:"Wishlist", user: req.user })
 } )
 
+router.post('/wishlist/:playInstanceId', ensureAuthenticated, async (req, res) => {
+  const user = req.user
+
+  if (ObjectId.isValid(req.params.playInstanceId)) {
+    const WishlistItem = new Wishlist({
+      playInstanceId: ObjectId(req.params.playInstanceId)
+    })
+    await WishlistItem.save()
+  
+    await User.findByIdAndUpdate(user._id, { $push: { wishlist: WishlistItem._id }})
+    res.send({ status: `Added play ${WishlistItem.playInstanceId} to wishlist` })
+  } else {
+    res.status(500).send({ status: 'Not a valid id' })
+  }
+})
+
+router.delete('/wishlist/:playInstanceId', ensureAuthenticated, async (req, res) => {
+  const user = req.user
+  const playInstanceId = req.params.playInstanceId
+  
+  if (ObjectId.isValid(playInstanceId)) {
+    const wishlistItems = await Wishlist.find({playInstanceId: playInstanceId })
+    const dbUser = await User.findOne({ _id: user._id }).populate('wishlist')
+    
+    const wishlistItemsIds = wishlistItems.map(item => item._id.toString())
+    for (let id of wishlistItemsIds) {
+      if (dbUser.wishlist.find(obj => obj._id.toString() === id)) { // if the id of the wishlistItem is present within the user's wishlist 
+        await Wishlist.deleteOne({ _id: id }) // delete the entry from the Wishlist collection
+        await User.findOneAndUpdate({ _id: user._id }, { $pull: { wishlist: id }}) // delete the reference in the user's wishlist
+        break
+      }
+    }
+
+    res.send({ status: `Removed play ${playInstanceId} from wishlist` })
+  } else {
+    res.status(500).send({ status: 'Not a valid id' })
+  }
+})
 
 //profile page - update information 
 

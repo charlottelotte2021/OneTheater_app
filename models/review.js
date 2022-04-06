@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 
 const ReviewSchema = new mongoose.Schema({
-	profileId: {
+	userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Profile"
+        ref: "User"
     },
 	playId: {
         type: mongoose.Schema.Types.ObjectId,

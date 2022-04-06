@@ -53,9 +53,14 @@ router.get("/play/:PlayId/:playInstanceId", async (req, res) => {
   res.render("play", { title: "Plays", user: req.user, play: onePlay })
 })
 
-//// play review page
+// play review page
 router.get("/playreview", (req, res) => {
   res.render("playreview", { title: "Reviews", user: req.user })
+})
+
+//signup confirmation page
+router.get("/signupconfirm", (req,res) => {
+  res.render("signupconfirm", {title: "Sign up Confirmation", layout: "layouts/no-footer", user: req.user,  })
 })
 
 //profile page 

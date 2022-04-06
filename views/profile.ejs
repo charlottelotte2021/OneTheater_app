@@ -1,75 +1,55 @@
 <main class="main-container">
 	<!-- Container for big titles on page  -->
 
-	 <%- include ('./partials/messages') %>
+	<%- include ('./partials/messages') %>
 
-	<div class="container-middle">
-		<h1 class="title-bg-red">My Profile</h1>
-		<h3 class="title-main">Settings</h3>
-		<div class="prof-pic-container">
-			<div>Change your profile picture</div>
-			<div class="add-prof-pic">
-				<i class="fas fa-user-plus"></i>
-			</div>
-		</div>
-
-<form class="flex-col2" action="/users/profile" method="POST">
-        <label> Username 
-	<input
-          type="username"
-          id="username"
-          name="username"
-          placeholder="username"
-          value="<%= typeof username != 'undefined' ? username : '' %>">
-	</label> <br>
-       <label> Email
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Email"
-          value="<%= typeof email != 'undefined' ? email : '' %>">
-	</label> <br> 
-    <label> Password
-        <input	
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Password"
-          value="<%= typeof password != 'undefined' ? password : '' %>">
-	</label> <br>
-        <label> Confirm password  
-        <input
-          type="password"
-          id="password"
-          name="password2"
-          placeholder="Password"
-          value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
-	</label> <br>
-     <input class="btn btn-tertiary" type="submit" value="Confirm modifications">
-    </form>
-
-
-
-
-	<!-- Container and cards for the reviews -->
-
-	
-		<div class="title-main">My reviews</div>
-		<div class="container-middle flex">
-			<div class="play-card-theater">Theater</div>
-			<div class="play-card-dates">Date</div>
-			<div class="play-card-reviews">
-			<a href="#" class="reviews-link">
-				<div class="review-stars">
-					<i class="fas fa-star"></i>
-					<i class="fas fa-star"></i>
-					<i class="fas fa-star"></i>
-					<i class="fas fa-star"></i>
-					<i class="fas fa-star"></i>
+		<div class="container-middle">
+			<h1 class="title-bg-red">My Profile</h1>
+			<h3 class="title-main">Settings</h3>
+			<div class="prof-pic-container">
+				<div>Edit your profile </div>
+				<div class="add-prof-pic">
+					<i class="fas fa-user-plus"></i>
 				</div>
-			</a>
+			</div>
+
+			<form class="profile-form" action="/users/profile" method="POST">
+				<label for="username"> Username </label> 
+					<input  type="username" id="username" name="Username" placeholder="Username"
+						value="<%= typeof username != 'undefined' ? username : '' %>">
+				<label for="email"> Email </label>
+					<input type="email" id="email" name="email" placeholder="Email"
+						value="<%= typeof email != 'undefined' ? email : '' %>">
+				<label for="password"> Password </label> 
+					<input  type="password" id="password" name="password" placeholder="Password"
+						value="<%= typeof password != 'undefined' ? password : '' %>">
+				<label for="password"> Confirm password </label> 
+					<input type="password" id="password" name="password2" placeholder="Password"
+						value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
+				<input class="btn btn-tertiary" type="submit" value="Confirm modifications">
+			</form>
+
+
+
+
+			<!-- Container and cards for the reviews -->
+
+
+			<h2>My reviews</h2>
+			<div class="container-middle flex">
+				<div class="play-card-theater">Theater</div>
+				<div class="play-card-dates">Date</div>
+				<div class="play-card-reviews">
+					<a href="#" class="reviews-link">
+						<div class="review-stars">
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+							<i class="fas fa-star"></i>
+						</div>
+					</a>
+				</div>
 			</div>
 		</div>
-	</div>
 </main>

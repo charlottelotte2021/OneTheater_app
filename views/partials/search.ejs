@@ -17,10 +17,12 @@
         <div class="options-sort">
             <label for="options-sort-input">Sort by</label>  
             <select id="options-sort-input">
-                <option value="Date">Date</option> 
-                <option value="Price">Price</option>  
-                <option value="Theatre">Theatre</option>  
+                <!-- <option value="Date">Date</option>   -->
+                <!-- <option value="Price">Price</option>   -->
                 <option value="Title">Title</option>  
+                <option value="Director">Director</option>  
+                <option value="Theater">Theater</option>
+                <option value="Best reviews">Best reviews</option>
             </select>  
         </div>    
         <div class="options-more">
@@ -29,35 +31,47 @@
             <div class="options-more-form">  
                 <div class="more-input-open flex flex-col">  
                     <div class="row flex center-v">
-                        <label for="options-date">Starting from</label>
-                        <input type="date" id="options-date" name="options-date">
+                      <!-- <label for="options-date">Starting from</label>
+                        <input type="date" id="options-date" name="options-date"> -->
                     </div>
                     <div class="row flex">
                         <div class="inner-label-wrap">
-                            <input type="text" id="options-theater" name="options-theater" placeholder="Choose your theatre(s)">
+                            <input type="text" id="options-theater" name="options-theater" placeholder="Choose your theater(s)">
                             <label class="inner-label" for="options-theater">Choose your theater(s)</label>
                         </div>
                     </div>
                     <div class="row flex">
                         <div class="inner-label-wrap">
-                            <input type="number" id="options-price" name="options-price" placeholder="Max. price" >
-                            <label class="inner-label" for="options-price">Max. price</label>
+                            <input type="number" id="options-director" name="options-director" placeholder="Director" >
+                            <label class="inner-label" for="options-director">Director of the play</label> 
+                            <!-- <input type="number" id="options-price" name="options-price" placeholder="Max. price" >
+                            <label class="inner-label" for="options-price">Max. price</label> -->
                         </div>
                     </div>
                     <div class="row flex">
                         <div class="inner-label-wrap">
-                            <input type="text" id="options-distance" name="options-distance" placeholder="Max. distance" >
-                            <label class="inner-label" for="options-distance">Max. distance</label>
+                             <input type="text" id="options-title" name="options-title" placeholder="Title" >
+                             <label class="inner-label" for="options-title">Title of the play</label> 
+                            <!-- <input type="text" id="options-distance" name="options-distance" placeholder="Max. distance" >
+                            <label class="inner-label" for="options-distance">Max. distance</label> -->
                         </div>
                     </div>
-                    <div class="row flex center-v">
+                    <div class="row flex">
+                        <div class="inner-label-wrap">
+                             <input type="text" id="options-reviews" name="options-reviews" placeholder="Best reviews" >
+                             <label class="inner-label" for="options-reviews">Best reviews</label> 
+                            <!-- <input type="text" id="options-distance" name="options-distance" placeholder="Max. distance" >
+                            <label class="inner-label" for="options-distance">Max. distance</label> -->
+                        </div>
+                    </div>
+                    <!-- <div class="row flex center-v">
                         <label for="options-genre">Genre</label>  
                         <select id="options-genre" name="options-genre">
                             <option value="Drama">Drama</option>
                             <option value="Comedy">Comedy</option>
                             <option value="Children">Children</option>
                         </select>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

@@ -102,6 +102,7 @@ select {
 .flex {
   display:flex;
   gap:1em;
+  justify-content: space-between; /*added for profile page reviews */
 }
 .flex-col {
   flex-direction: column;
@@ -168,6 +169,7 @@ h2 {
   font-family: var(--font-title);
   color: var(--clr-secondary);
   margin-bottom: 1em;
+  margin-top: 1em; /*added for profile page my review section */
   line-height:1.1;
   letter-spacing: -.5px;
 }
@@ -429,7 +431,9 @@ select {
   --btn-color: var(--clr-primary-light);
   --border-color: var(--clr-primary-light);
 }
-
+.btn-tertiary {
+  grid-column: 2;
+}
 .btn-secondary {
   --btn-color: var(--clr-secondary);
   --border-color: var(--clr-secondary);
@@ -1488,12 +1492,17 @@ label {
   color: var(--clr-primary);
   font-size: 3em;
 }
-
 .prof-pic-container {
   display: grid;
   grid-template-columns: 1fr 5rem;
   align-items: center;
   margin-bottom: 1.5rem;
+}
+.profile-form {
+  display: grid;
+  grid-template-columns: calc(30% - .5rem) calc(70% - .5rem);
+  gap: 1em;
+  align-items: center;
 }
 
 

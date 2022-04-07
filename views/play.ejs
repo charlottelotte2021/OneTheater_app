@@ -5,16 +5,28 @@
     <div class="hero-play-text">
         <h1><%= play.play.title%></h1>
 
+        <% if (user) { %>
         <div class="write-review soft-modal">
-            <div class="hero-play-stars soft-modal--button">
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
+            <div class="hero-play-stars soft-modal--button" data-play="<%= play.play._id %>">
+                <% if (!user.reviews.some(review => review.playId.toString() === play.play._id.toString())) { %>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                <% } else { %>
+                    <% let playReview = user.reviews.filter(review => review.playId.toString() === play.play._id.toString())[0] %>
+                    <% for (let i = 0; i < 5; i++) { %>
+                        <% if (i < playReview.stars) { %>
+                            <i class="fas fa-star"></i>
+                        <% } else { %>
+                            <i class="far fa-star"></i>
+                        <% } %>
+                    <% } %>
+                <% } %>
             </div>
             <div class="write-review--form soft-modal--content">
-                <form class="flex flex-col" action="/users/review" method="post">
+                <form class="flex flex-col" action="/users/review/<%= play.play._id %>" method="post">
                     <div class="row">
                         <label for="review-dateseen">When did you see the play?</label>
                         <input type="date" id="review-dateseen" name="reviewdateseen"
@@ -35,15 +47,22 @@
                 </form>
             </div>
         </div>
+        <% } %>
     </div>
 </div>
 
 <main class="main-container">
     <!--Bookmark, review starts and book your place link-->
     <div class="play-interactivity">
-        <div class="play-interactivity-bookmark">
-            <i class="far fa-bookmark"></i>
-        </div>
+        <% if (user) { %>
+            <button style="color:unset;" class="play-interactivity-bookmark" onclick="updateWishlist(this)" data-play-instance-id="<%= play.playInstance._id %>">
+                <% if (user.wishlist.some(item => item.playInstanceId.toString() === play.playInstance._id.toString())) { %>
+                    <i class="fas fa-bookmark"></i>
+                <% } else { %>
+                    <i class="far fa-bookmark"></i>
+                <% } %> 
+            </button>
+        <% } %>
         <div class="review-stars">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>

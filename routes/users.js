@@ -2,11 +2,13 @@ const express = require("express")
 const router = express.Router()
 const mongoose = require("mongoose")
 const { ObjectId } = require("mongodb")
-const User = require("../models/user")
-const { Wishlist } = require("../models/wishlist")
 const bcrypt = require("bcrypt")
 const passport = require("passport")
 const { ensureAuthenticated } = require("../config/auth.js")
+const User = require("../models/user")
+const { Wishlist } = require("../models/wishlist")
+const { Review } = require("../models/review")
+const { getUserAndWishlist } = require("../controllers/users-controller.js")
 
 //login handle
 router.get("/login", (req, res) => {
@@ -171,7 +173,7 @@ router.delete(
       const wishlistItems = await Wishlist.find({
         playInstanceId: playInstanceId,
       })
-      const dbUser = await User.findOne({ _id: user._id }).populate("wishlist")
+      const dbUser = await getUserAndWishlist(user)
 
       const wishlistItemsIds = wishlistItems.map((item) => item._id.toString())
       for (let id of wishlistItemsIds) {
@@ -303,6 +305,57 @@ router.post("/profile", ensureAuthenticated, async (req, res) => {
 //wishlist page
 router.get("/wishlist", ensureAuthenticated, (req, res) => {
   res.render("wishlist", { title: "Wishlist", user: req.user })
+})
+
+// Reviews
+const addAReview = async (req) => {
+  try {
+    if (ObjectId.isValid(req.params.playId)) {
+      const newReview = new Review({
+        userId: req.user._id,
+        playId: req.params.playId,
+        stars: req.body.note
+      })
+  
+      await newReview.save()
+  
+      await User.findByIdAndUpdate(req.user._id, { $push: { reviews: newReview._id }})
+    }
+  } catch (err) {
+    throw err
+  }
+}
+
+// Add a review note
+router.post('/review/note/:playId', ensureAuthenticated, async (req, res) => {
+  try {
+    const reviewExists = await Review.exists({ userId: req.user._id, playId: req.params.playId })
+    if (!reviewExists) {
+      addAReview(req)
+    } else {
+      await Review.findOneAndUpdate({ userId: req.user._id, playId: req.params.playId }, { stars: req.body.note })
+    }
+    res.status(200).send({ status: `Added ${req.body.note} stars to the play` })
+  } catch (err) {
+    res.status(500).send({ status: 'An error occurred' })
+  }
+})
+
+// Add a full review
+router.post('/review/:playId', ensureAuthenticated, async (req, res) => {
+  try {
+    const { reviewcontent, reviewdateseen, reviewtheater } = req.body
+    const updatedReview = {
+      comment: reviewcontent
+    }
+    if (reviewdateseen) updatedReview.dateSeen = reviewdateseen
+    if (reviewtheater) updatedReview.placeSeen = reviewtheater
+
+    await Review.findOneAndUpdate({ userId: req.user._id, playId: req.params.playId }, updatedReview)
+    res.status(200).redirect(req.query.prev)
+  } catch (err) {
+    res.status(500).send({ status: `An error occurred: ${err}` })
+  }
 })
 
 //logout

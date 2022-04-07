@@ -1,77 +1,29 @@
 const express = require("express")
 const router = express.Router()
 const { ensureAuthenticated } = require("../config/auth.js")
-const User = require('../models/user')
-const { Wishlist } = require("../models/wishlist.js")
-const Play = require("../models/play").Play
-const PlayInstance = require("../models/playInstance").PlayInstance
-const Theater = require("../models/theater").Theater
-// const playId = req.params.ObjectId
-// const playsInstancesId = req.params.ObjectId
-// const dotenv = require(“dotenv”);
-// dotenv.config();
-
-const getAllPlays = () => {
-  return Play.find({}).populate("playsInstances")
-}
-
-const getOnePlay = async (playId, playInstanceId) => {
-  const p = await Play.findById(playId)
-  const pI = await PlayInstance.findById(playInstanceId)
-  // console.log(p, pI)
-  return { play: p, playInstance: pI }
-}
+const {
+  getAllPlays,
+  getOnePlay,
+} = require("../controllers/plays-controller.js")
+const {
+  getUserWishlistAndReviews,
+} = require("../controllers/users-controller.js")
+const User = require("../models/user")
 
 
 //home page
 router.get("/", async (req, res) => {
-let allPlays = await getAllPlays()
-  let user
-  if (req.user) {
-    user = await User.findOne({_id: req.user._id}).populate('wishlist')
-  }
-  // Play.find({}, (err, allPlays) => {
-  res.render("index", { title: "Home", user: user || req.user, allplays: allPlays })
-  // })
+  let allPlays = await getAllPlays()
+  const user = req.user
+    ? User.findOne({ _id: req.user._id }).populate("wishlist")
+    : undefined
 
+  res.render("index", {
+    title: "Home",
+    user: user || req.user,
+    allplays: allPlays,
+  })
 })
-
-
-// Search for a play
-
-router.post("/", async (req, res) => {
-  console.log(req.body.searchinput)
-   let searchinput = req.body.searchinput
-   let allPlays
-   let totalPlays = []
-
-   let allplayinstances
-      if (searchinput != "") {
-       const allplays = await Play.find({$or:[{title : {$regex : String(searchinput)}}, {production : {$regex : String(searchinput)}} ]}).populate("playsInstances")
-       
-
-       const allplayInstances = await PlayInstance.find({summary: {$regex : String(searchinput)}})
-       
-       for (var i = 0; i < allplayInstances.length; i++) {
-         let newPlay = await Play.find({"playsInstances": allplayInstances[i]._id}).populate("playsInstances")
-          // console.log(newPlay)
-
-          totalPlays.push(newPlay[0])
-       }
-
-       let fullPlays = allplays.concat(totalPlays) 
-       const uniquePlays = Array.from(new Set(fullPlays.map(a => a.id))).map(id => {
-              return fullPlays.find(a => a.id === id)
-                    })
-       
-        res.render("index", { title: "Home", user: req.user, allplays: uniquePlays, allplayInstances: allplayinstances})
-      }else{
-        let allPlays = await getAllPlays()
-        // Play.find({}, (err, allPlays) => {
-        res.render("index", { title: "Home", user: req.user, allplays: allPlays, allplayInstances: allplayinstances})
-
-          }   
-
 
 // signup page
 router.get("/signup", (req, res) => {
@@ -82,17 +34,80 @@ router.get("/signup", (req, res) => {
   })
 })
 
+// Search for a play
+router.post("/", async (req, res) => {
+  // console.log(req.body.searchinput)
+  const user = req.user
+    ? User.findOne({ _id: req.user._id }).populate("wishlist")
+    : undefined
+
+  let searchinput = req.body.searchinput
+  let totalPlays = []
+
+  let allplayinstances
+  if (searchinput != "") {
+    const allplays = await Play.find({
+      $or: [
+        { title: { $regex: String(searchinput) } },
+        { production: { $regex: String(searchinput) } },
+      ],
+    }).populate("playsInstances")
+
+    const allplayInstances = await PlayInstance.find({
+      summary: { $regex: String(searchinput) },
+    })
+
+    for (var i = 0; i < allplayInstances.length; i++) {
+      let newPlay = await Play.find({
+        playsInstances: allplayInstances[i]._id,
+      }).populate("playsInstances")
+      // console.log(newPlay)
+
+      totalPlays.push(newPlay[0])
+    }
+
+    let fullPlays = allplays.concat(totalPlays)
+    const uniquePlays = Array.from(new Set(fullPlays.map((a) => a.id))).map(
+      (id) => {
+        return fullPlays.find((a) => a.id === id)
+      }
+    )
+
+    res.render("index", {
+      title: "Home",
+      user: user || req.user,
+      allplays: uniquePlays,
+      allplayInstances: allplayinstances,
+    })
+  } else {
+    let allPlays = await getAllPlays()
+    // Play.find({}, (err, allPlays) => {
+    res.render("index", {
+      title: "Home",
+      user: user || req.user,
+      allplays: allPlays,
+      allplayInstances: allplayinstances,
+    })
+  }
+})
+
 // play page
 router.get("/play/:PlayId/:playInstanceId", async (req, res) => {
   const playId = req.params.PlayId
   const playInstanceId = req.params.playInstanceId
 
   let onePlay = await getOnePlay(playId, playInstanceId)
-  //  console.log(onePlay)
-  res.render("play", { title: "Plays", user: req.user, play: onePlay })
+  const user = req.user ? await getUserWishlistAndReviews(req.user) : undefined
+
+  res.render("play", {
+    title: "Plays",
+    user,
+    play: onePlay,
+    baseURL: req.baseUrl,
+  })
 })
 
-// play review page
+//// play review page
 router.get("/playreview", (req, res) => {
   res.render("playreview", {
     title: "Reviews",
@@ -110,40 +125,17 @@ router.get("/signupconfirm", (req,res) => {
 })
 
 //forgot password page
-router.get("/forgotpassword", (req,res) => {
+router.get("/forgotpassword", (req, res) => {
   res.render("forgotpassword", {
     title: "Forgot Password",
-    layout: "layouts/no-footer", 
-    user: req.user, 
+    layout: "layouts/no-footer",
+    user: req.user,
   })
 })
 
-
-
-
-
-
-
-//profile page 
-// router.get("/profile", (req, res) => {
-//   res.render("profile", {title:"Profile page"})
-// })
-
-//wishlist page
+// wishlist page
 // router.get("/wishlist", (req,res) => {
 //   res.render("wishlist", {title:"Wishlist"})
 // } )
-
-// router.get('/', (req,res)=>{
-//   Play.find({}, (err, allPlays) => {
-//     res.render('index', {allplays: allPlays});
-//   })
-// })
-
-// router.post('/index',ensureAuthenticated,(req,res)=>{
-// res.render('index',{
-// user: req.user
-// })
-// })
 
 module.exports = router

@@ -1,6 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const { ensureAuthenticated } = require("../config/auth.js")
+const User = require('../models/user')
+const { Wishlist } = require("../models/wishlist.js")
 const Play = require("../models/play").Play
 const PlayInstance = require("../models/playInstance").PlayInstance
 const Theater = require("../models/theater").Theater
@@ -21,25 +23,21 @@ const getOnePlay = async (playId, playInstanceId) => {
 }
 
 
-// Search a play 
-
-  // const searchPlays = () => {
-  
-  //    return Play.find({$text: {$search: searchinput}})
-
-  //   // .populate("playsInstances")
-  // }
-
-
 //home page
 router.get("/", async (req, res) => {
-  console.log(req.body)
-
-        let allPlays = await getAllPlays()
-        // Play.find({}, (err, allPlays) => {
-        res.render("index", { title: "Home", user: req.user, allplays: allPlays })
+let allPlays = await getAllPlays()
+  let user
+  if (req.user) {
+    user = await User.findOne({_id: req.user._id}).populate('wishlist')
+  }
+  // Play.find({}, (err, allPlays) => {
+  res.render("index", { title: "Home", user: user || req.user, allplays: allPlays })
+  // })
 
 })
+
+
+// Search for a play
 
 router.post("/", async (req, res) => {
   console.log(req.body.searchinput)
@@ -73,7 +71,7 @@ router.post("/", async (req, res) => {
         res.render("index", { title: "Home", user: req.user, allplays: allPlays, allplayInstances: allplayinstances})
 
           }   
-})
+
 
 // signup page
 router.get("/signup", (req, res) => {
@@ -94,9 +92,30 @@ router.get("/play/:PlayId/:playInstanceId", async (req, res) => {
   res.render("play", { title: "Plays", user: req.user, play: onePlay })
 })
 
-//// play review page
+// play review page
 router.get("/playreview", (req, res) => {
-  res.render("playreview", { title: "Reviews", user: req.user })
+  res.render("playreview", {
+    title: "Reviews",
+    user: req.user 
+  })
+})
+
+//signup confirmation page
+router.get("/signupconfirm", (req,res) => {
+  res.render("signupconfirm", {
+    title: "Sign up Confirmation",
+    layout: "layouts/no-footer", 
+    user: req.user, 
+  })
+})
+
+//forgot password page
+router.get("/forgotpassword", (req,res) => {
+  res.render("forgotpassword", {
+    title: "Forgot Password",
+    layout: "layouts/no-footer", 
+    user: req.user, 
+  })
 })
 
 

@@ -4,6 +4,7 @@ const playCards = document.querySelectorAll('.play-card')
 const cardSummaries = document.querySelectorAll('.play-card-summary')
 const cardBookmarks = document.querySelectorAll('.play-card-bookmark')
 
+
 window.addEventListener('scroll', () => {
   const scrollThreshold = '64'
   if (
@@ -37,10 +38,12 @@ if (playCards) {
 
   cardBookmarks.forEach((cardBookmark) => {
     cardBookmark.addEventListener('click', () => {
-      if (cardBookmark.firstElementChild.classList.contains('fas')) {
-        cardBookmark.firstElementChild.classList.replace('fas', 'far')
-      } else {
+      if (cardBookmark.firstElementChild.classList.contains('far')) {
         cardBookmark.firstElementChild.classList.replace('far', 'fas')
+        addToWishlist(cardBookmark.dataset.playInstanceId)
+      } else {
+        cardBookmark.firstElementChild.classList.replace('fas', 'far')
+        removeFromWishlist(cardBookmark.dataset.playInstanceId)
       }
     })
   })
@@ -72,3 +75,46 @@ if (document.querySelector('.hero-play')) {
     })
   })
 }
+
+
+
+/**
+ * API to Wishlist
+ */
+
+// Add a play to the user's wishlist
+const addToWishlist = (playInstanceId) => {
+  fetch(`/users/wishlist/${playInstanceId}`, {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      }
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log('Success:', data);
+  })
+  .catch((error) => {
+      console.error('Error:', error);
+  });
+}
+
+// Remove a play from the user's wishlist
+const removeFromWishlist = (playInstanceId) => {
+  fetch(`/users/wishlist/${playInstanceId}`, {
+      method: 'DELETE',
+      headers: {
+      'Content-Type': 'application/json',
+      }
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log('Success:', data);
+  })
+  .catch((error) => {
+      console.error('Error:', error);
+  });
+}
+
+
+

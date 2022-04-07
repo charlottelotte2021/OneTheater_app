@@ -13,7 +13,15 @@
         <article class="card play-card">
             <div class="play-card-header">
                 <h2 ><a class="play-card-title" href="/play/<%= `${Play._id}/${playInstance._id}` %>"><%= Play.title%></a></h2>
-                <button class="play-card-bookmark"><i class="fas fa-bookmark"></i></button>
+                <% if (user) { %>
+                    <button class="play-card-bookmark" data-play-instance-id="<%= playInstance._id %>">
+                    <% if (user.wishlist.some(entry => entry.playInstanceId.toString() == playInstance._id.toString())) { // if the id is somewhere in the wishlist %>
+                        <i class="fas fa-bookmark"></i>
+                    <% } else { %>
+                        <i class="far fa-bookmark"></i>
+                    <% } %>
+                    </button>
+                <% } %>
             </div> 
 
             <div class="play-card-content">

@@ -1,81 +1,23 @@
-
+<main class="main-container">
 <!-- Write a review-->
 
-<div class="write-review">
-    <h5>When did you see the play</h5>
-    <input type="date">
-    <h5>Where did you see it</h5>
-    <input type="text" placeholder="Choose your theatre">
-    <h5>Leave a review</h5>
-    <textarea name="" id="" cols="30" rows="10"></textarea>
-    <button>Publish my review</button>
-</div>
 
+    <div class="write-review">
+        <button class="options-more-btn"><i class="fas fa-angle-down"></i></button>
 
-<div>
-        <div class="review-stars">
-            <a href="">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            </a>
+        <div class="review-form">  
+            <div class="more-input-open flex flex-col">
+                <label for="options-date">When did you see the play</label>
+                <input type="text" id="options-date" name="options-date"placeholder = "MM/DD/YYYY"
+                onfocus="(this.type='date')"
+                onblur="(this.type='text')" >
+                <label for="options-theater">Where did you see the play</label>
+                <input type="text" id="options-theater" name="options-theater" placeholder="Choose your theater">
+                <label for="options-review">Leave a review</label>
+                <textarea name="Leave a review" cols="30" rows="10" placeholder="Type here"></textarea>
+                <button class="btn btn-primary">Publish my review</button> 
+            </div>
         </div>
-        <img src="" alt="">
-        <h2>Théâtre de Poche</h2>
-        <img src="https://picsum.photos/200/300
-    " alt="">
     </div>
 
-    <!-- Write a review-->
-    <div>
-        <h5>When did you see the play</h5>
-        <input type="date">
-        <h5>Where did you see it</h5>
-        <input type="text" placeholder="Choose your theatre">
-        <h5>Leave a review</h5>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-        <button>Publish my review</button>
-    </div>
-
-    <!--Rreviews-->
-    <div class="review">
-        <h3>Jason 1000</h3>
-        <div class="review-stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-        </div>
-        <h5>Seen on 3 April 2022 at Théâtre de Poche</h5>
-        <p><i> Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br>
-            exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-            Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-            exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-            Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-            exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-            Placeat accusamus quas magni quos!</i>
-        </p>
-</div>
-    
-<div class="review">
-    <h3>Alain Duchamp</h3>
-    <div class="review-stars">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-    </div>
-    <h5>Seen on 3 April 2022 at Théâtre de Poche</h5>
-    <p><i> Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br>
-        exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-        Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-        exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-        Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-        exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-        Placeat accusamus quas magni quos!</i>
-    </p>
-</div>
+</main>

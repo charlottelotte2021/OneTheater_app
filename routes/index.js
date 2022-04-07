@@ -20,12 +20,59 @@ const getOnePlay = async (playId, playInstanceId) => {
   return { play: p, playInstance: pI }
 }
 
+
+// Search a play 
+
+  // const searchPlays = () => {
+  
+  //    return Play.find({$text: {$search: searchinput}})
+
+  //   // .populate("playsInstances")
+  // }
+
+
 //home page
 router.get("/", async (req, res) => {
-  let allPlays = await getAllPlays()
-  // Play.find({}, (err, allPlays) => {
-  res.render("index", { title: "Home", user: req.user, allplays: allPlays })
-  // })
+  console.log(req.body)
+
+        let allPlays = await getAllPlays()
+        // Play.find({}, (err, allPlays) => {
+        res.render("index", { title: "Home", user: req.user, allplays: allPlays })
+
+})
+
+router.post("/", async (req, res) => {
+  console.log(req.body.searchinput)
+   let searchinput = req.body.searchinput
+   let allPlays
+   let totalPlays = []
+
+   let allplayinstances
+      if (searchinput != "") {
+       const allplays = await Play.find({$or:[{title : {$regex : String(searchinput)}}, {production : {$regex : String(searchinput)}} ]}).populate("playsInstances")
+       
+
+       const allplayInstances = await PlayInstance.find({summary: {$regex : String(searchinput)}})
+       
+       for (var i = 0; i < allplayInstances.length; i++) {
+         let newPlay = await Play.find({"playsInstances": allplayInstances[i]._id}).populate("playsInstances")
+          // console.log(newPlay)
+
+          totalPlays.push(newPlay[0])
+       }
+
+       let fullPlays = allplays.concat(totalPlays) 
+       const uniquePlays = Array.from(new Set(fullPlays.map(a => a.id))).map(id => {
+              return fullPlays.find(a => a.id === id)
+                    })
+       
+        res.render("index", { title: "Home", user: req.user, allplays: uniquePlays, allplayInstances: allplayinstances})
+      }else{
+        let allPlays = await getAllPlays()
+        // Play.find({}, (err, allPlays) => {
+        res.render("index", { title: "Home", user: req.user, allplays: allPlays, allplayInstances: allplayinstances})
+
+          }   
 })
 
 // signup page
@@ -51,6 +98,12 @@ router.get("/play/:PlayId/:playInstanceId", async (req, res) => {
 router.get("/playreview", (req, res) => {
   res.render("playreview", { title: "Reviews", user: req.user })
 })
+
+
+
+
+
+
 
 //profile page 
 // router.get("/profile", (req, res) => {

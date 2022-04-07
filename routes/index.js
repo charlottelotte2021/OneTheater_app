@@ -22,9 +22,10 @@ const getOnePlay = async (playId, playInstanceId) => {
   return { play: p, playInstance: pI }
 }
 
+
 //home page
 router.get("/", async (req, res) => {
-  let allPlays = await getAllPlays()
+let allPlays = await getAllPlays()
   let user
   if (req.user) {
     user = await User.findOne({_id: req.user._id}).populate('wishlist')
@@ -32,7 +33,45 @@ router.get("/", async (req, res) => {
   // Play.find({}, (err, allPlays) => {
   res.render("index", { title: "Home", user: user || req.user, allplays: allPlays })
   // })
+
 })
+
+
+// Search for a play
+
+router.post("/", async (req, res) => {
+  console.log(req.body.searchinput)
+   let searchinput = req.body.searchinput
+   let allPlays
+   let totalPlays = []
+
+   let allplayinstances
+      if (searchinput != "") {
+       const allplays = await Play.find({$or:[{title : {$regex : String(searchinput)}}, {production : {$regex : String(searchinput)}} ]}).populate("playsInstances")
+       
+
+       const allplayInstances = await PlayInstance.find({summary: {$regex : String(searchinput)}})
+       
+       for (var i = 0; i < allplayInstances.length; i++) {
+         let newPlay = await Play.find({"playsInstances": allplayInstances[i]._id}).populate("playsInstances")
+          // console.log(newPlay)
+
+          totalPlays.push(newPlay[0])
+       }
+
+       let fullPlays = allplays.concat(totalPlays) 
+       const uniquePlays = Array.from(new Set(fullPlays.map(a => a.id))).map(id => {
+              return fullPlays.find(a => a.id === id)
+                    })
+       
+        res.render("index", { title: "Home", user: req.user, allplays: uniquePlays, allplayInstances: allplayinstances})
+      }else{
+        let allPlays = await getAllPlays()
+        // Play.find({}, (err, allPlays) => {
+        res.render("index", { title: "Home", user: req.user, allplays: allPlays, allplayInstances: allplayinstances})
+
+          }   
+
 
 // signup page
 router.get("/signup", (req, res) => {
@@ -78,6 +117,12 @@ router.get("/forgotpassword", (req,res) => {
     user: req.user, 
   })
 })
+
+
+
+
+
+
 
 //profile page 
 // router.get("/profile", (req, res) => {

@@ -55,12 +55,28 @@ router.get("/play/:PlayId/:playInstanceId", async (req, res) => {
 
 // play review page
 router.get("/playreview", (req, res) => {
-  res.render("playreview", { title: "Reviews", user: req.user })
+  res.render("playreview", {
+    title: "Reviews",
+    user: req.user 
+  })
 })
 
 //signup confirmation page
 router.get("/signupconfirm", (req,res) => {
-  res.render("signupconfirm", {title: "Sign up Confirmation", layout: "layouts/no-footer", user: req.user,  })
+  res.render("signupconfirm", {
+    title: "Sign up Confirmation",
+    layout: "layouts/no-footer", 
+    user: req.user, 
+  })
+})
+
+//forgot password page
+router.get("/forgotpassword", (req,res) => {
+  res.render("forgotpassword", {
+    title: "Forgot Password",
+    layout: "layouts/no-footer", 
+    user: req.user, 
+  })
 })
 
 //profile page 

@@ -4,6 +4,7 @@ const playCards = document.querySelectorAll('.play-card')
 const cardSummaries = document.querySelectorAll('.play-card-summary')
 const cardBookmarks = document.querySelectorAll('.play-card-bookmark')
 
+
 window.addEventListener('scroll', () => {
   const scrollThreshold = '64'
   if (
@@ -114,3 +115,6 @@ const removeFromWishlist = (playInstanceId) => {
       console.error('Error:', error);
   });
 }
+
+
+

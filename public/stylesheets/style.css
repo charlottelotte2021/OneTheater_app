@@ -178,17 +178,22 @@ h2 {
 h1 {
   margin-top: 2em;
 }
+h3 {
+  font-family: var(--font-general);
+  margin-bottom: 1em;
+  letter-spacing: 1px;
+}
 .title-bg-dark {
   color: white;
 }
 .title-bg-red {
   color: var(--clr-primary);
 }
-.title-main {
-  font-family: var(--font-general);
+.text-main {
   color: var(--clr-main-text);
-  margin-bottom: 1em;
-  letter-spacing: 1px;
+}
+.title-bg-green {
+  color: var(--clr-secondary)
 }
 a {
   text-decoration: none;
@@ -235,6 +240,8 @@ a:focus {
     margin-left: 20px;
     font-size: 30px;
 }
+
+
 .logo-img {
   height: 15vh;
 }
@@ -262,11 +269,13 @@ a:focus {
   padding-block: 1em;
   color: var(--clr-primary);
 }
-.menu-bottom .bottom-button:not(.active) {
+/* .menu-bottom .bottom-button:not(.active) {
   border-right: 1px solid var(--grey-middle);
-}
+} */
+
 .menu-bottom .bottom-button.active {
   background-color: var(--clr-primary);
+
   color:white;
 }
 .menu-bottom .bottom-button {
@@ -290,6 +299,7 @@ footer {
 .fa-star::before {
   content: "\f005";
 }
+
 
 /* ============================ 6. FORMS & INPUTS ============================ */
 /* ============================ 6.1. General inputs ============================ */

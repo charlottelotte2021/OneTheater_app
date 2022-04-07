@@ -1,16 +1,39 @@
 <!-- Poster, title of the play & user's review note -->
-<div class="hero-play"> <!-- Poster as a background -->
+<div class="hero-play" style="background-image:url('<%= play.playInstance.image %>')"> <!-- Poster as a background -->
     <div class="hero-play-dark-layer"></div> <!-- Black layer for readability -->
     
     <div class="hero-play-text">
         <h1><%= play.play.title%></h1>
 
-        <div class="hero-play-stars">
-            <i class="far fa-star"></i>
-            <i class="far fa-star"></i>
-            <i class="far fa-star"></i>
-            <i class="far fa-star"></i>
-            <i class="far fa-star"></i>
+        <div class="write-review soft-modal">
+            <div class="hero-play-stars soft-modal--button">
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+            </div>
+            <div class="write-review--form soft-modal--content">
+                <form class="flex flex-col" action="/users/review" method="post">
+                    <div class="row">
+                        <label for="review-dateseen">When did you see the play?</label>
+                        <input type="date" id="review-dateseen" name="reviewdateseen"
+                            onfocus="(this.type='date')"
+                        onblur="(this.type='text')" >
+                    </div>
+                    <div class="row">
+                        <label for="review-theater">Where did you see the play?</label>
+                        <input type="text" id="review-theater" name="reviewtheater" placeholder="Choose your theater">
+                    </div>
+                    <div class="row">
+                        <label for="review-content">Leave a review</label>
+                        <textarea name="reviewcontent" cols="30" rows="10" placeholder="What did you think about it?"></textarea>
+                    </div>
+                    <div class="row">
+                        <input type="button" class="btn btn-primary" value="Publish my review">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

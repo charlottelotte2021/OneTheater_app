@@ -311,6 +311,11 @@ select {
   padding: .5em;
 }
 
+input::placeholder,
+textarea::placeholder {
+  color:var(--grey-middle-text);
+}
+
 .row.flex input,
 .row.flex select {
   width: 100%;
@@ -619,34 +624,7 @@ label {
   color: var(--grey-middle-text);
 }
 
-/* ============================ 7.4.3. Play review(Write a review) ============================ */
-
-textarea{
-  width: 100%;
-  height: 130px;
-  padding: 1px 13px;
-  border: 1px solid #aaa;
-  border-radius: 18px;
-  background-color: var(--grey-light);  
-}
-
-.write-review .review-form {
-  display:none; 
-  position: absolute;
-  right: 1rem;
-  width: 90vw;
-  max-width: 400px;
-  margin-top: 1em;
-  padding: 2em;
-  background-color: var(--grey-light);
-  border-radius: 10px;
-  box-shadow: 5px 5px 10px rgba(0 0 0 / .15);
-  z-index: 1;
-}
-.write-review.active .review-form {
-  display:block;
-}
-
+/* ============================ 7.4.3. Play review (Write a review) ============================ */
 
 
 
@@ -691,6 +669,79 @@ textarea{
   }
 }
 
+/* ============================ 7.6. Modals ============================ */
+/* ============================ 7.6.1. Soft modals ============================ */
+
+.soft-modal {
+  position: relative;
+}
+
+.soft-modal--content {
+  display:none;
+  position:absolute;
+  padding:2rem;
+  background-color: var(--grey-light);
+  border-radius:10px;
+  box-shadow: 5px 5px 10px rgba(0 0 0 / .15), -5px -5px 10px rgba(0 0 0 / .15);
+  z-index:1;
+}
+.soft-modal--content.active {
+  display: block;
+}
+
+.write-review--form {
+  top:3.5rem;
+  width: 100%;
+  
+}
+.write-review--form::before {
+  content:'';
+  position:absolute;
+  top:-1.2rem;
+  left:2rem;
+  background-color: var(--grey-light);
+  height:1.3rem;
+  width:1.5rem;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+
+
+.write-review--form textarea {
+  width: 100%;
+  padding: 1em;
+  font-family: inherit;
+  border: 1px solid var(--grey-middle);
+  border-radius: 10px;
+}
+
+.write-review--form .row {
+  display:flex;
+  flex-direction: column;
+  gap:.5em;
+}
+
+.write-review .review-form {
+  display:none; 
+  position: absolute;
+  right: 1rem;
+  width: 90vw;
+  max-width: 400px;
+  margin-top: 1em;
+  padding: 2em;
+  background-color: var(--grey-light);
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0 0 0 / .15);
+  z-index: 1;
+}
+.write-review.active .review-form {
+  display:block;
+}
+
+
+
+
+
 /* ============================ 8. PAGES ============================ */
 /* ============================ 8.1. Login page ============================ */
 
@@ -714,7 +765,8 @@ textarea{
   aspect-ratio: 2 / 1;
   background-image: url("https://picsum.photos/400/600");
   background-position:center;
-  overflow:hidden;
+  background-size: cover;
+  /* overflow:hidden; */
   display:flex;
   flex-direction: column;
   justify-content: flex-end;

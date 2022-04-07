@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 
   res.render("index", {
     title: "Home",
-    user: user || req.user,
+    user,
     allplays: allPlays,
   })
 })
@@ -75,16 +75,16 @@ router.post("/", async (req, res) => {
 
     res.render("index", {
       title: "Home",
-      user: user || req.user,
+      user,
       allplays: uniquePlays,
       allplayInstances: allplayinstances,
     })
   } else {
     let allPlays = await getAllPlays()
-    // Play.find({}, (err, allPlays) => {
+    
     res.render("index", {
       title: "Home",
-      user: user || req.user,
+      user,
       allplays: allPlays,
       allplayInstances: allplayinstances,
     })

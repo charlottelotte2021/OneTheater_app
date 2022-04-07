@@ -14,13 +14,16 @@
   6.2. Search
 7. COMPONENTS
   7.1. Buttons
-  7.2. Cards
-  7.3. Play card
-  7.4. Reviews
-    7.4.1. Review container
-    7.4.2. Review cards
-    7.4.3. Play review (Write a review)
-    7.5. Info messages 
+  7.2. Info messages
+  7.3. Modals
+    7.3.1. Soft modals
+  7.4. Cards
+  7.5. Play card
+  7.6. Reviews
+    7.6.1. Review container
+    7.6.2. Review cards
+    7.6.3. Play review (Write a review)
+
 8. PAGES
   8.1. Login page
   8.2. Play page
@@ -467,7 +470,84 @@ textarea::placeholder {
   --text-color: var(--clr-primary-light);
 }
 
-/* ============================ 7.2. Cards ============================ */
+/* ============================ 7.2. Info messages ============================ */
+
+.error {
+  position:relative;
+  margin-block:1rem;
+  padding: .5em 1em .5em 1.5em;
+  color: var(--clr-primary);
+  font-weight:700;
+  background: rgba(255 255 255 / .6);
+  border-radius:10px;
+  animation: quake .3s;
+}
+.error-icon {
+  position:absolute;
+  top:-.5rem;
+  left:-.5rem;
+  font-size:1.5rem;
+  color: var(--clr-primary);
+  background-color: white;
+  border:1px solid white;
+  border-radius:50%;
+}
+
+@keyframes quake {
+  20% {
+    transform: translateX(-.5rem);
+  }
+  50% {
+    transform: translateX(.5rem);
+  }
+  70% {
+    transform: translateX(-.25rem);
+  }
+  90% {
+    transform: translateX(.25rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* ============================ 7.3. Modals ============================ */
+/* ============================ 7.3.1. Soft modals (can still interact with the page) ============================ */
+
+.soft-modal {
+  position: relative;
+}
+
+.soft-modal--content {
+  display:none;
+  position:absolute;
+  padding:2rem;
+  background-color: var(--grey-light);
+  border-radius:10px;
+  box-shadow: 5px 5px 10px rgba(0 0 0 / .15), -5px -5px 10px rgba(0 0 0 / .15);
+  z-index:1;
+}
+.soft-modal--content.active {
+  display: block;
+}
+
+.write-review--form {
+  top:3.5rem;
+  width: 100%;
+  
+}
+.write-review--form::before {
+  content:'';
+  position:absolute;
+  top:-1.2rem;
+  left:2rem;
+  background-color: var(--grey-light);
+  height:1.3rem;
+  width:1.5rem;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+/* ============================ 7.4. Cards ============================ */
 
 .card {
   display: flex;
@@ -477,7 +557,7 @@ textarea::placeholder {
   box-shadow: 3px 3px 10px rgba(0 0 0 / .1);
 }
 
-/* ============================ 7.3. Play card ============================ */
+/* ============================ 7.5. Play card ============================ */
 
 .cards-container {
   display:flex;
@@ -548,16 +628,6 @@ textarea::placeholder {
 }
 
 
-/* .big-title {
-  color: var(--clr-secondary);
-  margin-left: 20px;
-} */
-/* .theater-dates {
-  display: flex;
-  width: 80vw;
-  justify-content: space-between;
-  height: 5vh;
-} */
 .play-card-poster {
   max-width:100%;
   object-fit: contain;
@@ -569,15 +639,12 @@ textarea::placeholder {
   text-align:center;
   font-size:.8rem;
 }
-/* .review-stars {
-  color: var(--clr-secondary);
-} */
 label {
   color: #504f4f;
 }
 
-/* ============================ 7.4. Reviews ============================ */
-/* ============================ 7.4.1. Review container ============================ */
+/* ============================ 7.6. Reviews ============================ */
+/* ============================ 7.6.1. Review container ============================ */
 .reviews-container {
   display: flex;
   flex-direction: column;
@@ -588,7 +655,7 @@ label {
   margin-top: 2rem;
 }
 
-/* ============================ 7.4.2. Review cards ============================ */
+/* ============================ 7.6.2. Review cards ============================ */
 
 .card.review {
   background-color: var(--grey-light);
@@ -624,88 +691,7 @@ label {
   color: var(--grey-middle-text);
 }
 
-/* ============================ 7.4.3. Play review (Write a review) ============================ */
-
-
-
-/* ============================ 7.5. Info messages ============================ */
-
-.error {
-  position:relative;
-  margin-block:1rem;
-  padding: .5em 1em .5em 1.5em;
-  color: var(--clr-primary);
-  font-weight:700;
-  background: rgba(255 255 255 / .6);
-  border-radius:10px;
-  animation: quake .3s;
-}
-.error-icon {
-  position:absolute;
-  top:-.5rem;
-  left:-.5rem;
-  font-size:1.5rem;
-  color: var(--clr-primary);
-  background-color: white;
-  border:1px solid white;
-  border-radius:50%;
-}
-
-@keyframes quake {
-  20% {
-    transform: translateX(-.5rem);
-  }
-  50% {
-    transform: translateX(.5rem);
-  }
-  70% {
-    transform: translateX(-.25rem);
-  }
-  90% {
-    transform: translateX(.25rem);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-/* ============================ 7.6. Modals ============================ */
-/* ============================ 7.6.1. Soft modals ============================ */
-
-.soft-modal {
-  position: relative;
-}
-
-.soft-modal--content {
-  display:none;
-  position:absolute;
-  padding:2rem;
-  background-color: var(--grey-light);
-  border-radius:10px;
-  box-shadow: 5px 5px 10px rgba(0 0 0 / .15), -5px -5px 10px rgba(0 0 0 / .15);
-  z-index:1;
-}
-.soft-modal--content.active {
-  display: block;
-}
-
-.write-review--form {
-  top:3.5rem;
-  width: 100%;
-  
-}
-.write-review--form::before {
-  content:'';
-  position:absolute;
-  top:-1.2rem;
-  left:2rem;
-  background-color: var(--grey-light);
-  height:1.3rem;
-  width:1.5rem;
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-}
-
-
+/* ============================ 7.6.3. Play review (Write a review) ============================ */
 
 .write-review--form textarea {
   width: 100%;
@@ -720,27 +706,6 @@ label {
   flex-direction: column;
   gap:.5em;
 }
-
-.write-review .review-form {
-  display:none; 
-  position: absolute;
-  right: 1rem;
-  width: 90vw;
-  max-width: 400px;
-  margin-top: 1em;
-  padding: 2em;
-  background-color: var(--grey-light);
-  border-radius: 10px;
-  box-shadow: 5px 5px 10px rgba(0 0 0 / .15);
-  z-index: 1;
-}
-.write-review.active .review-form {
-  display:block;
-}
-
-
-
-
 
 /* ============================ 8. PAGES ============================ */
 /* ============================ 8.1. Login page ============================ */

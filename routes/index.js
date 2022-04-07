@@ -41,7 +41,7 @@ router.get("/play/:PlayId/:playInstanceId", async (req, res) => {
   let onePlay = await getOnePlay(playId, playInstanceId)
   const user = req.user ? await getUserWishlistAndReviews(req.user) : undefined
 
-  res.render("play", { title: "Plays", user, play: onePlay })
+  res.render("play", { title: "Plays", user, play: onePlay, baseURL: req.baseUrl })
 })
 
 //// play review page

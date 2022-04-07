@@ -8,6 +8,7 @@ const { ensureAuthenticated } = require("../config/auth.js")
 const User = require("../models/user")
 const { Wishlist } = require("../models/wishlist")
 const { Review } = require("../models/review")
+const { getUserAndWishlist } = require("../controllers/users-controller.js")
 
 //login handle
 router.get("/login", (req, res) => {
@@ -172,7 +173,7 @@ router.delete(
       const wishlistItems = await Wishlist.find({
         playInstanceId: playInstanceId,
       })
-      const dbUser = await User.findOne({ _id: user._id }).populate("wishlist")
+      const dbUser = await getUserAndWishlist(user)
 
       const wishlistItemsIds = wishlistItems.map((item) => item._id.toString())
       for (let id of wishlistItemsIds) {
@@ -341,9 +342,21 @@ router.post('/review/note/:playId', ensureAuthenticated, async (req, res) => {
 })
 
 // Add a full review
-// router.post('/review/:playId', ensureAuthenticated, (req, res) => {
+router.post('/review/:playId', ensureAuthenticated, async (req, res) => {
+  try {
+    const { reviewcontent, reviewdateseen, reviewtheater } = req.body
+    const updatedReview = {
+      comment: reviewcontent
+    }
+    if (reviewdateseen) updatedReview.dateSeen = reviewdateseen
+    if (reviewtheater) updatedReview.placeSeen = reviewtheater
 
-// })
+    await Review.findOneAndUpdate({ userId: req.user._id, playId: req.params.playId }, updatedReview)
+    res.status(200).redirect(req.query.prev)
+  } catch (err) {
+    res.status(500).send({ status: `An error occurred: ${err}` })
+  }
+})
 
 //logout
 router.get("/logout", (req, res) => {

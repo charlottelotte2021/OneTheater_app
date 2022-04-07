@@ -6,16 +6,17 @@
         <h1><%= play.play.title%></h1>
 
         <% if (user) { %>
+            <% const isPlayReviewed = user.reviews.some(review => review.playId.toString() === play.play._id.toString()) %>
+            <% const playReview = user.reviews.filter(review => review.playId.toString() === play.play._id.toString())[0] %>
         <div class="write-review soft-modal">
             <div class="hero-play-stars soft-modal--button" data-play="<%= play.play._id %>">
-                <% if (!user.reviews.some(review => review.playId.toString() === play.play._id.toString())) { %>
+                <% if (!isPlayReviewed) { %>
                     <i class="far fa-star"></i>
                     <i class="far fa-star"></i>
                     <i class="far fa-star"></i>
                     <i class="far fa-star"></i>
                     <i class="far fa-star"></i>
                 <% } else { %>
-                    <% let playReview = user.reviews.filter(review => review.playId.toString() === play.play._id.toString())[0] %>
                     <% for (let i = 0; i < 5; i++) { %>
                         <% if (i < playReview.stars) { %>
                             <i class="fas fa-star"></i>
@@ -26,23 +27,23 @@
                 <% } %>
             </div>
             <div class="write-review--form soft-modal--content">
-                <form class="flex flex-col" action="/users/review/<%= play.play._id %>" method="post">
+                <form class="flex flex-col" action="/users/review/<%= play.play._id %>?prev=<%= `/play/${play.play._id}/${play.playInstance._id}` %>" method="post">
                     <div class="row">
                         <label for="review-dateseen">When did you see the play?</label>
                         <input type="date" id="review-dateseen" name="reviewdateseen"
                             onfocus="(this.type='date')"
-                        onblur="(this.type='text')" >
+                        onblur="(this.type='text')" value="<%= isPlayReviewed ? playReview.dateSeen : '' %>">
                     </div>
                     <div class="row">
                         <label for="review-theater">Where did you see the play?</label>
-                        <input type="text" id="review-theater" name="reviewtheater" placeholder="Choose your theater">
+                        <input type="text" id="review-theater" name="reviewtheater" placeholder="Choose your theater" value="<%= isPlayReviewed ? playReview.placeSeen : '' %>">
                     </div>
                     <div class="row">
                         <label for="review-content">Leave a review</label>
-                        <textarea name="reviewcontent" cols="30" rows="10" placeholder="What did you think about it?"></textarea>
+                        <textarea name="reviewcontent" cols="30" rows="10" placeholder="What did you think about it?"><%= isPlayReviewed ? playReview.content : '' %></textarea>
                     </div>
                     <div class="row">
-                        <input type="button" class="btn btn-primary" value="Publish my review">
+                        <input type="submit" class="btn btn-primary" value="Publish my review">
                     </div>
                 </form>
             </div>

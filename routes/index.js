@@ -10,6 +10,7 @@ const {
 } = require("../controllers/users-controller.js")
 const User = require("../models/user")
 
+
 //home page
 router.get("/", async (req, res) => {
   let allPlays = await getAllPlays()
@@ -34,7 +35,6 @@ router.get("/signup", (req, res) => {
 })
 
 // Search for a play
-
 router.post("/", async (req, res) => {
   // console.log(req.body.searchinput)
   const user = req.user
@@ -109,15 +109,18 @@ router.get("/play/:PlayId/:playInstanceId", async (req, res) => {
 
 //// play review page
 router.get("/playreview", (req, res) => {
-  res.render("playreview", { title: "Reviews", user: req.user })
+  res.render("playreview", {
+    title: "Reviews",
+    user: req.user 
+  })
 })
 
 //signup confirmation page
-router.get("/signupconfirm", (req, res) => {
+router.get("/signupconfirm", (req,res) => {
   res.render("signupconfirm", {
     title: "Sign up Confirmation",
-    layout: "layouts/no-footer",
-    user: req.user,
+    layout: "layouts/no-footer", 
+    user: req.user, 
   })
 })
 
@@ -130,26 +133,9 @@ router.get("/forgotpassword", (req, res) => {
   })
 })
 
-//profile page
-// router.get("/profile", (req, res) => {
-//   res.render("profile", {title:"Profile page"})
-// })
-
-//wishlist page
+// wishlist page
 // router.get("/wishlist", (req,res) => {
 //   res.render("wishlist", {title:"Wishlist"})
 // } )
-
-// router.get('/', (req,res)=>{
-//   Play.find({}, (err, allPlays) => {
-//     res.render('index', {allplays: allPlays});
-//   })
-// })
-
-// router.post('/index',ensureAuthenticated,(req,res)=>{
-// res.render('index',{
-// user: req.user
-// })
-// })
 
 module.exports = router

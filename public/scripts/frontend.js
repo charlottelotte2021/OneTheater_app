@@ -160,21 +160,21 @@ const addReviewNote = (playId, playInstanceId, note) => {
 
 // Infinite Scroll 
 
- window.addEventListener('scroll', () => {
-      const { scrollTop, scrollHeight, clientHeight } =
-      document.documentElement; 
+//  window.addEventListener('scroll', () => {
+//       const { scrollTop, scrollHeight, clientHeight } =
+//       document.documentElement; 
 
-      console.log({ scrollTop, scrollHeight, clientHeight }); 
+//       console.log({ scrollTop, scrollHeight, clientHeight }); 
 
-      if (clientHeight + scrollTop >= scrollHeight - 5) {
-        console.log("bottom reached")
+//       if (clientHeight + scrollTop >= scrollHeight - 5) {
+//         console.log("bottom reached")
       
-         }     
-      })
+//          }     
+//       })
 
-const addDataToIndex = () => {
+// const addDataToIndex = () => {
 
-cardsList.innerHTML = 
+// cardsList.innerHTML = 
 
 // let infScroll = new InfiniteScroll( elem, {
 //   // options

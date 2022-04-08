@@ -5,24 +5,25 @@ const {
   getAllPlays,
   getOnePlay,
 } = require("../controllers/plays-controller.js")
+const { getReviewsOfPlayAndUsers, getAllReviews } = require("../controllers/reviews-controller.js")
 const {
-  getUserWishlistAndReviews, getUserAndWishlist,
+  getUserWishlistAndReviews,
+  getUserAndWishlist
 } = require("../controllers/users-controller.js")
-const User = require("../models/user")
-const  Play  = require("../models/play").Play
-const  PlayInstance = require("../models/playInstance").PlayInstance
+const { Play }  = require("../models/play")
+const { PlayInstance } = require("../models/playInstance")
 
 //home page
 router.get("/", async (req, res) => {
   let allPlays = await getAllPlays()
-  const user = req.user
-    ? await getUserAndWishlist(req.user)
-    : undefined
+  const user = req.user ? await getUserAndWishlist(req.user) : undefined
+  const reviews = await getAllReviews()
 
   res.render("index", {
     title: "Home",
     user,
     allplays: allPlays,
+    reviews
   })
 })
 
@@ -82,7 +83,6 @@ router.post("/", async (req, res) => {
     })
   } else {
     let allPlays = await getAllPlays()
-    
     res.render("index", {
       title: "Home",
       user,
@@ -99,20 +99,13 @@ router.get("/play/:PlayId/:playInstanceId", async (req, res) => {
 
   let onePlay = await getOnePlay(playId, playInstanceId)
   const user = req.user ? await getUserWishlistAndReviews(req.user) : undefined
+  const reviews = await getReviewsOfPlayAndUsers(playId)
 
   res.render("play", {
     title: "Plays",
     user,
     play: onePlay,
-    baseURL: req.baseUrl,
-  })
-})
-
-//// play review page
-router.get("/playreview", (req, res) => {
-  res.render("playreview", {
-    title: "Reviews",
-    user: req.user 
+    reviews
   })
 })
 

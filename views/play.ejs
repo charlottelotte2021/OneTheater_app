@@ -9,7 +9,7 @@
             <% const isPlayReviewed = user.reviews.some(review => review.playId.toString() === play.play._id.toString()) %>
             <% const playReview = user.reviews.filter(review => review.playId.toString() === play.play._id.toString())[0] %>
         <div class="write-review soft-modal">
-            <div class="hero-play-stars soft-modal--button" data-play="<%= play.play._id %>">
+            <div class="hero-play-stars soft-modal--button" data-play="<%= play.play._id %>" data-play-instance="<%= play.playInstance._id %>">
                 <% if (!isPlayReviewed) { %>
                     <i class="far fa-star"></i>
                     <i class="far fa-star"></i>

@@ -81,7 +81,7 @@ if (document.querySelector('.hero-play-stars')) {
         }
       }
       star.parentElement.nextElementSibling.classList.toggle('active')
-      addReviewNote(star.parentElement.dataset.play, i+1)
+      addReviewNote(star.parentElement.dataset.play, star.parentElement.dataset.playInstance, i+1)
     })
   })
 }
@@ -139,13 +139,13 @@ const removeFromWishlist = (playInstanceId) => {
  */
 
 // Add a note to a play
-const addReviewNote = (playId, note) => {
-  fetch(`/users/review/note/${playId}`, {
+const addReviewNote = (playId, playInstanceId, note) => {
+  fetch('/users/review/note', {
       method: 'POST',
       headers: {
       'Content-Type': 'application/json',
       },
-      body: JSON.stringify({note: note})
+      body: JSON.stringify({playId: playId, playInstanceId: playInstanceId, note: note})
   })
   .then(response => response.json())
   .then(data => {

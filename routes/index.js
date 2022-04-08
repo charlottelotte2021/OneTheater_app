@@ -6,7 +6,7 @@ const {
   getOnePlay,
 } = require("../controllers/plays-controller.js")
 const {
-  getUserWishlistAndReviews,
+  getUserWishlistAndReviews, getUserAndWishlist,
 } = require("../controllers/users-controller.js")
 const User = require("../models/user")
 
@@ -15,7 +15,7 @@ const User = require("../models/user")
 router.get("/", async (req, res) => {
   let allPlays = await getAllPlays()
   const user = req.user
-    ? User.findOne({ _id: req.user._id }).populate("wishlist")
+    ? await getUserAndWishlist(req.user)
     : undefined
 
   res.render("index", {
@@ -38,7 +38,7 @@ router.get("/signup", (req, res) => {
 router.post("/", async (req, res) => {
   // console.log(req.body.searchinput)
   const user = req.user
-    ? User.findOne({ _id: req.user._id }).populate("wishlist")
+    ? await getUserAndWishlist(req.user)
     : undefined
 
   let searchinput = req.body.searchinput

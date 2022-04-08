@@ -4,7 +4,10 @@ const playCards = document.querySelectorAll('.play-card')
 const cardSummaries = document.querySelectorAll('.play-card-summary')
 const cardBookmarks = document.querySelectorAll('.play-card-bookmark')
 const softModalSubmit = document.querySelector('.soft-modal--content input[type="button"]')
+const cardsList = document.querySelector('.cards-container')
 
+
+console.log(cardsList)
 
 window.addEventListener('scroll', () => {
   const scrollThreshold = '64'
@@ -154,4 +157,76 @@ const addReviewNote = (playId, note) => {
 }
 
 
+
+// Infinite Scroll 
+
+ window.addEventListener('scroll', () => {
+      const { scrollTop, scrollHeight, clientHeight } =
+      document.documentElement; 
+
+      console.log({ scrollTop, scrollHeight, clientHeight }); 
+
+      if (clientHeight + scrollTop >= scrollHeight - 5) {
+        console.log("bottom reached")
+      
+         }     
+      })
+
+const addDataToIndex = () => {
+
+cardsList.innerHTML = 
+
+// let infScroll = new InfiniteScroll( elem, {
+//   // options
+//   // path: '.pagination__next',
+//   append: playCards,
+//   history: false,
+// });
+
+
+
+
+
+
+
+// let nextItem = 1;
+// const loadMore = () => {
+// for (var i = 0; i < 20; i++) {
+// cardsList.appendChild(playCards)
+// } 
+// }
+// loadMore()
+
+// playCards.addEventListener('scroll', (e) => {
+//         if (playCards.scrollTop + playCards.clientHeight >= playCards.scrollHeight) {
+//              loadMore()
+//          }     
+//  })
+
+
+// Sort the results 
+
+// function compareValues(key, order = 'asc') {
+//   return function innerSort(a, b) {
+//     if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+//       // property doesn't exist on either object
+//       return 0;
+//     }
+
+//     const varA = (typeof a[key] === 'string')
+//       ? a[key].toUpperCase() : a[key];
+//     const varB = (typeof b[key] === 'string')
+//       ? b[key].toUpperCase() : b[key];
+
+//     let comparison = 0;
+//     if (varA > varB) {
+//       comparison = 1;
+//     } else if (varA < varB) {
+//       comparison = -1;
+//     }
+//     return (
+//       (order === 'desc') ? (comparison * -1) : comparison
+//     );
+//   };
+// }
 

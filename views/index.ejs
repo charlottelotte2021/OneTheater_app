@@ -6,7 +6,7 @@
 
 <section class="cards-container"> 
 
- <% allplays = allplays.slice(0,5) %>
+
     <% allplays.forEach((Play) => { %>
 
       <%  Play.playsInstances.forEach((playInstance) => { %>
@@ -64,6 +64,8 @@
 <% }) %>
 <% }) %>
 </section>
-
+<script>
+  let allPlays = <%- JSON.stringify(allplays) %>
+</script>
 
 </main>

@@ -68,7 +68,9 @@
                 <% const reviewsTotalStars = reviews.map(review => review.stars).reduce((review1, review2) => review1 + review2, 0) %>
                 <% const average = Math.round((reviewsTotalStars/reviews.length)*2)/2 %>
                 <% for (let i = 0; i < 5; i++) { %>
-                    <% if (i < average) { %>
+                    <% if (i + 0.5 === average) { %>
+                        <i class="fas fa-star-half-stroke"></i>
+                    <% } else if (i < average) { %>
                         <i class="fas fa-star"></i>
                     <% } else { %>
                         <i class="far fa-star"></i>

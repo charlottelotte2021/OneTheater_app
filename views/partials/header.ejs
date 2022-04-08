@@ -1,8 +1,13 @@
     <!-- Header container  with logo and login icon-->
 
     <header class="header flex">
-        <a class="arrow-icon" href="javascript:history.back()" title="Previous page">
-             <i class="fas fa-angle-left"></i>
+        <% if (user) { %>
+        <a class="arrow-icon" href="javascript:history.back()" title="Previous page"> 
+            <i class="fas fa-angle-left"></i>
+        <%} else { %>
+            <a class="arrow-icon" href="javascript:history.back()" title="Previous page">
+            </a>
+         <%}%>
         </a>
 
         <a href="/" title="Homepage">

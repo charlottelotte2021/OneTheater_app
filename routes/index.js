@@ -9,7 +9,8 @@ const {
   getUserWishlistAndReviews, getUserAndWishlist,
 } = require("../controllers/users-controller.js")
 const User = require("../models/user")
-
+const  Play  = require("../models/play").Play
+const  PlayInstance = require("../models/playInstance").PlayInstance
 
 //home page
 router.get("/", async (req, res) => {

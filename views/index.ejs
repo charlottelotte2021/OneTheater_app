@@ -37,9 +37,8 @@
                             <button class="play-card-summary-seemore"><i class="fas fa-angle-down"></i></button>
                         </div> 
         
-                        <div><%= Play.director%></div>  
-                        <div><%= Play.production%>  
-                        </div>
+                        <div><%= Play.director %></div>  
+                        <div><%= Play.production ? Play.production.length > 100 ? Play.production.substr(0, 97) + '...' : Play.production : '' %></div>
                     </div>
 
                     <div class="pic-reviews">

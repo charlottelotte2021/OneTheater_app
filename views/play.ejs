@@ -30,17 +30,15 @@
                 <form class="flex flex-col" action="/users/review/<%= play.play._id %>?prev=<%= `/play/${play.play._id}/${play.playInstance._id}` %>" method="post">
                     <div class="row">
                         <label for="review-dateseen">When did you see the play?</label>
-                        <input type="date" id="review-dateseen" name="reviewdateseen"
-                            onfocus="(this.type='date')"
-                        onblur="(this.type='text')" value="<%= isPlayReviewed ? playReview.dateSeen : '' %>">
+                        <input type="date" id="review-dateseen" name="reviewdateseen" value="<%= isPlayReviewed && playReview.dateSeen ? playReview.dateSeen.toLocaleString('en-CA').split(',')[0] : '' %>">
                     </div>
                     <div class="row">
                         <label for="review-theater">Where did you see the play?</label>
-                        <input type="text" id="review-theater" name="reviewtheater" placeholder="Choose your theater" value="<%= isPlayReviewed ? playReview.placeSeen : '' %>">
+                        <input type="text" id="review-theater" name="reviewtheater" placeholder="Choose your theater" value="<%= isPlayReviewed && playReview.placeSeen ? playReview.placeSeen : '' %>">
                     </div>
                     <div class="row">
                         <label for="review-content">Leave a review</label>
-                        <textarea name="reviewcontent" cols="30" rows="10" placeholder="What did you think about it?"><%= isPlayReviewed ? playReview.content : '' %></textarea>
+                        <textarea name="reviewcontent" cols="30" rows="10" placeholder="What did you think about it?"><%= isPlayReviewed && playReview.comment ? playReview.comment : '' %></textarea>
                     </div>
                     <div class="row">
                         <input type="submit" class="btn btn-primary" value="Publish my review">
@@ -64,13 +62,21 @@
                 <% } %> 
             </button>
         <% } %>
+
         <div class="review-stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+            <% if (reviews.length > 0) { %>
+                <% const reviewsTotalStars = reviews.map(review => review.stars).reduce((review1, review2) => review1 + review2, 0) %>
+                <% const average = Math.round((reviewsTotalStars/reviews.length)*2)/2 %>
+                <% for (let i = 0; i < 5; i++) { %>
+                    <% if (i < average) { %>
+                        <i class="fas fa-star"></i>
+                    <% } else { %>
+                        <i class="far fa-star"></i>
+                    <% } %>
+                <% } %>
+            <% } %>
         </div>
+
         <div class="link light">
             <a href="<%= play.playInstance.bookingUrl %>" class="btn btn-secondary">Book your place</a>
         </div>
@@ -80,11 +86,11 @@
     <div class="play-content">
         <div class="play-row-highlight">
             <p class="play-theater"><%= play.playInstance.theater.name %></p>
-            <p class="play-price"><%= play.playInstance.price%></p>
+            <p class="play-price"><%= play.playInstance.price %></p>
         </div>
 
-        <p class="play-dates"><%= play.playInstance.date%></p>
-        <p class="play-summary"> <%= play.playInstance.summary%> <br>
+        <p class="play-dates"><%= play.playInstance.date %></p>
+        <p class="play-summary"><%= play.playInstance.summary %><br>
             
         </p>
     </div>
@@ -93,42 +99,36 @@
     <section class="reviews-container" id="reviews">
         <h2>Reviews</h2>
         
-        <div class="review card">
-            <div class="review-header">
-                <img class="review-profile-pic" src="https://picsum.photos/300/300" alt="Profile picture of Jason1000">
-                
-                <h3 class="review-username">Jason 1000</h3>
-                <div class="review-stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
+        <% if (reviews.filter(review => review.comment).length === 0) { %>
+            <p>No reviews yet. <% if (user) { %>Add yours!<% } %></p>
+        <% } else { %>
+            <% reviews.filter(review => review.comment).forEach(review => { %>
+                <div class="review card">
+                    <div class="review-header">
+                        <% if (review.userId.picture) { %>
+                            <img class="review-profile-pic" src="<%= review.userId.picture %>" alt="Profile picture of <%= review.userId.username %>">
+                        <% } %>
+                        <h3 class="review-username"><%= review.userId.username %></h3>
+                        <div class="review-stars">
+                            <% for (let i = 0; i < 5; i++) { %>
+                                <% if (i < review.stars) { %>
+                                    <i class="fas fa-star"></i>
+                                <% } else { %>
+                                    <i class="far fa-star"></i>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% if (review.dateSeen || review.placeSeen) { %>
+                        <p class="review-dateseen">
+                            Seen
+                            <%= review.dateSeen ? ` on ${review.dateSeen.toLocaleString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}` : '' %>
+                            <%= review.placeSeen ? ` at ${review.placeSeen}` : '' %>
+                        </p>
+                    <% } %>
+                    <p><%= review.comment %></p>
                 </div>
-            </div>
-            <p class="review-dateseen">Seen on 3 April 2022 at Théâtre de Poche</p>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste deserunt, reiciendis sequi dolorem officia deleniti ipsam, eum odio non enim cum facere soluta voluptatem natus possimus et molestiae aperiam maiores veniam illo sapiente voluptate. Cupiditate molestias maxime temporibus nulla itaque sed, nihil ut aliquid dolore possimus magnam ea, laborum, distinctio molestiae iusto esse dolor qui dolores! Magnam labore ex nulla expedita nihil ducimus perspiciatis eius consequuntur, adipisci reprehenderit, fugiat error?
-            </p>
-        </div>
-                    
-        <div class="review card">
-            <h3>Alain Duchamp</h3>
-            <div class="review-stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            </div>
-            <h5>Seen on 3 April 2022 at Théâtre de Poche</h5>
-            <p><i> Lorem ipsum dolor, sit amet consectetur adipisicing elit. <br>
-                exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-                Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-                Placeat accusamus quas magni quos!Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                exercitationem dolores deserunt nesciunt quod architecto voluptates sapiente eos accusamus perspiciatis non, libero reiciendis laudantium sequi. 
-                Placeat accusamus quas magni quos!</i>
-            </p>
-        </div>
+            <% }) %>
+        <% } %>
     </section>
 </main>

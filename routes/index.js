@@ -5,23 +5,25 @@ const {
   getAllPlays,
   getOnePlay,
 } = require("../controllers/plays-controller.js")
+const { getReviewsOfPlayAndUsers, getAllReviews } = require("../controllers/reviews-controller.js")
 const {
   getUserWishlistAndReviews,
+  getUserAndWishlist
 } = require("../controllers/users-controller.js")
-const User = require("../models/user")
-
+const { Play }  = require("../models/play")
+const { PlayInstance } = require("../models/playInstance")
 
 //home page
 router.get("/", async (req, res) => {
   let allPlays = await getAllPlays()
-  const user = req.user
-    ? User.findOne({ _id: req.user._id }).populate("wishlist")
-    : undefined
+  const user = req.user ? await getUserAndWishlist(req.user) : undefined
+  const reviews = await getAllReviews()
 
   res.render("index", {
     title: "Home",
-    user: user || req.user,
+    user,
     allplays: allPlays,
+    reviews
   })
 })
 
@@ -38,7 +40,7 @@ router.get("/signup", (req, res) => {
 router.post("/", async (req, res) => {
   // console.log(req.body.searchinput)
   const user = req.user
-    ? User.findOne({ _id: req.user._id }).populate("wishlist")
+    ? await getUserAndWishlist(req.user)
     : undefined
 
   let searchinput = req.body.searchinput
@@ -75,16 +77,15 @@ router.post("/", async (req, res) => {
 
     res.render("index", {
       title: "Home",
-      user: user || req.user,
+      user,
       allplays: uniquePlays,
       allplayInstances: allplayinstances,
     })
   } else {
     let allPlays = await getAllPlays()
-    // Play.find({}, (err, allPlays) => {
     res.render("index", {
       title: "Home",
-      user: user || req.user,
+      user,
       allplays: allPlays,
       allplayInstances: allplayinstances,
     })
@@ -98,20 +99,13 @@ router.get("/play/:PlayId/:playInstanceId", async (req, res) => {
 
   let onePlay = await getOnePlay(playId, playInstanceId)
   const user = req.user ? await getUserWishlistAndReviews(req.user) : undefined
+  const reviews = await getReviewsOfPlayAndUsers(playId)
 
   res.render("play", {
     title: "Plays",
     user,
     play: onePlay,
-    baseURL: req.baseUrl,
-  })
-})
-
-//// play review page
-router.get("/playreview", (req, res) => {
-  res.render("playreview", {
-    title: "Reviews",
-    user: req.user 
+    reviews
   })
 })
 

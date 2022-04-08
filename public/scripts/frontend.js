@@ -5,6 +5,7 @@ const cardSummaries = document.querySelectorAll('.play-card-summary')
 const cardBookmarks = document.querySelectorAll('.play-card-bookmark')
 const softModalSubmit = document.querySelector('.soft-modal--content input[type="button"]')
 
+
 window.addEventListener('scroll', () => {
   const scrollThreshold = '64'
   if (
@@ -151,3 +152,6 @@ const addReviewNote = (playId, note) => {
       console.error('Error:', error);
   });
 }
+
+
+

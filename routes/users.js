@@ -108,7 +108,7 @@ router.post("/signup", (req, res) => {
                   .then((value) => {
                     // console.log(value)
                     req.flash("success_msg", "You are now registered!")
-                    res.redirect("/")
+                    res.redirect("/signupconfirm")
                   })
                   .catch((value) => console.log(value))
               })
@@ -364,5 +364,6 @@ router.get("/logout", (req, res) => {
   req.flash("success_msg", "Now logged out")
   res.redirect("/users/login")
 })
+
 
 module.exports = router

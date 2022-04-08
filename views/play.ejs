@@ -30,17 +30,15 @@
                 <form class="flex flex-col" action="/users/review/<%= play.play._id %>?prev=<%= `/play/${play.play._id}/${play.playInstance._id}` %>" method="post">
                     <div class="row">
                         <label for="review-dateseen">When did you see the play?</label>
-                        <input type="date" id="review-dateseen" name="reviewdateseen"
-                            onfocus="(this.type='date')"
-                        onblur="(this.type='text')" value="<%= isPlayReviewed ? playReview.dateSeen : '' %>">
+                        <input type="date" id="review-dateseen" name="reviewdateseen" value="<%= isPlayReviewed && playReview.dateSeen ? playReview.dateSeen.toLocaleString('en-CA').split(',')[0] : '' %>">
                     </div>
                     <div class="row">
                         <label for="review-theater">Where did you see the play?</label>
-                        <input type="text" id="review-theater" name="reviewtheater" placeholder="Choose your theater" value="<%= isPlayReviewed ? playReview.placeSeen : '' %>">
+                        <input type="text" id="review-theater" name="reviewtheater" placeholder="Choose your theater" value="<%= isPlayReviewed && playReview.placeSeen ? playReview.placeSeen : '' %>">
                     </div>
                     <div class="row">
                         <label for="review-content">Leave a review</label>
-                        <textarea name="reviewcontent" cols="30" rows="10" placeholder="What did you think about it?"><%= isPlayReviewed ? playReview.content : '' %></textarea>
+                        <textarea name="reviewcontent" cols="30" rows="10" placeholder="What did you think about it?"><%= isPlayReviewed && playReview.comment ? playReview.comment : '' %></textarea>
                     </div>
                     <div class="row">
                         <input type="submit" class="btn btn-primary" value="Publish my review">

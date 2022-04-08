@@ -1,5 +1,5 @@
-const  Play  = require("../models/play").Play
-const  PlayInstance = require("../models/playInstance").PlayInstance
+const { Play }  = require("../models/play")
+const { PlayInstance } = require("../models/playInstance")
 
 const getAllPlays = () => {
     return Play.find({}).populate("playsInstances")

@@ -36,20 +36,29 @@
 
 
 			<h2>My reviews</h2>
-			<div class="container-middle flex">
-				<div class="play-card-theater">Theater</div>
-				<div class="play-card-dates">Date</div>
-				<div class="play-card-reviews">
-					<a href="#" class="reviews-link">
-						<div class="review-stars">
-							<i class="fas fa-star"></i>
-							<i class="fas fa-star"></i>
-							<i class="fas fa-star"></i>
-							<i class="fas fa-star"></i>
-							<i class="fas fa-star"></i>
+
+			<div>
+				<% if (user.reviews.length > 0) { %>
+					<% user.reviews.forEach(review => { %>
+						<div class="container-middle flex">
+							<div class="play-card-theater"><%= review.playId.title %></div>
+							<div class="play-card-dates"><%= review.dateSeen ? review.dateSeen.toLocaleString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }) : '' %></div>
+							<div class="play-card-reviews">
+								<a href="/play/<%= `${review.playId._id}/${review.playInstanceId}` %>" class="reviews-link">
+									<div class="review-stars">
+										<% for (let i = 0; i < 5; i++) { %>
+											<% if (i < review.stars) { %>
+												<i class="fas fa-star"></i>
+											<% } else { %>
+												<i class="far fa-star"></i>
+											<% } %>
+										<% } %>
+									</div>
+								</a>
+							</div>
 						</div>
-					</a>
-				</div>
+					<% }) %>
+				<% } %>
 			</div>
 		</div>
 </main>

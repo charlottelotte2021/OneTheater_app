@@ -12,8 +12,13 @@ const getUserWishlistAndReviews = async (user) => {
     return await User.findById(user._id).populate([ 'wishlist', 'reviews' ])
 }
 
+const getUserWishlistAndReviewsPopulated = async (user) => {
+    return await User.findById(user._id).populate([ 'wishlist', { path: 'reviews', populate: { path: 'playId' }} ])
+}
+
 module.exports = {
     getUserAndReviews,
     getUserAndWishlist,
-    getUserWishlistAndReviews
+    getUserWishlistAndReviews,
+    getUserWishlistAndReviewsPopulated
 }

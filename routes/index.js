@@ -60,7 +60,6 @@ router.post("/", async (req, res) => {
     : undefined
   const reviews = await getAllReviews()
 
-  const reviews = await getAllReviews()
   let searchinput = req.body.searchinput
 
   if (searchinput != "") {

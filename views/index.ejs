@@ -5,79 +5,11 @@
 
 <section class="cards-container"> 
 
-<% allplays.forEach((Play) => { %>
+    <%- include('partials/playcards') %>
 
-
-    <%  Play.playsInstances.forEach((playInstance) => { %>
-        <article class="card play-card">
-            <div class="play-card-header">
-                <h2><a class="play-card-title" href="/play/<%= `${Play._id}/${playInstance._id}` %>" title="<%= Play.title %>"><%= Play.title %></a></h2>
-                <% if (user) { %>
-                    <button class="play-card-bookmark" data-play-instance-id="<%= playInstance._id %>">
-                    <% if (user.wishlist.some(entry => entry.playInstanceId.toString() == playInstance._id.toString())) { // if the id is somewhere in the wishlist %>
-                        <i class="fas fa-bookmark"></i>
-                    <% } else { %>
-                        <i class="far fa-bookmark"></i>
-                    <% } %>
-                    </button>
-                <% } %>
-            </div> 
-
-            <div class="play-card-content">
-                <div class="card-row">
-                    <div class="play-card-dates"><%= playInstance.date%></div>
-
-                    <div class="play-card-theater"><%= playInstance.theater.name %></div>
-                </div>
-                <div class="card-row">
-                    <div class="">
-                        <div class="play-card-summary"> 
-                            <p><%= playInstance.summary%> <br>
-                            </p>
-                            <button class="play-card-summary-seemore"><i class="fas fa-angle-down"></i></button>
-                        </div> 
-        
-                        <div><%= Play.director %></div>  
-                        <div><%= Play.production ? Play.production.length > 100 ? Play.production.substr(0, 97) + '...' : Play.production : '' %></div>
-                    </div>
-
-                    <div class="pic-reviews">
-                        <img class="play-card-poster" src=<%= playInstance.image%> alt="">
-                        <div class="play-card-reviews">
-                            <a href="/play/<%= `${Play._id}/${playInstance._id}` %>" title="<%= Play.title %>" class="reviews-link">
-                                <% const filteredReviews = reviews.filter(review => review.playId.toString() === Play._id.toString()) %>
-                                <% const reviewsWithComment = filteredReviews.filter(review => review.comment) %>
-                                <% if (reviewsWithComment.length > 0) { %>
-                                    <p>Read <%= reviewsWithComment.length %> reviews</p>
-                                <% } else { %>
-                                    <p>There are no reviews yet. <% if (user) { %>Add yours!<% } %></p>
-                                <% } %>
-                                <% if (filteredReviews.length > 0) { %>
-                                    <div class="review-stars">
-                                        <% const reviewsTotalStars = filteredReviews.map(review => review.stars).reduce((review1, review2) => review1 + review2, 0) %>
-                                        <% const average = Math.round((reviewsTotalStars/filteredReviews.length)*2)/2 %>
-                                        <% for (let i = 0; i < 5; i++) { %>
-                                            <% if (i + 0.5 === average) { %>
-                                                <i class="fas fa-star-half-stroke"></i>
-                                            <% } else if (i < average) { %>
-                                                <i class="fas fa-star"></i>
-                                            <% } else { %>
-                                                <i class="far fa-star"></i>
-                                            <% } %>
-                                        <% } %>
-                                    </div>
-                                <% } %>
-                            </a>
-                        </div>
-                    </div>    
-                </div>
-            </div>  
-        </article>
-    <% }) %>
-<% }) %>
 </section>
 <script>
-  let allPlays = <%- JSON.stringify(allplays) %>
+  let allPlays = <%- JSON.stringify(plays) %>
 </script>
 
 </main>

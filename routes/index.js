@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
   res.render("index", {
     title: "Home",
     user,
-    allplays: allPlays,
+    plays: allPlays,
     reviews
   })
 })
@@ -46,7 +46,6 @@ router.post("/", async (req, res) => {
   const reviews = await getAllReviews()
 
   let searchinput = req.body.searchinput
-  let allplayinstances
 
   if (searchinput != "") {
     const allplays = await Play.find({
@@ -72,8 +71,7 @@ router.post("/", async (req, res) => {
     res.render("index", {
       title: "Home",
       user,
-      allplays: uniquePlays,
-      allplayInstances: allplayinstances,
+      plays: uniquePlays,
       reviews
     })
   } else {
@@ -81,8 +79,7 @@ router.post("/", async (req, res) => {
     res.render("index", {
       title: "Home",
       user,
-      allplays: allPlays,
-      allplayInstances: allplayinstances,
+      plays: allPlays,
       reviews
     })
   }

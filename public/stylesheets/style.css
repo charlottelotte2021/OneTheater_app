@@ -174,7 +174,6 @@ h2 {
   font-family: var(--font-title);
   color: var(--clr-secondary);
   margin-bottom: 1em;
-  margin-top: 1em; /*added for profile page my review section */
   line-height:1.1;
   letter-spacing: -.5px;
 }
@@ -201,10 +200,10 @@ h3 {
 a {
   text-decoration: none;
 }
-a:hover,
+/* a:hover,
 a:focus {
   text-decoration: underline;
-}
+} */
 
 /* ============================ 4. HEADER & FOOTER ============================ */
 
@@ -239,9 +238,9 @@ a:focus {
   color:white;
 }
 .arrow-icon {
-    justify-content: flex-start;
-    margin-left: 20px;
-    font-size: 30px;
+  justify-content: flex-start;
+  margin-left: 20px;
+  font-size: 30px;
 }
 
 
@@ -258,7 +257,7 @@ a:focus {
 .menu-bottom {
   position: fixed;
   bottom: 0;
-  display: flex;
+  display: flex; 
   justify-content: space-between;
   align-items: center;
   width: 100vw;
@@ -282,7 +281,7 @@ a:focus {
   color:white;
 }
 .menu-bottom .bottom-button {
-  width: 33%;
+  width: 34%;
 }
 
 /* ============================ 4.3. Footer ============================ */
@@ -290,7 +289,8 @@ a:focus {
 footer {
   background: var(--grey-dark);
   color:white;
-  padding: 2rem 1rem 5rem 1rem;
+  padding: 1rem 1rem 1rem 1rem;
+  text-align: end;
 }
 
 /* ============================ 5. ICONS ============================ */
@@ -462,14 +462,17 @@ textarea::placeholder {
   --border-color: var(--clr-secondary-light);
 }
 .btn-tertiary{
-  color: var(--clr-secondary-light);
+  --btn-color: white;
+  --border-color: var(--clr-secondary);
+  --text-color: var(--clr-secondary);
   grid-column: 2;
 }
-.btn-tertiary:hover {
-  --btn-color: var(--clr-primary-light);
-  --border-color: var(--clr-primary-light);
-}
 
+.btn-tertiary:hover {
+  --btn-color: var(--clr-secondary);
+  --border-color: var(--clr-secondary);
+  --text-color: white;
+}
 
 .btn-white {
   --btn-color: white;
@@ -579,6 +582,7 @@ textarea::placeholder {
 }
 
 .play-card-header {
+  padding-top: 1em;
   display:grid;
   grid-template-columns: 1fr 2rem;
   align-items:center;
@@ -853,7 +857,10 @@ label {
   gap: 1em;
   align-items: center;
 }
-
+.profile-reviews {
+  margin-top: 3em;
+  margin-bottom: 5em;
+}
 
 
 

@@ -8,7 +8,7 @@ const { ensureAuthenticated } = require("../config/auth.js")
 const User = require("../models/user")
 const { Wishlist } = require("../models/wishlist")
 const { Review } = require("../models/review")
-const { getUserAndWishlist, getUserAndWishlistPopulated, getUserWishlistAndReviews, getUserWishlistAndReviewsPopulated } = require("../controllers/users-controller")
+const { getUserAndWishlist, getUserAndWishlistPopulated, getUserWishlistAndReviews, getUserWishlistAndReviewsPopulated, uploadProfilePic } = require("../controllers/users-controller")
 const { addAReview, getAllReviews } = require('../controllers/reviews-controller')
 const { getMultiplePlaysFromWishlist } = require('../controllers/plays-controller')
 
@@ -309,6 +309,14 @@ router.post("/profile", ensureAuthenticated, async (req, res) => {
       }
     })
   }
+})
+
+router.post('/profile/picture', ensureAuthenticated, async (req, res) => {
+  // console.log(req.files)
+  const pic = await uploadProfilePic(req.files.profilepic.tempFilePath)
+  User.findByIdAndUpdate(req.user._id, { picture: pic })
+  .then(() => res.redirect('/users/profile'))
+  .catch(err => res.status(500).send({ status: 'An error occurred: ' + err}))
 })
 
 //wishlist page

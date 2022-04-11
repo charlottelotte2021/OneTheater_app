@@ -157,6 +157,26 @@ const addReviewNote = (playId, playInstanceId, note) => {
 }
 
 
+// Profile pic
+if (document.querySelector('.add-prof-pic')) {
+  const addProfilePicBtn = document.querySelector('.add-prof-pic')
+  addProfilePicBtn.addEventListener('click', (e) => {
+    addProfilePicBtn.nextElementSibling.classList.toggle('active')
+  })
+}
+
+// let file
+// if (document.querySelector('.prof-pic-form')) {
+//   document.querySelector('.prof-pic-form input[type="submit"]').addEventListener('change', () => {
+//     const reader = new FileReader()
+//     reader.addEventListener('load', () => {
+//         file = reader.result;
+//         console.log(file)
+//     })
+//     reader.readAsDataURL(fileInput.files[0])
+//   })
+// }
+
 
 // Infinite Scroll 
 

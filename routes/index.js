@@ -121,7 +121,7 @@ router.get('/sortby/:query', async (req, res) => {
   res.render("index", {
     title: "Home",
     user,
-    allplays: sortedByDirector,
+    plays: sortedByDirector,
     reviews 
   })
 })

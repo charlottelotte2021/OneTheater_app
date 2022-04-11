@@ -2,8 +2,8 @@
 <div class="hero-play" style="background-image:url('<%= play.playInstance.image %>')"> <!-- Poster as a background -->
     <div class="hero-play-dark-layer"></div> <!-- Black layer for readability -->
     
-    <div class="hero-play-text">
-        <h1><%= play.play.title%></h1>
+    <div class="hero-play-text" title="<%= play.play.title %>">
+        <h1><%= play.play.title.length > 50 ? play.play.title.substr(0, 47) + '…' : play.play.title %></h1>
 
         <% if (user) { %>
             <% const isPlayReviewed = user.reviews.some(review => review.playId.toString() === play.play._id.toString()) %>

@@ -2,7 +2,7 @@ const header = document.querySelector('header.header')
 const optionsMoreBtn = document.querySelector('.options-more-btn')
 let playCards = document.querySelectorAll('.play-card')
 const cardSummaries = document.querySelectorAll('.play-card-summary')
-const cardBookmarks = document.querySelectorAll('.play-card-bookmark')
+let cardBookmarks = document.querySelectorAll('.play-card-bookmark')
 const softModalSubmit = document.querySelector('.soft-modal--content input[type="button"]')
 const cardsList = document.querySelector('.cards-container')
 let playsShowed = 5
@@ -194,8 +194,10 @@ const createPlaysCard = (plays, data) => {
       if(data.user){
         let button = document.createElement("button")
         button.classList.add("play-card-bookmark")
-        button.dataset.playinstanceid = pi._id
-
+        button.dataset.playInstanceId = pi._id
+        button.addEventListener('click', () => {
+          updateWishlist(button)
+        })
         // div.insertAdjacentHTML("beforeend", `<button class="play-card-bookmark" data-play-instance-id="${pi._id}">`)
         if(data.user.wishlist.some(entry => entry.playInstanceId.toString() == pi._id.toString())){
           button.insertAdjacentHTML("beforeend", `<i class="fas fa-bookmark"></i>`)
@@ -304,7 +306,7 @@ const getFiveMorePlays = (nbr) => {
   })
   .then(response => response.json())
   .then(data => { 
-    console.log(data)
+    // console.log(data)
     document.querySelector("body").insertAdjacentHTML("beforeend",`<div class="loader-cont"><svg width="120" height="30" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg" fill="#fff">
     <circle cx="15" cy="15" r="15">
         <animate attributeName="r" from="15" to="15"
@@ -363,8 +365,11 @@ const addEventListenerToWindow = () => {
 
 }
 
+let baseURL = document.location.protocol + '//' + document.location.host
 
- window.addEventListener('scroll', addEventListenerToWindow)
+if (document.URL.replace(baseURL, '') === '/') {
+  window.addEventListener('scroll', addEventListenerToWindow)
+}
  
 
 

@@ -33,12 +33,13 @@ router.get("/", async (req, res) => {
 router.post("/getfiveplays", async (req,res) => {
     // let fivePlays = await getFivePlays(req.body.limit)
     console.log(req.body.limit)
+    const user = req.user ? await getUserAndWishlist(req.user) : undefined
     const play = await Play.find({}).populate("playsInstances")
     plays = play.slice(req.body.limit, req.body.limit + 5)
     const reviews = await getAllReviews()
     console.log(plays)
     console.log("ready to send next plays")
-    res.send({status: "success", plays: plays, user: req.user, reviews: reviews})
+    res.send({status: "success", plays, user, reviews})
 })
 
 

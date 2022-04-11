@@ -1,41 +1,40 @@
-
-    <!-- Search bar with input and button-->
-    <div class="search-bar">
-    <form class="search-tools" method="POST" action="/">
-        <div class="search-container">
-            <input 
-            class="search-input" 
-            id="search-input" 
-            name="searchinput" 
-            type="text" 
-            placeholder="Type your search" />
-            <label for="search-input" class="search-icon">
-                <i class="fas fa-search"></i>
-            </label>
-            
-
-        </div>
-        <input type="submit" value="Search" class="btn btn-primary" />
-
-    </form>
-</div>
-
+<!-- Search bar with input and button-->
+<form class="search-tools" method="POST" action="/">
+  <div class="search-bar">
+    <div class="search-container">
+      <input
+        class="search-input"
+        id="search-input"
+        name="searchinput"
+        type="text"
+        placeholder="Type your search"
+      />
+      <label for="search-input" class="search-icon">
+        <i class="fas fa-search"></i>
+      </label>
+    </div>
+    <input type="submit" value="Search" class="btn btn-primary" />
+  </div>
+</form>
 
 <!--Homepage with sort by, more options and card -->
 
 <div class="options">
-    <div class="options-sort">
-        <label for="options-sort-input">Sort by</label>  
-      <select id="options-sort-input" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-        <!-- <option value="Date">Date</option>   -->
-        <!-- <option value="Price">Price</option>   -->
-        <option value="/sortby/title">Title </option>  
-        <option value="/sortby/director">Director</option>  
-        <option value="/sortby/theater">Theater</option>
-        <option value="/sortby/reviews">Best reviews</option>
-    </select>  
-</div>    
-<!-- <div class="options-more">
+  <div class="options-sort">
+    <label for="options-sort-input">Sort by</label>
+    <select
+      id="options-sort-input"
+      onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);"
+    >
+      <!-- <option value="Date">Date</option>   -->
+      <!-- <option value="Price">Price</option>   -->
+      <option value="/sortby/title">Title</option>
+      <option value="/sortby/director">Director</option>
+      <option value="/sortby/theater">Theater</option>
+      <option value="/sortby/reviews">Best reviews</option>
+    </select>
+  </div>
+  <!-- <div class="options-more">
     <button class="options-more-btn">More options <i class="fas fa-angle-down"></i></button>
 
 
@@ -87,4 +86,4 @@
                 </div> 
             </div>
         </div> -->
-    </div> 
+</div>

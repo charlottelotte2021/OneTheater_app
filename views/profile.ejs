@@ -5,12 +5,12 @@
 
 		<div class="container-middle">
 			<h1 class="title-bg-red">My Profile</h1>
-			<h3 class="text-main">Settings</h3>
+			<h2>Settings</h2>
 			<div class="prof-pic-container">
 				<div>Edit your profile </div>
-				<div class="add-prof-pic">
+				<!-- <div class="add-prof-pic">
 					<i class="fas fa-user-plus"></i>
-				</div>
+				</div> -->
 			</div>
 
 			<form class="profile-form" action="/users/profile" method="POST">
@@ -34,9 +34,7 @@
 
 			<!-- Container and cards for the reviews -->
 
-
-			<h2>My reviews</h2>
-
+			<h2 class="profile-reviews">My reviews</h2>
 			<div>
 				<% if (user.reviews.length > 0) { %>
 					<% user.reviews.forEach(review => { %>

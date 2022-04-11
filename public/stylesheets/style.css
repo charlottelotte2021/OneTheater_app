@@ -174,7 +174,6 @@ h2 {
   font-family: var(--font-title);
   color: var(--clr-secondary);
   margin-bottom: 1em;
-  margin-top: 1em; /*added for profile page my review section */
   line-height:1.1;
   letter-spacing: -.5px;
 }
@@ -201,10 +200,10 @@ h3 {
 a {
   text-decoration: none;
 }
-a:hover,
+/* a:hover,
 a:focus {
   text-decoration: underline;
-}
+} */
 
 /* ============================ 4. HEADER & FOOTER ============================ */
 
@@ -239,9 +238,9 @@ a:focus {
   color:white;
 }
 .arrow-icon {
-    justify-content: flex-start;
-    margin-left: 20px;
-    font-size: 30px;
+  justify-content: flex-start;
+  margin-left: 20px;
+  font-size: 30px;
 }
 
 
@@ -258,7 +257,7 @@ a:focus {
 .menu-bottom {
   position: fixed;
   bottom: 0;
-  display: flex;
+  display: flex; 
   justify-content: space-between;
   align-items: center;
   width: 100vw;
@@ -272,17 +271,16 @@ a:focus {
   padding-block: 1em;
   color: var(--clr-primary);
 }
-/* .menu-bottom .bottom-button:not(.active) {
-  border-right: 1px solid var(--grey-middle);
-} */
+.menu-bottom .bottom-button:not(.active) + .bottom-button:not(.active) {
+  border-left: 1px solid var(--grey-middle);
+}
 
 .menu-bottom .bottom-button.active {
   background-color: var(--clr-primary);
-
   color:white;
 }
 .menu-bottom .bottom-button {
-  width: 33%;
+  width: 33.5%;
 }
 
 /* ============================ 4.3. Footer ============================ */
@@ -290,7 +288,8 @@ a:focus {
 footer {
   background: var(--grey-dark);
   color:white;
-  padding: 2rem 1rem 5rem 1rem;
+  padding: 1rem 1rem 1rem 1rem;
+  text-align: end;
 }
 
 /* ============================ 5. ICONS ============================ */
@@ -462,14 +461,17 @@ textarea::placeholder {
   --border-color: var(--clr-secondary-light);
 }
 .btn-tertiary{
-  color: var(--clr-secondary-light);
+  --btn-color: white;
+  --border-color: var(--clr-secondary);
+  --text-color: var(--clr-secondary);
   grid-column: 2;
 }
-.btn-tertiary:hover {
-  --btn-color: var(--clr-primary-light);
-  --border-color: var(--clr-primary-light);
-}
 
+.btn-tertiary:hover {
+  --btn-color: var(--clr-secondary);
+  --border-color: var(--clr-secondary);
+  --text-color: white;
+}
 
 .btn-white {
   --btn-color: white;
@@ -579,10 +581,12 @@ textarea::placeholder {
 }
 
 .play-card-header {
+  padding-top: 1em;
   display:grid;
   grid-template-columns: 1fr 2rem;
   align-items:center;
   margin-bottom: 1.5rem;
+  gap: 1rem;
 }
 .play-card-title {
   margin-bottom:unset;
@@ -607,6 +611,7 @@ textarea::placeholder {
   gap: var(--gap);
   align-items:start;
 }
+
 .play-card-dates,
 .play-card-theater {
   color: var(--grey-middle-text);
@@ -642,6 +647,9 @@ textarea::placeholder {
   max-width:100%;
   object-fit: contain;
   margin-bottom:2rem;
+}
+.play-card-reviews {
+  min-width: 5.5rem;
 }
 .reviews-link {
   color:var(--clr-secondary);
@@ -817,13 +825,35 @@ label {
 .add-prof-pic{
   color: var(--clr-primary);
   font-size: 3em;
+  cursor:pointer;
+}
+
+.prof-pic {
+  width:64px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius:50%;
+}
+
+.prof-pic-form {
+  left:100%;
+  transform: translateX(-100%);
+  max-width:80vw;
+}
+.prof-pic-form.active {
+  display:flex;
+  gap:1em;
+}
+.prof-pic-form > * {
+  max-width: 100%;
 }
 
 .prof-pic-container {
   display: grid;
-  grid-template-columns: 1fr 5rem;
+  grid-template-columns: 1fr 5rem 5rem;
   align-items: center;
   margin-bottom: 1.5rem;
+  gap: 1rem;
 }
 .profile-form {
   display: grid;
@@ -831,8 +861,18 @@ label {
   gap: 1em;
   align-items: center;
 }
-
-
+.profile-reviews {
+  margin-top: 3em;
+  margin-bottom: 5em;
+}
+.profile-reviews-row {
+  align-items: center;
+  margin-top:1.5rem;
+}
+.profile-reviews-row > .play-card-dates {
+  min-width: 5rem;
+  text-align:center;
+}
 
 
 /* ============================ 10. DARK THEME ============================ */

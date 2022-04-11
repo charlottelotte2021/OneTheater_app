@@ -1,6 +1,18 @@
 <!-- Bottom Container for the menu -->
-<nav class="menu-bottom flex">
-    <a class="bottom-button active"  href="/"><i class="fas fa-home"></i></a>
-    <a class="bottom-button" href="/users/wishlist"><i class="fas fa-bookmark"></i></a>
-    <a class="bottom-button" href="/users/profile"><i class="fas fa-user"></i></a>
+<nav class="menu-bottom">
+    <% if (title === "Home") { %>
+        <a class="bottom-button active"  href="/"><i class="fas fa-home"></i></a>
+    <%} else { %>
+         <a class="bottom-button"  href="/"><i class="fas fa-home"></i></a>
+    <%}%>
+    <% if (title === "Wishlist") { %>
+    <a class="bottom-button active" href="/users/wishlist"><i class="fas fa-bookmark"></i></a>
+    <%} else { %>
+        <a class="bottom-button " href="/users/wishlist"><i class="fas fa-bookmark"></i></a>
+    <%}%>
+    <% if (title === "Profile page") { %>
+    <a class="bottom-button active" href="/users/profile"><i class="fas fa-user"></i></a>
+    <%} else { %>
+        <a class="bottom-button" href="/users/profile"><i class="fas fa-user"></i></a>
+    <%}%>
 </nav>

@@ -1,19 +1,21 @@
 <main class="main-container">
 	<%- include('partials/search') %>
 		
-
 	<h1>My Wishlist</h1>
-		
-
-<section class="cards-container">
+	
+	<section class="cards-container"> 
+		<% if (user.wishlist.length === 0) { %>
+			<article class="card play-card">
+				<h2 class="title-bg-green">Your wishlist is empty</h2>
+				<h4 class="title-bg-green">Tap on the bookmark <i class="far fa-bookmark"></i> to add a play to your wishlist</h4>
+			</article>	
+		<% } else { %>
 			
-	<article class="card play-card">
-		<h3 class="title-bg-green">Wishlist is empty</h3>
-		<h4 class="title-bg-green"> Tap on bookmark <i class="far fa-bookmark"></i> to add the play to your wishlist</h4>
-		<a href="/">Go back to Homepage</a>
-	</article>		
-				
-</section>
+			<%- include('partials/playcards') %>
+
+		<% } %>
+	</section>
+
 
 </main>
 

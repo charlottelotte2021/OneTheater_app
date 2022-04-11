@@ -9,6 +9,10 @@ const ReviewSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Play"
     },
+    playInstanceId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "PlayInstance"
+    },
 	stars: {
         type: Number,
         required: true

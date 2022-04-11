@@ -5,6 +5,7 @@ const {
   getAllPlays,
   getOnePlay,
   getFivePlays,
+  getMultiplePlaysFromInstances,
 } = require("../controllers/plays-controller.js")
 const { getReviewsOfPlayAndUsers, getAllReviews } = require("../controllers/reviews-controller.js")
 const {
@@ -23,7 +24,7 @@ router.get("/", async (req, res) => {
   res.render("index", {
     title: "Home",
     user,
-    allplays: allPlays,
+    plays: allPlays,
     reviews
   })
 })
@@ -57,12 +58,11 @@ router.post("/", async (req, res) => {
   const user = req.user
     ? await getUserAndWishlist(req.user)
     : undefined
+  const reviews = await getAllReviews()
 
   const reviews = await getAllReviews()
   let searchinput = req.body.searchinput
-  let totalPlays = []
 
-  let allplayinstances
   if (searchinput != "") {
     const allplays = await Play.find({
       $or: [
@@ -75,14 +75,7 @@ router.post("/", async (req, res) => {
       summary: { $regex: String(searchinput) },
     })
 
-    for (var i = 0; i < allplayInstances.length; i++) {
-      let newPlay = await Play.find({
-        playsInstances: allplayInstances[i]._id,
-      }).populate("playsInstances")
-      // console.log(newPlay)
-
-      totalPlays.push(newPlay[0])
-    }
+    const totalPlays = await getMultiplePlaysFromInstances(allplayInstances)
 
     let fullPlays = allplays.concat(totalPlays)
 
@@ -97,24 +90,21 @@ router.post("/", async (req, res) => {
     res.render("index", {
       title: "Home",
       user,
-      allplays: uniquePlays,
-      allplayInstances: allplayinstances,
-      reviews,
+      plays: uniquePlays,
+      reviews
     })
   } else {
     let allPlays = await getAllPlays()
     res.render("index", {
       title: "Home",
       user,
-      allplays: allPlays,
-      allplayInstances: allplayinstances,
-      reviews,
+      plays: allPlays,
+      reviews
     })
   }
 }) 
 
 //Sort by 
-
 
 router.get('/sortby/:query', async (req, res) => {
   // let allPlays = await getAllPlays()
@@ -173,10 +163,5 @@ router.get("/forgotpassword", (req, res) => {
     user: req.user,
   })
 })
-
-// wishlist page
-// router.get("/wishlist", (req,res) => {
-//   res.render("wishlist", {title:"Wishlist"})
-// } )
 
 module.exports = router

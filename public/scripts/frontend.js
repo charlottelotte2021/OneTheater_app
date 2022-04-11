@@ -82,7 +82,7 @@ if (document.querySelector('.hero-play-stars')) {
         }
       }
       star.parentElement.nextElementSibling.classList.toggle('active')
-      addReviewNote(star.parentElement.dataset.play, i+1)
+      addReviewNote(star.parentElement.dataset.play, star.parentElement.dataset.playInstance, i+1)
     })
   })
 }
@@ -140,13 +140,13 @@ const removeFromWishlist = (playInstanceId) => {
  */
 
 // Add a note to a play
-const addReviewNote = (playId, note) => {
-  fetch(`/users/review/note/${playId}`, {
+const addReviewNote = (playId, playInstanceId, note) => {
+  fetch('/users/review/note', {
       method: 'POST',
       headers: {
       'Content-Type': 'application/json',
       },
-      body: JSON.stringify({note: note})
+      body: JSON.stringify({playId: playId, playInstanceId: playInstanceId, note: note})
   })
   .then(response => response.json())
   .then(data => {
@@ -156,6 +156,27 @@ const addReviewNote = (playId, note) => {
       console.error('Error:', error);
   });
 }
+
+
+// Profile pic
+if (document.querySelector('.add-prof-pic')) {
+  const addProfilePicBtn = document.querySelector('.add-prof-pic')
+  addProfilePicBtn.addEventListener('click', (e) => {
+    addProfilePicBtn.nextElementSibling.classList.toggle('active')
+  })
+}
+
+// let file
+// if (document.querySelector('.prof-pic-form')) {
+//   document.querySelector('.prof-pic-form input[type="submit"]').addEventListener('change', () => {
+//     const reader = new FileReader()
+//     reader.addEventListener('load', () => {
+//         file = reader.result;
+//         console.log(file)
+//     })
+//     reader.readAsDataURL(fileInput.files[0])
+//   })
+// }
 
 
 
@@ -333,8 +354,6 @@ const addEventListenerToWindow = () => {
   const { scrollTop, scrollHeight, clientHeight } =
        document.documentElement; 
 
-        
-
        if (clientHeight + scrollTop >= scrollHeight - 5) {
 
          getFiveMorePlays(playsShowed)
@@ -348,52 +367,7 @@ const addEventListenerToWindow = () => {
  window.addEventListener('scroll', addEventListenerToWindow)
  
 
- // Sorting by 
-
-//  const sortByWhat = () => {
-// 	sortButton.addEventListener('change', (e) => { 
-// 	sortBy()
-// 	console.log("hello")
-// 	})
-// }
-
-// sortByWhat()
-
-// const sortBy = () => {
-//   fetch('/sortby', {
-//       method: 'POST',
-//       headers: {
-//       'Content-Type': 'application/json',
-//       }
-//   })
-// }
 
 
 
-
-// Sort the results 
-
-// function compareValues(key, order = 'asc') {
-//   return function innerSort(a, b) {
-//     if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-//       // property doesn't exist on either object
-//       return 0;
-//     }
-
-//     const varA = (typeof a[key] === 'string')
-//       ? a[key].toUpperCase() : a[key];
-//     const varB = (typeof b[key] === 'string')
-//       ? b[key].toUpperCase() : b[key];
-
-//     let comparison = 0;
-//     if (varA > varB) {
-//       comparison = 1;
-//     } else if (varA < varB) {
-//       comparison = -1;
-//     }
-//     return (
-//       (order === 'desc') ? (comparison * -1) : comparison
-//     );
-//   };
-// }
 

@@ -5,16 +5,25 @@
 
 		<div class="container-middle">
 			<h1 class="title-bg-red">My Profile</h1>
-			<h3 class="text-main">Settings</h3>
+			<h2>Settings</h2>
 			<div class="prof-pic-container">
 				<div>Edit your profile </div>
-				<div class="add-prof-pic">
-					<i class="fas fa-user-plus"></i>
+				<% if (user) { %>
+					<img src="<%= user.picture %>" class="prof-pic">
+				<% } %>
+				<div class="soft-modal">
+					<div class="add-prof-pic soft-modal--button">
+						<i class="fas fa-user-plus"></i>
+					</div>
+					<form class="prof-pic-form flex-col soft-modal--content" action="/users/profile/picture" method="post" enctype="multipart/form-data">
+						<input type="file" name="profilepic" id="profilepic" accept="image/png, image/jpg, image/jpeg, image/webp">
+						<input class="btn btn-primary" type="submit" value="Upload your profile picture">
+					</form>
 				</div>
 			</div>
 
 			<form class="profile-form" action="/users/profile" method="POST">
-				<label for="username"> Username </label> 
+				<label for="username">Username </label> 
 					<input type="username" id="username" name="username" placeholder="Username"
 						value="<%= typeof username != 'undefined' ? username : '' %>">
 				<label for="email"> Email </label>
@@ -34,22 +43,29 @@
 
 			<!-- Container and cards for the reviews -->
 
-
-			<h2>My reviews</h2>
-			<div class="container-middle flex">
-				<div class="play-card-theater">Theater</div>
-				<div class="play-card-dates">Date</div>
-				<div class="play-card-reviews">
-					<a href="#" class="reviews-link">
-						<div class="review-stars">
-							<i class="fas fa-star"></i>
-							<i class="fas fa-star"></i>
-							<i class="fas fa-star"></i>
-							<i class="fas fa-star"></i>
-							<i class="fas fa-star"></i>
+			<div class="profile-reviews">
+				<h2>My reviews</h2>
+				<% if (user.reviews.length > 0) { %>
+					<% user.reviews.forEach(review => { %>
+						<div class="profile-reviews-row flex">
+							<div class="play-card-theater"><%= review.playId.title %></div>
+							<div class="play-card-dates"><%= review.dateSeen ? review.dateSeen.toLocaleString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }) : '' %></div>
+							<div class="play-card-reviews">
+								<a href="/play/<%= `${review.playId._id}/${review.playInstanceId}` %>" class="reviews-link">
+									<div class="review-stars">
+										<% for (let i = 0; i < 5; i++) { %>
+											<% if (i < review.stars) { %>
+												<i class="fas fa-star"></i>
+											<% } else { %>
+												<i class="far fa-star"></i>
+											<% } %>
+										<% } %>
+									</div>
+								</a>
+							</div>
 						</div>
-					</a>
-				</div>
+					<% }) %>
+				<% } %>
 			</div>
 		</div>
 </main>

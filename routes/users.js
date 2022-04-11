@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const mongoose = require("mongoose")
+// const mongoose = require("mongoose")
 const { ObjectId } = require("mongodb")
 const bcrypt = require("bcrypt")
 const passport = require("passport")
@@ -8,7 +8,9 @@ const { ensureAuthenticated } = require("../config/auth.js")
 const User = require("../models/user")
 const { Wishlist } = require("../models/wishlist")
 const { Review } = require("../models/review")
-const { getUserAndWishlist } = require("../controllers/users-controller.js")
+const { getUserAndWishlist, getUserAndWishlistPopulated, getUserWishlistAndReviews, getUserWishlistAndReviewsPopulated, uploadProfilePic } = require("../controllers/users-controller")
+const { addAReview, getAllReviews } = require('../controllers/reviews-controller')
+const { getMultiplePlaysFromWishlist } = require('../controllers/plays-controller')
 
 //login handle
 router.get("/login", (req, res) => {
@@ -129,13 +131,19 @@ router.post("/login", (req, res, next) => {
 })
 
 //profile page
-router.get("/profile", ensureAuthenticated, (req, res) => {
-  res.render("profile", { title: "Profile page", user: req.user })
+router.get("/profile", ensureAuthenticated, async (req, res) => {
+  const user = req.user ? await getUserWishlistAndReviewsPopulated(req.user) : undefined
+
+  res.render("profile", { title: "Profile page", user })
 })
 
 //wishlist page
-router.get("/wishlist", ensureAuthenticated, (req, res) => {
-  res.render("wishlist", { title: "Wishlist", user: req.user })
+router.get("/wishlist", ensureAuthenticated, async (req, res) => {
+  const user = req.user ? await getUserAndWishlistPopulated(req.user) : undefined
+  const reviews = await getAllReviews()
+  const plays = await getMultiplePlaysFromWishlist(user.wishlist)
+
+  res.render("wishlist", { title: "Wishlist", user, reviews, plays })
 })
 
 router.post(
@@ -198,6 +206,7 @@ router.delete(
 //profile page - update information
 
 router.post("/profile", ensureAuthenticated, async (req, res) => {
+  const user = req.user ? await getUserWishlistAndReviews(req.user) : undefined
   const loggedUser = req.user
   const { username, email, password, password2 } = req.body
   let errors = []
@@ -229,7 +238,7 @@ router.post("/profile", ensureAuthenticated, async (req, res) => {
       password: password,
       password2: password2,
       title: "Profile page",
-      user: req.user,
+      user,
     })
   } else {
     //check if the e-mail already exists
@@ -246,7 +255,7 @@ router.post("/profile", ensureAuthenticated, async (req, res) => {
           password: password,
           password2: password2,
           title: "Profile page",
-          user: req.user,
+          user,
         })
       } else {
         //check if username already exists
@@ -263,7 +272,7 @@ router.post("/profile", ensureAuthenticated, async (req, res) => {
               password: password,
               password2: password2,
               title: "Profile page",
-              user: req.user,
+              user,
             })
           } else {
             if (updatedUser.password) {
@@ -302,40 +311,26 @@ router.post("/profile", ensureAuthenticated, async (req, res) => {
   }
 })
 
-//wishlist page
-router.get("/wishlist", ensureAuthenticated, (req, res) => {
-  res.render("wishlist", { title: "Wishlist", user: req.user })
+router.post('/profile/picture', ensureAuthenticated, async (req, res) => {
+  // console.log(req.files)
+  const pic = await uploadProfilePic(req.files.profilepic.tempFilePath)
+  User.findByIdAndUpdate(req.user._id, { picture: pic })
+  .then(() => res.redirect('/users/profile'))
+  .catch(err => res.status(500).send({ status: 'An error occurred: ' + err}))
 })
 
 // Reviews
-const addAReview = async (req) => {
-  try {
-    if (ObjectId.isValid(req.params.playId)) {
-      const newReview = new Review({
-        userId: req.user._id,
-        playId: req.params.playId,
-        stars: req.body.note
-      })
-  
-      await newReview.save()
-  
-      await User.findByIdAndUpdate(req.user._id, { $push: { reviews: newReview._id }})
-    }
-  } catch (err) {
-    throw err
-  }
-}
-
 // Add a review note
-router.post('/review/note/:playId', ensureAuthenticated, async (req, res) => {
+router.post('/review/note', ensureAuthenticated, async (req, res) => {
   try {
-    const reviewExists = await Review.exists({ userId: req.user._id, playId: req.params.playId })
+    const { playId, playInstanceId, note } = req.body
+    const reviewExists = await Review.exists({ userId: req.user._id, playId, playInstanceId })
     if (!reviewExists) {
-      addAReview(req)
+      await addAReview(req.user, playId, playInstanceId, note)
     } else {
-      await Review.findOneAndUpdate({ userId: req.user._id, playId: req.params.playId }, { stars: req.body.note })
+      await Review.findOneAndUpdate({ userId: req.user._id, playId }, { stars: note })
     }
-    res.status(200).send({ status: `Added ${req.body.note} stars to the play` })
+    res.status(200).send({ status: `Added ${note} stars to the play` })
   } catch (err) {
     res.status(500).send({ status: 'An error occurred' })
   }

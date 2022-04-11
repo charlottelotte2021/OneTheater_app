@@ -271,17 +271,16 @@ a:focus {
   padding-block: 1em;
   color: var(--clr-primary);
 }
-/* .menu-bottom .bottom-button:not(.active) {
-  border-right: 1px solid var(--grey-middle);
-} */
+.menu-bottom .bottom-button:not(.active) + .bottom-button:not(.active) {
+  border-left: 1px solid var(--grey-middle);
+}
 
 .menu-bottom .bottom-button.active {
   background-color: var(--clr-primary);
-
   color:white;
 }
 .menu-bottom .bottom-button {
-  width: 34%;
+  width: 33.5%;
 }
 
 /* ============================ 4.3. Footer ============================ */
@@ -587,6 +586,7 @@ textarea::placeholder {
   grid-template-columns: 1fr 2rem;
   align-items:center;
   margin-bottom: 1.5rem;
+  gap: 1rem;
 }
 .play-card-title {
   margin-bottom:unset;
@@ -610,6 +610,10 @@ textarea::placeholder {
   grid-template-columns: calc(60% - var(--gap)/2) calc(40% - var(--gap)/2);
   gap: var(--gap);
   align-items:start;
+}
+.play-card-dates {
+  min-width: 5rem;
+  text-align:center;
 }
 .play-card-dates,
 .play-card-theater {
@@ -646,6 +650,9 @@ textarea::placeholder {
   max-width:100%;
   object-fit: contain;
   margin-bottom:2rem;
+}
+.play-card-reviews {
+  min-width: 5.5rem;
 }
 .reviews-link {
   color:var(--clr-secondary);
@@ -860,6 +867,10 @@ label {
 .profile-reviews {
   margin-top: 3em;
   margin-bottom: 5em;
+}
+.profile-reviews-row {
+  align-items: center;
+  margin-top:1.5rem;
 }
 
 

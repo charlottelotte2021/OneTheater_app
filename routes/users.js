@@ -319,11 +319,6 @@ router.post('/profile/picture', ensureAuthenticated, async (req, res) => {
   .catch(err => res.status(500).send({ status: 'An error occurred: ' + err}))
 })
 
-//wishlist page
-router.get("/wishlist", ensureAuthenticated, (req, res) => {
-  res.render("wishlist", { title: "Wishlist", user: req.user })
-})
-
 // Reviews
 // Add a review note
 router.post('/review/note', ensureAuthenticated, async (req, res) => {

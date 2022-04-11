@@ -4,6 +4,7 @@ const { ensureAuthenticated } = require("../config/auth.js")
 const {
   getAllPlays,
   getOnePlay,
+  getMultiplePlaysFromInstances,
 } = require("../controllers/plays-controller.js")
 const { getReviewsOfPlayAndUsers, getAllReviews } = require("../controllers/reviews-controller.js")
 const {
@@ -45,9 +46,8 @@ router.post("/", async (req, res) => {
   const reviews = await getAllReviews()
 
   let searchinput = req.body.searchinput
-  let totalPlays = []
-
   let allplayinstances
+
   if (searchinput != "") {
     const allplays = await Play.find({
       $or: [
@@ -60,14 +60,7 @@ router.post("/", async (req, res) => {
       summary: { $regex: String(searchinput) },
     })
 
-    for (var i = 0; i < allplayInstances.length; i++) {
-      let newPlay = await Play.find({
-        playsInstances: allplayInstances[i]._id,
-      }).populate("playsInstances")
-      // console.log(newPlay)
-
-      totalPlays.push(newPlay[0])
-    }
+    const totalPlays = await getMultiplePlaysFromInstances(allplayInstances)
 
     let fullPlays = allplays.concat(totalPlays)
     const uniquePlays = Array.from(new Set(fullPlays.map((a) => a.id))).map(
@@ -129,10 +122,5 @@ router.get("/forgotpassword", (req, res) => {
     user: req.user,
   })
 })
-
-// wishlist page
-// router.get("/wishlist", (req,res) => {
-//   res.render("wishlist", {title:"Wishlist"})
-// } )
 
 module.exports = router

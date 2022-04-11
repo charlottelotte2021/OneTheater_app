@@ -12,6 +12,23 @@ const getOnePlay = async (playId, playInstanceId) => {
     return { play: p, playInstance: pI }
 }
 
+const getMultiplePlaysFromInstances = async (instances) => {
+    const plays = []
+    for (let play of instances) {
+        const currentPlay = await Play.findOne({ playsInstances: play._id }).populate('playsInstances')
+
+        plays.push(currentPlay)
+    }
+
+    // console.log(plays)
+    return plays
+}
+
+const getMultiplePlaysFromWishlist = async (wishlist) => {
+    const instances = wishlist.map(item => item.playInstanceId)
+    return await getMultiplePlaysFromInstances(instances)
+}
+
 
 // const SortbyTitle = async () => 
 //     {
@@ -26,5 +43,6 @@ const getOnePlay = async (playId, playInstanceId) => {
 module.exports = {
     getAllPlays,
     getOnePlay,
-    
+    getMultiplePlaysFromInstances,
+    getMultiplePlaysFromWishlist
 }

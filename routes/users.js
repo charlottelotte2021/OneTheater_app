@@ -8,8 +8,9 @@ const { ensureAuthenticated } = require("../config/auth.js")
 const User = require("../models/user")
 const { Wishlist } = require("../models/wishlist")
 const { Review } = require("../models/review")
-const { getUserAndWishlist, getUserWishlistAndReviews, getUserWishlistAndReviewsPopulated } = require("../controllers/users-controller")
-const { addAReview } = require('../controllers/reviews-controller')
+const { getUserAndWishlist, getUserAndWishlistPopulated, getUserWishlistAndReviews, getUserWishlistAndReviewsPopulated } = require("../controllers/users-controller")
+const { addAReview, getAllReviews } = require('../controllers/reviews-controller')
+const { getMultiplePlaysFromWishlist } = require('../controllers/plays-controller')
 
 //login handle
 router.get("/login", (req, res) => {
@@ -138,9 +139,11 @@ router.get("/profile", ensureAuthenticated, async (req, res) => {
 
 //wishlist page
 router.get("/wishlist", ensureAuthenticated, async (req, res) => {
-  const user = req.user ? await getUserAndWishlist(req.user) : undefined
+  const user = req.user ? await getUserAndWishlistPopulated(req.user) : undefined
+  const reviews = await getAllReviews()
+  const plays = await getMultiplePlaysFromWishlist(user.wishlist)
 
-  res.render("wishlist", { title: "Wishlist", user })
+  res.render("wishlist", { title: "Wishlist", user, reviews, plays })
 })
 
 router.post(

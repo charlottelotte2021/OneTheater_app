@@ -611,10 +611,7 @@ textarea::placeholder {
   gap: var(--gap);
   align-items:start;
 }
-.play-card-dates {
-  min-width: 5rem;
-  text-align:center;
-}
+
 .play-card-dates,
 .play-card-theater {
   color: var(--grey-middle-text);
@@ -872,7 +869,10 @@ label {
   align-items: center;
   margin-top:1.5rem;
 }
-
+.profile-reviews-row > .play-card-dates {
+  min-width: 5rem;
+  text-align:center;
+}
 
 
 /* ============================ 10. DARK THEME ============================ */

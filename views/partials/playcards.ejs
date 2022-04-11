@@ -37,7 +37,7 @@
                         </div>
     
                         <div class="pic-reviews">
-                            <img class="play-card-poster" src=<%= playInstance.image%> alt="">
+                            <img class="play-card-poster" src=<%= playInstance.image ? playInstance.image : '""' %> alt="">
                             <div class="play-card-reviews">
                                 <a href="/play/<%= `${play._id}/${playInstance._id}` %>" title="<%= play.title %>" class="reviews-link">
                                     <% const filteredReviews = reviews.filter(review => review.playId.toString() === play._id.toString()) %>

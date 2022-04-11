@@ -1,13 +1,14 @@
 const header = document.querySelector('header.header')
 const optionsMoreBtn = document.querySelector('.options-more-btn')
-const playCards = document.querySelectorAll('.play-card')
+let playCards = document.querySelectorAll('.play-card')
 const cardSummaries = document.querySelectorAll('.play-card-summary')
 const cardBookmarks = document.querySelectorAll('.play-card-bookmark')
 const softModalSubmit = document.querySelector('.soft-modal--content input[type="button"]')
 const cardsList = document.querySelector('.cards-container')
+let playsShowed = 5
 
-
-console.log(cardsList)
+let sortButton = document.querySelector("#options-sort-input")
+console.log(sortButton)
 
 window.addEventListener('scroll', () => {
   const scrollThreshold = '64'
@@ -178,75 +179,195 @@ if (document.querySelector('.add-prof-pic')) {
 // }
 
 
-// Infinite Scroll 
 
-//  window.addEventListener('scroll', () => {
-//       const { scrollTop, scrollHeight, clientHeight } =
-//       document.documentElement; 
 
-//       console.log({ scrollTop, scrollHeight, clientHeight }); 
 
-//       if (clientHeight + scrollTop >= scrollHeight - 5) {
-//         console.log("bottom reached")
+const createPlaysCard = (plays, data) => {
+  plays.forEach((play) => {
+    play.playsInstances.forEach((pi) => {
+      let article = document.createElement('article')
+      article.classList.add("card", "play-card")
+      let div = document.createElement('div')
+      div.classList.add("play-card-header")
+      article.appendChild(div)
+      div.insertAdjacentHTML("beforeend", `<h2><a class="play-card-title" href="/play/${play._id}/${pi._id}" title="${play.title}">${play.title}</a></h2>`)
+      if(data.user){
+        let button = document.createElement("button")
+        button.classList.add("play-card-bookmark")
+        button.dataset.playinstanceid = pi._id
+
+        // div.insertAdjacentHTML("beforeend", `<button class="play-card-bookmark" data-play-instance-id="${pi._id}">`)
+        if(data.user.wishlist.some(entry => entry.playInstanceId.toString() == pi._id.toString())){
+          button.insertAdjacentHTML("beforeend", `<i class="fas fa-bookmark"></i>`)
+          div.appendChild(button)                                                                        
+        }else{
+          button.insertAdjacentHTML("beforeend", `<i class="far fa-bookmark"></i>`)
+          div.appendChild(button) 
+        }
+      }
+      let divContent = document.createElement('div')
+      divContent.classList.add("play-card-content") 
+      article.appendChild(divContent)
+      let divRow = document.createElement('div')
+      divRow.classList.add("card-row")
+      divContent.appendChild(divRow)
+      let divDates = document.createElement('div')
+      divRow.appendChild(divDates)
+      divDates.insertAdjacentHTML("beforeend", `${pi.date}`)
+      let divTheater = document.createElement('div')
+      divTheater.classList.add("play-card-theater")
+      divRow.appendChild(divTheater)
+      divTheater.insertAdjacentHTML("beforeend", `${pi.theater.name}`)
+      let divRowTwo = document.createElement("div")
+      divRowTwo.classList.add("card-row")
+      let divTwo = document.createElement("div")
+      let divSummary = document.createElement("div")
+      divSummary.classList.add("play-card-summary")
+      divSummary.insertAdjacentHTML("beforeend", `<p>${pi.summary}<br> </p> <button class="play-card-summary-seemore"><i class="fas fa-angle-down"></i></button>`)
+      divTwo.appendChild(divSummary)
+      divRowTwo.appendChild(divTwo)
+      divContent.appendChild(divRowTwo)
+      let divDirector = document.createElement("div")
+      divTwo.appendChild(divDirector)
+      let divProduction = document.createElement("div")
+      divTwo.appendChild(divProduction)
+      divDirector.insertAdjacentHTML("beforeend", play.director)
+      divProduction.insertAdjacentHTML("beforeend", `${play.production ? play.production.length > 100 ? play.production.substr(0, 97) + '...' : play.production : ''}`)
+      let divPicReviews = document.createElement("div")
+      divContent.appendChild(divPicReviews)
+      divPicReviews.classList.add("pic-reviews")
+      divRowTwo.appendChild(divPicReviews)
+      divPicReviews.insertAdjacentHTML("beforeend", `<img class="play-card-poster" src= ${pi.image} alt="">`)
+      let divReviews = document.createElement("div")
+      divPicReviews.appendChild(divReviews)
+      divReviews.classList.add("play-card-reviews")
+      divReviews.insertAdjacentHTML("beforeend", `<a href="/play/${play._id}/${pi._id}" title=" ${play.title}" class="reviews-link">`)
       
-//          }     
-//       })
 
-// const addDataToIndex = () => {
+        const filteredReviews = data.reviews.filter(review => {
+            console.log("inside filter", review.playId, play._id, review )
+            return review.playId.toString() === play._id.toString()
+                                                             })
+        const reviewsWithComment = filteredReviews.filter(review => review.comment)
+        console.log("helloWorld", play)
+        console.log(filteredReviews)
+        let divReviewsTwo = divReviews.querySelector(".reviews-link")
+        if (reviewsWithComment.length > 0) {
+                                    divReviewsTwo.insertAdjacentHTML("beforeend", `<p>Read ${reviewsWithComment.length}reviews</p>`)
+                                } else { 
+                                          let tmp
+                                          if(!data.user) {
+                                                    tmp = ""}else{
+                                                    tmp = "Add yours"}
+                                    divReviewsTwo.insertAdjacentHTML("beforeend", `<p>There are no reviews yet. ${tmp} </p>`)
+                               } 
+                                if (filteredReviews.length > 0) { 
+                                    let reviewStar = document.createElement("div")
 
-// cardsList.innerHTML = 
+                                    reviewStar.insertAdjacentHTML("beforeend", `<div class="review-stars">`)
+                                    const reviewsTotalStars = filteredReviews.map(review => review.star).reduce((review1, review2) => review1 + review2, 0)
+                                    const average = Math.round((reviewsTotalStars/filteredReviews.length)*2)/2 
+                                    for (let i = 0; i < 5; i++) { 
+                                             if (i + 0.5 === average) { 
+                                               reviewStar.insertAdjacentHTML("beforeend", `<i class="fas fa-star-half-stroke"></i>`) 
+                                              }  else if (i < average) {
+                                               reviewStar.insertAdjacentHTML("beforeend", `<i class="fas fa-star"></i>`)
+                                              } else { 
+                                               reviewStar.insertAdjacentHTML("beforeend", `<i class="far fa-star"></i>`)
+                                              } 
+                                    } 
+                                  divReviews.querySelector(".reviews-link").appendChild(reviewStar) 
 
-// let infScroll = new InfiniteScroll( elem, {
-//   // options
-//   // path: '.pagination__next',
-//   append: playCards,
-//   history: false,
-// });
+                                }
+      // Derniere ligne qui ajoute la carte entiere au container
+      cardsList.appendChild(article)
+
+    })
+
+  })
+  setTimeout(() => {
+    document.querySelector(".loader-cont").remove()
+
+  }, 1000);
+  
+}
+
+
+// Infinite Scroll 
+const getFiveMorePlays = (nbr) => {
+  fetch('/getfiveplays', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({limit : nbr})
+  })
+  .then(response => response.json())
+  .then(data => { 
+    console.log(data)
+    document.querySelector("body").insertAdjacentHTML("beforeend",`<div class="loader-cont"><svg width="120" height="30" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg" fill="#fff">
+    <circle cx="15" cy="15" r="15">
+        <animate attributeName="r" from="15" to="15"
+                 begin="0s" dur="0.8s"
+                 values="15;9;15" calcMode="linear"
+                 repeatCount="indefinite" />
+        <animate attributeName="fill-opacity" from="1" to="1"
+                 begin="0s" dur="0.8s"
+                 values="1;.5;1" calcMode="linear"
+                 repeatCount="indefinite" />
+    </circle>
+    <circle cx="60" cy="15" r="9" fill-opacity="0.3">
+        <animate attributeName="r" from="9" to="9"
+                 begin="0s" dur="0.8s"
+                 values="9;15;9" calcMode="linear"
+                 repeatCount="indefinite" />
+        <animate attributeName="fill-opacity" from="0.5" to="0.5"
+                 begin="0s" dur="0.8s"
+                 values=".5;1;.5" calcMode="linear"
+                 repeatCount="indefinite" />
+    </circle>
+    <circle cx="105" cy="15" r="15">
+        <animate attributeName="r" from="15" to="15"
+                 begin="0s" dur="0.8s"
+                 values="15;9;15" calcMode="linear"
+                 repeatCount="indefinite" />
+        <animate attributeName="fill-opacity" from="1" to="1"
+                 begin="0s" dur="0.8s"
+                 values="1;.5;1" calcMode="linear"
+                 repeatCount="indefinite" />
+    </circle>
+</svg> </div>`)
+    createPlaysCard(data.plays, data)
+    playsShowed = playsShowed + 5
+    window.addEventListener('scroll', addEventListenerToWindow)
+    
+    // return data 
+    // console.log('Success:', data);
+  })
+  .catch((error) => {
+      console.error('Error:', error);
+  });
+}
+
+
+const addEventListenerToWindow = () => {
+  const { scrollTop, scrollHeight, clientHeight } =
+       document.documentElement; 
+
+       if (clientHeight + scrollTop >= scrollHeight - 5) {
+
+         getFiveMorePlays(playsShowed)
+         window.removeEventListener("scroll", addEventListenerToWindow )
+       
+      }  
+
+}
+
+
+ window.addEventListener('scroll', addEventListenerToWindow)
+ 
 
 
 
 
-
-
-
-// let nextItem = 1;
-// const loadMore = () => {
-// for (var i = 0; i < 20; i++) {
-// cardsList.appendChild(playCards)
-// } 
-// }
-// loadMore()
-
-// playCards.addEventListener('scroll', (e) => {
-//         if (playCards.scrollTop + playCards.clientHeight >= playCards.scrollHeight) {
-//              loadMore()
-//          }     
-//  })
-
-
-// Sort the results 
-
-// function compareValues(key, order = 'asc') {
-//   return function innerSort(a, b) {
-//     if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-//       // property doesn't exist on either object
-//       return 0;
-//     }
-
-//     const varA = (typeof a[key] === 'string')
-//       ? a[key].toUpperCase() : a[key];
-//     const varB = (typeof b[key] === 'string')
-//       ? b[key].toUpperCase() : b[key];
-
-//     let comparison = 0;
-//     if (varA > varB) {
-//       comparison = 1;
-//     } else if (varA < varB) {
-//       comparison = -1;
-//     }
-//     return (
-//       (order === 'desc') ? (comparison * -1) : comparison
-//     );
-//   };
-// }
 

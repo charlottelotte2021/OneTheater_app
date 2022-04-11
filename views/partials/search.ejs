@@ -1,7 +1,7 @@
-<form class="search-tools" method="POST" action="/">
 
     <!-- Search bar with input and button-->
     <div class="search-bar">
+    <form class="search-tools" method="POST" action="/">
         <div class="search-container">
             <input 
             class="search-input" 
@@ -16,29 +16,31 @@
 
         </div>
         <input type="submit" value="Search" class="btn btn-primary" />
-    </div>
+
+    </form>
+</div>
 
 
-    <!--Homepage with sort by, more options and card -->
-    
-    <div class="options">
-        <div class="options-sort">
-            <label for="options-sort-input">Sort by</label>  
-            <select id="options-sort-input">
-                <!-- <option value="Date">Date</option>   -->
-                <!-- <option value="Price">Price</option>   -->
-                <option value="Title">Title</option>  
-                <option value="Director">Director</option>  
-                <option value="Theater">Theater</option>
-                <option value="Best reviews">Best reviews</option>
-            </select>  
-        </div>    
-        <!-- <div class="options-more">
-            <button class="options-more-btn">More options <i class="fas fa-angle-down"></i></button>
-        
+<!--Homepage with sort by, more options and card -->
 
-        
-            <div class="options-more-form">  
+<div class="options">
+    <div class="options-sort">
+        <label for="options-sort-input">Sort by</label>  
+      <select id="options-sort-input" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+        <!-- <option value="Date">Date</option>   -->
+        <!-- <option value="Price">Price</option>   -->
+        <option value="/sortby/title">Title </option>  
+        <option value="/sortby/director">Director</option>  
+        <option value="/sortby/theater">Theater</option>
+        <option value="/sortby/reviews">Best reviews</option>
+    </select>  
+</div>    
+<!-- <div class="options-more">
+    <button class="options-more-btn">More options <i class="fas fa-angle-down"></i></button>
+
+
+             <div class="options-more-form">  
+
                 <div class="more-input-open flex flex-col">  
                     <div class="row flex center-v">
                       <label for="options-date">Starting from</label>
@@ -86,4 +88,3 @@
             </div>
         </div> -->
     </div> 
-</form>

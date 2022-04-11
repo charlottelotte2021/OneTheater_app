@@ -4,6 +4,7 @@ const { ensureAuthenticated } = require("../config/auth.js")
 const {
   getAllPlays,
   getOnePlay,
+  getFivePlays,
   getMultiplePlaysFromInstances,
 } = require("../controllers/plays-controller.js")
 const { getReviewsOfPlayAndUsers, getAllReviews } = require("../controllers/reviews-controller.js")
@@ -28,6 +29,19 @@ router.get("/", async (req, res) => {
   })
 })
 
+// get 5 Plays 
+router.post("/getfiveplays", async (req,res) => {
+    // let fivePlays = await getFivePlays(req.body.limit)
+    console.log(req.body.limit)
+    const play = await Play.find({}).populate("playsInstances")
+    plays = play.slice(req.body.limit, req.body.limit + 5)
+    const reviews = await getAllReviews()
+    console.log(plays)
+    console.log("ready to send next plays")
+    res.send({status: "success", plays: plays, user: req.user, reviews: reviews})
+})
+
+
 // signup page
 router.get("/signup", (req, res) => {
   res.render("signup", {
@@ -35,7 +49,8 @@ router.get("/signup", (req, res) => {
     title: "Sign up",
     user: req.user,
   })
-})
+}) 
+
 
 // Search for a play
 router.post("/", async (req, res) => {
@@ -45,6 +60,7 @@ router.post("/", async (req, res) => {
     : undefined
   const reviews = await getAllReviews()
 
+  const reviews = await getAllReviews()
   let searchinput = req.body.searchinput
 
   if (searchinput != "") {
@@ -62,6 +78,9 @@ router.post("/", async (req, res) => {
     const totalPlays = await getMultiplePlaysFromInstances(allplayInstances)
 
     let fullPlays = allplays.concat(totalPlays)
+
+
+    //remove duplicates 
     const uniquePlays = Array.from(new Set(fullPlays.map((a) => a.id))).map(
       (id) => {
         return fullPlays.find((a) => a.id === id)
@@ -83,7 +102,32 @@ router.post("/", async (req, res) => {
       reviews
     })
   }
+}) 
+
+//Sort by 
+
+router.get('/sortby/:query', async (req, res) => {
+  // let allPlays = await getAllPlays()
+  const user = req.user ? await getUserAndWishlist(req.user) : undefined
+  const reviews = await getAllReviews()
+  let sortedByDirector
+  console.log(req.params)
+  if(req.params.query === "director"){
+   sortedByDirector = await Play.find({}).populate("playsInstances").sort({"director": -1})
+   console.log(sortedByDirector)
+  }
+
+
+  res.render("index", {
+    title: "Home",
+    user,
+    allplays: sortedByDirector,
+    reviews 
+  })
 })
+
+
+
 
 // play page
 router.get("/play/:PlayId/:playInstanceId", async (req, res) => {

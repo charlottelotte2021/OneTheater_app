@@ -2,8 +2,17 @@ const { Play }  = require("../models/play")
 const { PlayInstance } = require("../models/playInstance")
 
 const getAllPlays = () => {
-    return Play.find({}).populate("playsInstances").limit(10)
+    return Play.find({}).populate("playsInstances").limit(5)
 }
+
+const getFivePlays = (newLimit) => {
+    // let Plays = [] 
+    // Play.find({}).populate("playsInstances").limit(newLimit).forEach((play) => Plays.push(play))
+    // .then (() => {
+    //     return Plays.splice(0, newLimit-5)
+    // }
+    //     )
+    }
 
 const getOnePlay = async (playId, playInstanceId) => {
     const p = await Play.findById(playId)
@@ -43,6 +52,10 @@ const getMultiplePlaysFromWishlist = async (wishlist) => {
 module.exports = {
     getAllPlays,
     getOnePlay,
+
+    getFivePlays,
+
     getMultiplePlaysFromInstances,
     getMultiplePlaysFromWishlist
+
 }

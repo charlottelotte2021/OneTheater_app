@@ -821,13 +821,35 @@ label {
 .add-prof-pic{
   color: var(--clr-primary);
   font-size: 3em;
+  cursor:pointer;
+}
+
+.prof-pic {
+  width:64px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius:50%;
+}
+
+.prof-pic-form {
+  left:100%;
+  transform: translateX(-100%);
+  max-width:80vw;
+}
+.prof-pic-form.active {
+  display:flex;
+  gap:1em;
+}
+.prof-pic-form > * {
+  max-width: 100%;
 }
 
 .prof-pic-container {
   display: grid;
-  grid-template-columns: 1fr 5rem;
+  grid-template-columns: 1fr 5rem 5rem;
   align-items: center;
   margin-bottom: 1.5rem;
+  gap: 1rem;
 }
 .profile-form {
   display: grid;

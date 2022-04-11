@@ -8,13 +8,22 @@
 			<h2>Settings</h2>
 			<div class="prof-pic-container">
 				<div>Edit your profile </div>
-				<!-- <div class="add-prof-pic">
-					<i class="fas fa-user-plus"></i>
-				</div> -->
+				<% if (user) { %>
+					<img src="<%= user.picture %>" class="prof-pic">
+				<% } %>
+				<div class="soft-modal">
+					<div class="add-prof-pic soft-modal--button">
+						<i class="fas fa-user-plus"></i>
+					</div>
+					<form class="prof-pic-form flex-col soft-modal--content" action="/users/profile/picture" method="post" enctype="multipart/form-data">
+						<input type="file" name="profilepic" id="profilepic" accept="image/png, image/jpg, image/jpeg, image/webp">
+						<input class="btn btn-primary" type="submit" value="Upload your profile picture">
+					</form>
+				</div>
 			</div>
 
 			<form class="profile-form" action="/users/profile" method="POST">
-				<label for="username"> Username </label> 
+				<label for="username">Username </label> 
 					<input type="username" id="username" name="username" placeholder="Username"
 						value="<%= typeof username != 'undefined' ? username : '' %>">
 				<label for="email"> Email </label>

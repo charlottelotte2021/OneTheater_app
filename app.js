@@ -7,6 +7,7 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require("passport")
 const dotenv = require('dotenv')
+const fileupload = require('express-fileupload')
 
 dotenv.config()
 
@@ -47,7 +48,7 @@ app.use((req,res,next)=> {
     next()
     })
 
-// app.use(fileupload({useTempFiles: true}))
+app.use(fileupload({useTempFiles: true}))
 
 
 

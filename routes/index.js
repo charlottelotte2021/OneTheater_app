@@ -42,6 +42,7 @@ router.post("/", async (req, res) => {
   const user = req.user
     ? await getUserAndWishlist(req.user)
     : undefined
+  const reviews = await getAllReviews()
 
   let searchinput = req.body.searchinput
   let totalPlays = []
@@ -80,6 +81,7 @@ router.post("/", async (req, res) => {
       user,
       allplays: uniquePlays,
       allplayInstances: allplayinstances,
+      reviews
     })
   } else {
     let allPlays = await getAllPlays()
@@ -88,6 +90,7 @@ router.post("/", async (req, res) => {
       user,
       allplays: allPlays,
       allplayInstances: allplayinstances,
+      reviews
     })
   }
 })

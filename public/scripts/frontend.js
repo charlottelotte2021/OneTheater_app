@@ -1,98 +1,115 @@
-const header = document.querySelector('header.header')
-const optionsMoreBtn = document.querySelector('.options-more-btn')
-let playCards = document.querySelectorAll('.play-card')
-const cardSummaries = document.querySelectorAll('.play-card-summary')
-let cardBookmarks = document.querySelectorAll('.play-card-bookmark')
-const softModalSubmit = document.querySelector('.soft-modal--content input[type="button"]')
-const cardsList = document.querySelector('.cards-container')
+const header = document.querySelector("header.header")
+const optionsMoreBtn = document.querySelector(".options-more-btn")
+let playCards = document.querySelectorAll(".play-card")
+const cardSummaries = document.querySelectorAll(".play-card-summary")
+let cardBookmarks = document.querySelectorAll(".play-card-bookmark")
+const softModalSubmit = document.querySelector(
+  '.soft-modal--content input[type="button"]'
+)
+const cardsList = document.querySelector(".cards-container")
 let playsShowed = 5
 
 let sortButton = document.querySelector("#options-sort-input")
-console.log(sortButton)
 
-window.addEventListener('scroll', () => {
-  const scrollThreshold = '64'
+// On scroll, change the looks of the header
+window.addEventListener("scroll", () => {
+  const scrollThreshold = "64"
   if (
     window.scrollY > scrollThreshold &&
-    !header.classList.contains('scroll-down')
+    !header.classList.contains("scroll-down")
   ) {
-    header.classList.add('scroll-down')
+    header.classList.add("scroll-down")
   } else if (
     window.scrollY < scrollThreshold &&
-    header.classList.contains('scroll-down')
+    header.classList.contains("scroll-down")
   ) {
-    header.classList.remove('scroll-down')
+    header.classList.remove("scroll-down")
   }
 })
 
+// On click on the button to show more options,
+// show the options container
+// NB: as of 12/04/2022, this feature has been removed
 if (optionsMoreBtn) {
-  optionsMoreBtn.addEventListener('click', (e) => {
+  optionsMoreBtn.addEventListener("click", (e) => {
     e.preventDefault()
-    optionsMoreBtn.parentElement.classList.toggle('active')
-    optionsMoreBtn.firstElementChild.classList.toggle('flip')
+    optionsMoreBtn.parentElement.classList.toggle("active")
+    optionsMoreBtn.firstElementChild.classList.toggle("flip")
   })
 }
 
+// If there are cards of plays on the page,
+// create the proper event listeners
 if (playCards) {
+  // Event listener to expand the summaries
   cardSummaries.forEach((cardSummary) => {
-    cardSummary.addEventListener('click', () => {
-      //   cardSummarySeemore.parentElement.classList.toggle('active')
-      cardSummary.classList.toggle('active')
+    cardSummary.addEventListener("click", () => {
+      cardSummary.classList.toggle("active")
     })
   })
 
+  // Event listener for the bookmarks
   cardBookmarks.forEach((cardBookmark) => {
-    cardBookmark.addEventListener('click', () => {
+    cardBookmark.addEventListener("click", () => {
       updateWishlist(cardBookmark)
     })
   })
 }
 
+/**
+ * Add to or remove a play from the wishlist when clicking on a bookmark icon 
+ * @param {HTMLelement} element - Container whose child is a bookmark
+ */
 const updateWishlist = (element) => {
-  if (element.firstElementChild.classList.contains('far')) {
-    element.firstElementChild.classList.replace('far', 'fas')
+  if (element.firstElementChild.classList.contains("far")) {
+    element.firstElementChild.classList.replace("far", "fas")
     addToWishlist(element.dataset.playInstanceId)
   } else {
-    element.firstElementChild.classList.replace('fas', 'far')
+    element.firstElementChild.classList.replace("fas", "far")
     removeFromWishlist(element.dataset.playInstanceId)
   }
 }
 
 /*
-  Review stars on the play pages 
+  Review stars on the play pages
+  When clicked, show the note & add the review
  */
 
-if (document.querySelector('.hero-play-stars')) {
-  const heroPlayStars = [...document.querySelector('.hero-play-stars').children]
+if (document.querySelector(".hero-play-stars")) {
+  const heroPlayStars = [...document.querySelector(".hero-play-stars").children]
 
   heroPlayStars.forEach((star, i) => {
-    star.addEventListener('click', function (e) {
-      if (this.classList.contains('far')) {
-        this.classList.replace('far', 'fas')
+    star.addEventListener("click", function (e) {
+      if (this.classList.contains("far")) {
+        this.classList.replace("far", "fas")
         for (let j = 0; j < i + 1; j++) {
-          if (heroPlayStars[j].classList.contains('far')) {
-            heroPlayStars[j].classList.replace('far', 'fas')
+          if (heroPlayStars[j].classList.contains("far")) {
+            heroPlayStars[j].classList.replace("far", "fas")
           }
         }
       } else {
         for (let j = heroPlayStars.length - 1; j > i; j--) {
-          if (heroPlayStars[j].classList.contains('fas')) {
-            heroPlayStars[j].classList.replace('fas', 'far')
+          if (heroPlayStars[j].classList.contains("fas")) {
+            heroPlayStars[j].classList.replace("fas", "far")
           }
         }
       }
-      star.parentElement.nextElementSibling.classList.toggle('active')
-      addReviewNote(star.parentElement.dataset.play, star.parentElement.dataset.playInstance, i+1)
+      star.parentElement.nextElementSibling.classList.toggle("active")
+      addReviewNote(
+        star.parentElement.dataset.play,
+        star.parentElement.dataset.playInstance,
+        i + 1
+      )
     })
   })
 }
 
 /**
- * Open soft modal
+ * Open soft modal (i.e. a modal that doesn't take up the whole space)
  */
 if (softModalSubmit) {
-  softModalSubmit.addEventListener('click', () => {
-    softModalSubmit.closest('.soft-modal--content').classList.toggle('active')
+  softModalSubmit.addEventListener("click", () => {
+    softModalSubmit.closest(".soft-modal--content").classList.toggle("active")
   })
 }
 
@@ -103,37 +120,36 @@ if (softModalSubmit) {
 // Add a play to the user's wishlist
 const addToWishlist = (playInstanceId) => {
   fetch(`/users/wishlist/${playInstanceId}`, {
-      method: 'POST',
-      headers: {
-      'Content-Type': 'application/json',
-      }
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
   })
-  .then(response => response.json())
-  .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       // console.log('Success:', data);
-  })
-  .catch((error) => {
-      console.error('Error:', error);
-  });
+    })
+    .catch((error) => {
+      console.error("Error:", error)
+    })
 }
 
 // Remove a play from the user's wishlist
 const removeFromWishlist = (playInstanceId) => {
   fetch(`/users/wishlist/${playInstanceId}`, {
-      method: 'DELETE',
-      headers: {
-      'Content-Type': 'application/json',
-      }
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
   })
-  .then(response => response.json())
-  .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       // console.log('Success:', data);
-  })
-  .catch((error) => {
-      console.error('Error:', error);
-  });
+    })
+    .catch((error) => {
+      console.error("Error:", error)
+    })
 }
-
 
 /**
  * API to reviews
@@ -141,82 +157,88 @@ const removeFromWishlist = (playInstanceId) => {
 
 // Add a note to a play
 const addReviewNote = (playId, playInstanceId, note) => {
-  fetch('/users/review/note', {
-      method: 'POST',
-      headers: {
-      'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({playId: playId, playInstanceId: playInstanceId, note: note})
+  fetch("/users/review/note", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      playId: playId,
+      playInstanceId: playInstanceId,
+      note: note,
+    }),
   })
-  .then(response => response.json())
-  .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       // console.log('Success:', data);
-  })
-  .catch((error) => {
-      console.error('Error:', error);
-  });
+    })
+    .catch((error) => {
+      console.error("Error:", error)
+    })
 }
-
 
 // Profile pic
-if (document.querySelector('.add-prof-pic')) {
-  const addProfilePicBtn = document.querySelector('.add-prof-pic')
-  addProfilePicBtn.addEventListener('click', (e) => {
-    addProfilePicBtn.nextElementSibling.classList.toggle('active')
+if (document.querySelector(".add-prof-pic")) {
+  const addProfilePicBtn = document.querySelector(".add-prof-pic")
+  addProfilePicBtn.addEventListener("click", (e) => {
+    addProfilePicBtn.nextElementSibling.classList.toggle("active")
   })
 }
 
-// let file
-// if (document.querySelector('.prof-pic-form')) {
-//   document.querySelector('.prof-pic-form input[type="submit"]').addEventListener('change', () => {
-//     const reader = new FileReader()
-//     reader.addEventListener('load', () => {
-//         file = reader.result;
-//         console.log(file)
-//     })
-//     reader.readAsDataURL(fileInput.files[0])
-//   })
-// }
 
-
-
-
-
+/**
+ * Generate a card for each play
+ * @param {array} plays - Array of plays from the DB
+ * @param {object} data - User information
+ */
 const createPlaysCard = (plays, data) => {
   plays.forEach((play) => {
-    play.playsInstances.forEach((pi) => {
-      let article = document.createElement('article')
+    play.playsInstances.forEach((pi) => { // pi = playInstance
+      let article = document.createElement("article")
       article.classList.add("card", "play-card")
-      let div = document.createElement('div')
+      let div = document.createElement("div")
       div.classList.add("play-card-header")
       article.appendChild(div)
-      div.insertAdjacentHTML("beforeend", `<h2><a class="play-card-title" href="/play/${play._id}/${pi._id}" title="${play.title}">${play.title}</a></h2>`)
-      if(data.user){
+      div.insertAdjacentHTML(
+        "beforeend",
+        `<h2><a class="play-card-title" href="/play/${play._id}/${pi._id}" title="${play.title}">${play.title}</a></h2>`
+      )
+      if (data.user) {
         let button = document.createElement("button")
         button.classList.add("play-card-bookmark")
         button.dataset.playInstanceId = pi._id
-        button.addEventListener('click', () => {
+        button.addEventListener("click", () => {
           updateWishlist(button)
         })
         // div.insertAdjacentHTML("beforeend", `<button class="play-card-bookmark" data-play-instance-id="${pi._id}">`)
-        if(data.user.wishlist.some(entry => entry.playInstanceId.toString() == pi._id.toString())){
-          button.insertAdjacentHTML("beforeend", `<i class="fas fa-bookmark"></i>`)
-          div.appendChild(button)                                                                        
-        }else{
-          button.insertAdjacentHTML("beforeend", `<i class="far fa-bookmark"></i>`)
-          div.appendChild(button) 
+        if (
+          data.user.wishlist.some(
+            (entry) => entry.playInstanceId.toString() == pi._id.toString()
+          )
+        ) {
+          button.insertAdjacentHTML(
+            "beforeend",
+            `<i class="fas fa-bookmark"></i>`
+          )
+          div.appendChild(button)
+        } else {
+          button.insertAdjacentHTML(
+            "beforeend",
+            `<i class="far fa-bookmark"></i>`
+          )
+          div.appendChild(button)
         }
       }
-      let divContent = document.createElement('div')
-      divContent.classList.add("play-card-content") 
+      let divContent = document.createElement("div")
+      divContent.classList.add("play-card-content")
       article.appendChild(divContent)
-      let divRow = document.createElement('div')
+      let divRow = document.createElement("div")
       divRow.classList.add("card-row")
       divContent.appendChild(divRow)
-      let divDates = document.createElement('div')
+      let divDates = document.createElement("div")
       divRow.appendChild(divDates)
       divDates.insertAdjacentHTML("beforeend", `${pi.date}`)
-      let divTheater = document.createElement('div')
+      let divTheater = document.createElement("div")
       divTheater.classList.add("play-card-theater")
       divRow.appendChild(divTheater)
       divTheater.insertAdjacentHTML("beforeend", `${pi.theater.name}`)
@@ -225,7 +247,10 @@ const createPlaysCard = (plays, data) => {
       let divTwo = document.createElement("div")
       let divSummary = document.createElement("div")
       divSummary.classList.add("play-card-summary")
-      divSummary.insertAdjacentHTML("beforeend", `<p>${pi.summary}<br> </p> <button class="play-card-summary-seemore"><i class="fas fa-angle-down"></i></button>`)
+      divSummary.insertAdjacentHTML(
+        "beforeend",
+        `<p>${pi.summary}<br> </p> <button class="play-card-summary-seemore"><i class="fas fa-angle-down"></i></button>`
+      )
       divTwo.appendChild(divSummary)
       divRowTwo.appendChild(divTwo)
       divContent.appendChild(divRowTwo)
@@ -234,80 +259,113 @@ const createPlaysCard = (plays, data) => {
       let divProduction = document.createElement("div")
       divTwo.appendChild(divProduction)
       divDirector.insertAdjacentHTML("beforeend", play.director)
-      divProduction.insertAdjacentHTML("beforeend", `${play.production ? play.production.length > 100 ? play.production.substr(0, 97) + '...' : play.production : ''}`)
+      divProduction.insertAdjacentHTML(
+        "beforeend",
+        `${
+          play.production
+            ? play.production.length > 100
+              ? play.production.substr(0, 97) + "..."
+              : play.production
+            : ""
+        }`
+      )
       let divPicReviews = document.createElement("div")
       divContent.appendChild(divPicReviews)
       divPicReviews.classList.add("pic-reviews")
       divRowTwo.appendChild(divPicReviews)
-      divPicReviews.insertAdjacentHTML("beforeend", `<img class="play-card-poster" src= ${pi.image} alt="">`)
+      divPicReviews.insertAdjacentHTML(
+        "beforeend",
+        `<img class="play-card-poster" src= ${pi.image} alt="">`
+      )
       let divReviews = document.createElement("div")
       divPicReviews.appendChild(divReviews)
       divReviews.classList.add("play-card-reviews")
-      divReviews.insertAdjacentHTML("beforeend", `<a href="/play/${play._id}/${pi._id}" title=" ${play.title}" class="reviews-link">`)
-      
+      divReviews.insertAdjacentHTML(
+        "beforeend",
+        `<a href="/play/${play._id}/${pi._id}" title=" ${play.title}" class="reviews-link">`
+      )
 
-        const filteredReviews = data.reviews.filter(review => {
-            console.log("inside filter", review.playId, play._id, review )
-            return review.playId.toString() === play._id.toString()
-                                                             })
-        const reviewsWithComment = filteredReviews.filter(review => review.comment)
-        console.log("helloWorld", play)
-        console.log(filteredReviews)
-        let divReviewsTwo = divReviews.querySelector(".reviews-link")
-        if (reviewsWithComment.length > 0) {
-                                    divReviewsTwo.insertAdjacentHTML("beforeend", `<p>Read ${reviewsWithComment.length}reviews</p>`)
-                                } else { 
-                                          let tmp
-                                          if(!data.user) {
-                                                    tmp = ""}else{
-                                                    tmp = "Add yours"}
-                                    divReviewsTwo.insertAdjacentHTML("beforeend", `<p>There are no reviews yet. ${tmp} </p>`)
-                               } 
-                                if (filteredReviews.length > 0) { 
-                                    let reviewStar = document.createElement("div")
+      const filteredReviews = data.reviews.filter((review) => {
+        // console.log("inside filter", review.playId, play._id, review)
+        return review.playId.toString() === play._id.toString()
+      })
+      const reviewsWithComment = filteredReviews.filter(
+        (review) => review.comment
+      )
+      // console.log("helloWorld", play)
+      // console.log(filteredReviews)
+      let divReviewsTwo = divReviews.querySelector(".reviews-link")
+      if (reviewsWithComment.length > 0) {
+        divReviewsTwo.insertAdjacentHTML(
+          "beforeend",
+          `<p>Read ${reviewsWithComment.length}reviews</p>`
+        )
+      } else {
+        let tmp
+        if (!data.user) {
+          tmp = ""
+        } else {
+          tmp = "Add yours"
+        }
+        divReviewsTwo.insertAdjacentHTML(
+          "beforeend",
+          `<p>There are no reviews yet. ${tmp} </p>`
+        )
+      }
+      if (filteredReviews.length > 0) {
+        let reviewStar = document.createElement("div")
 
-                                    reviewStar.insertAdjacentHTML("beforeend", `<div class="review-stars">`)
-                                    const reviewsTotalStars = filteredReviews.map(review => review.star).reduce((review1, review2) => review1 + review2, 0)
-                                    const average = Math.round((reviewsTotalStars/filteredReviews.length)*2)/2 
-                                    for (let i = 0; i < 5; i++) { 
-                                             if (i + 0.5 === average) { 
-                                               reviewStar.insertAdjacentHTML("beforeend", `<i class="fas fa-star-half-stroke"></i>`) 
-                                              }  else if (i < average) {
-                                               reviewStar.insertAdjacentHTML("beforeend", `<i class="fas fa-star"></i>`)
-                                              } else { 
-                                               reviewStar.insertAdjacentHTML("beforeend", `<i class="far fa-star"></i>`)
-                                              } 
-                                    } 
-                                  divReviews.querySelector(".reviews-link").appendChild(reviewStar) 
-
-                                }
+        reviewStar.insertAdjacentHTML("beforeend", `<div class="review-stars">`)
+        const reviewsTotalStars = filteredReviews
+          .map((review) => review.star)
+          .reduce((review1, review2) => review1 + review2, 0)
+        const average =
+          Math.round((reviewsTotalStars / filteredReviews.length) * 2) / 2
+        for (let i = 0; i < 5; i++) {
+          if (i + 0.5 === average) {
+            reviewStar.insertAdjacentHTML(
+              "beforeend",
+              `<i class="fas fa-star-half-stroke"></i>`
+            )
+          } else if (i < average) {
+            reviewStar.insertAdjacentHTML(
+              "beforeend",
+              `<i class="fas fa-star"></i>`
+            )
+          } else {
+            reviewStar.insertAdjacentHTML(
+              "beforeend",
+              `<i class="far fa-star"></i>`
+            )
+          }
+        }
+        divReviews.querySelector(".reviews-link").appendChild(reviewStar)
+      }
       // Derniere ligne qui ajoute la carte entiere au container
       cardsList.appendChild(article)
-
     })
-
   })
+  // Timeout for the loader
   setTimeout(() => {
     document.querySelector(".loader-cont").remove()
-
-  }, 1000);
-  
+  }, 1000)
 }
 
-
-// Infinite Scroll 
+// Infinite Scroll: loader
 const getFiveMorePlays = (nbr) => {
-  fetch('/getfiveplays', {
-      method: 'POST',
-      headers: {
-      'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({limit : nbr})
+  fetch("/getfiveplays", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ limit: nbr, location: window.location }),
   })
-  .then(response => response.json())
-  .then(data => { 
-    // console.log(data)
-    document.querySelector("body").insertAdjacentHTML("beforeend",`<div class="loader-cont"><svg width="120" height="30" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg" fill="#fff">
+    .then((response) => response.json())
+    .then((data) => {
+      // console.log(data)
+      document.querySelector("body").insertAdjacentHTML(
+        "beforeend",
+        `<div class="loader-cont"><svg width="120" height="30" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg" fill="#fff">
     <circle cx="15" cy="15" r="15">
         <animate attributeName="r" from="15" to="15"
                  begin="0s" dur="0.8s"
@@ -338,41 +396,28 @@ const getFiveMorePlays = (nbr) => {
                  values="1;.5;1" calcMode="linear"
                  repeatCount="indefinite" />
     </circle>
-</svg> </div>`)
-    createPlaysCard(data.plays, data)
-    playsShowed = playsShowed + 5
-    window.addEventListener('scroll', addEventListenerToWindow)
-    
-    // return data 
-    // console.log('Success:', data);
-  })
-  .catch((error) => {
-      console.error('Error:', error);
-  });
+</svg> </div>`
+      )
+      createPlaysCard(data.plays, data)
+      playsShowed = playsShowed + 5
+      window.addEventListener("scroll", addEventListenerToWindow)
+
+      // return data
+      // console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error("Error:", error)
+    })
 }
 
-
+// Infinite scroll: if the user's at the bottom of the page, load 5 more plays
 const addEventListenerToWindow = () => {
-  const { scrollTop, scrollHeight, clientHeight } =
-       document.documentElement; 
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement
 
-       if (clientHeight + scrollTop >= scrollHeight - 5) {
-
-         getFiveMorePlays(playsShowed)
-         window.removeEventListener("scroll", addEventListenerToWindow )
-       
-      }  
-
+  if (clientHeight + scrollTop >= scrollHeight - 5) {
+    getFiveMorePlays(playsShowed)
+    window.removeEventListener("scroll", addEventListenerToWindow)
+  }
 }
 
-let baseURL = document.location.protocol + '//' + document.location.host
-
-if (document.URL.replace(baseURL, '') === '/') {
-  window.addEventListener('scroll', addEventListenerToWindow)
-}
- 
-
-
-
-
-
+window.addEventListener("scroll", addEventListenerToWindow)

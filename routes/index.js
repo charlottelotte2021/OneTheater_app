@@ -16,6 +16,7 @@ const {
 } = require("../controllers/users-controller.js")
 const { Play } = require("../models/play")
 const { PlayInstance } = require("../models/playInstance")
+const { Review } = require("../models/review")
 
 // Home page
 router.get("/", async (req, res) => {
@@ -77,13 +78,13 @@ router.post("/searchplays", async (req, res) => {
   if (searchinput != "") {
     const allplays = await Play.find({
       $or: [
-        { title: { $regex: String(searchinput) } },
-        { production: { $regex: String(searchinput) } },
+        { title: { $regex: String(searchinput), $options: 'i'} },
+        { production: { $regex: String(searchinput), $options: 'i'} },
       ],
     }).populate("playsInstances")
 
     const allplayInstances = await PlayInstance.find({
-      summary: { $regex: String(searchinput) },
+      summary: { $regex: String(searchinput), $options: 'i' },
     })
 
     const totalPlays = await getMultiplePlaysFromInstances(allplayInstances)
@@ -120,13 +121,18 @@ router.get("/sortby/:query", async (req, res) => {
   const user = req.user ? await getUserAndWishlist(req.user) : undefined
   const reviews = await getAllReviews()
   let sortedByDirector
+  let sortedByTitle
+  let sortedByTheater
+  let sortedByReviews
+
   // console.log(req.params)
   if (req.params.query === "director") {
     sortedByDirector = await Play.find({})
       .populate("playsInstances")
       .sort({ director: -1 })
+      .limit(5)
     // console.log(sortedByDirector)
-  }
+ 
 
   res.render("index", {
     title: "Home",
@@ -134,6 +140,45 @@ router.get("/sortby/:query", async (req, res) => {
     plays: sortedByDirector,
     reviews,
   })
+ }
+  if (req.params.query === "title") {
+    sortedByTitle = await Play.find({})
+    .populate("playsInstances")
+    .sort({title: 1})
+ 
+  res.render("index", {
+    title: "Home",
+    user,
+    plays: sortedByTitle,
+    reviews,
+  })
+   }
+if (req.params.query === "theater") {
+      sortedByTheater = await Play.find({})
+      .populate("playsInstances")
+      
+      .sort({name: 1})
+
+    res.render("index", {
+    title: "Home",
+    user,
+    plays: sortedByTheater,
+    reviews,
+  }) 
+}
+
+// if (req.params.query === "reviews") {
+//     sortedByReviews = await Review.find({})
+//     .sort({note: 1})
+  
+//   res.render("index", {
+//     title: "Home",
+//     user,
+//     plays: sortedByReviews,
+//     reviews,
+//   }) 
+
+//   }
 })
 
 // Play page

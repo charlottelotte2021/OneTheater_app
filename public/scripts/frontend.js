@@ -1,8 +1,7 @@
 const header = document.querySelector("header.header")
-const optionsMoreBtn = document.querySelector(".options-more-btn")
 let playCards = document.querySelectorAll(".play-card")
-const cardSummaries = document.querySelectorAll(".play-card-summary")
 let cardBookmarks = document.querySelectorAll(".play-card-bookmark")
+let cardSummaries = document.querySelectorAll(".play-card-summary")
 const softModalSubmit = document.querySelector(
   '.soft-modal--content input[type="button"]'
 )
@@ -30,6 +29,8 @@ window.addEventListener("scroll", () => {
 // On click on the button to show more options,
 // show the options container
 // NB: as of 12/04/2022, this feature has been removed
+/*
+const optionsMoreBtn = document.querySelector(".options-more-btn")
 if (optionsMoreBtn) {
   optionsMoreBtn.addEventListener("click", (e) => {
     e.preventDefault()
@@ -37,7 +38,7 @@ if (optionsMoreBtn) {
     optionsMoreBtn.firstElementChild.classList.toggle("flip")
   })
 }
-
+*/
 // If there are cards of plays on the page,
 // create the proper event listeners
 if (playCards) {
@@ -247,6 +248,9 @@ const createPlaysCard = (plays, data) => {
       let divTwo = document.createElement("div")
       let divSummary = document.createElement("div")
       divSummary.classList.add("play-card-summary")
+      divSummary.addEventListener("click", () => {
+        divSummary.classList.toggle("active")
+      })
       divSummary.insertAdjacentHTML(
         "beforeend",
         `<p>${pi.summary}<br> </p> <button class="play-card-summary-seemore"><i class="fas fa-angle-down"></i></button>`
@@ -283,6 +287,7 @@ const createPlaysCard = (plays, data) => {
         "beforeend",
         `<a href="/play/${play._id}/${pi._id}" title=" ${play.title}" class="reviews-link">`
       )
+
 
       const filteredReviews = data.reviews.filter((review) => {
         // console.log("inside filter", review.playId, play._id, review)

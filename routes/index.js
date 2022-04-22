@@ -34,18 +34,20 @@ router.get("/", async (req, res) => {
 // Get 5 plays with infinite scroll
 router.post("/getfiveplays", async (req, res) => {
   // let fivePlays = await getFivePlays(req.body.limit)
-  if (req.body.location.pathname === "/") {
-    // console.log(req.body.limit)
-    const user = req.user ? await getUserAndWishlist(req.user) : undefined
-    let plays = await Play.find({}).populate("playsInstances")
-    plays = plays.slice(req.body.limit, req.body.limit + 5)
-    const reviews = await getAllReviews()
-    // console.log(plays)
-    // console.log("ready to send next plays")
-    res.send({ status: "success", plays, user, reviews })
-  } else {
-    res.send({ status: "page not needed" })
-  }
+  // if (req.body.location.pathname === "/") {
+  // console.log(req.body.limit)
+  const user = req.user ? await getUserAndWishlist(req.user) : undefined
+  let plays = await Play.find({}).populate("playsInstances")
+  plays = plays.slice(req.body.limit, req.body.limit + 5)
+  const reviews = await getAllReviews()
+  // console.log(plays)
+  // console.log("ready to send next plays")
+  res.send({ status: "success", plays, user, reviews })
+  /*
+} else {
+  res.send({ status: "page not needed" })
+}
+*/
 })
 
 // Signup page
@@ -125,6 +127,7 @@ router.get("/sortby/:query", async (req, res) => {
     sortedByDirector = await Play.find({})
       .populate("playsInstances")
       .sort({ director: -1 })
+      .limit(5)
     // console.log(sortedByDirector)
   }
 

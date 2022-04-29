@@ -1,4 +1,11 @@
-/node_modules/
+node_modules
 package-lock.json
 .env
 .DS_Store
+/tmp
+
+# files & folders on Robin's computer
+.prettierrc
+.prettierignore
+offline-json-manipulation
+/public/assets/json-data

@@ -3,17 +3,17 @@ const { TheaterSchema } = require('./theater')
 
 const PlayInstanceSchema = new mongoose.Schema({
     theater: TheaterSchema,
-    // dateStart: {
-    //     type: Date,
-    //     required: true
-    // },
-    // dateEnd: {
-    //     type: Date,
-    // },
-    date: {
-        type: String,
+    dateStart: {
+        type: Date,
         // required: true
     },
+    dateEnd: {
+        type: Date,
+    },
+    // date: {
+    //     type: String,
+    //     // required: true
+    // },
     image: {
         type: String,
     },

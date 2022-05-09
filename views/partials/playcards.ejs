@@ -20,17 +20,25 @@
     
                 <div class="play-card-content">
                     <div class="card-row">
-                        <div class="play-card-dates"><%= playInstance.date %></div>
+                        <% const dateOptions = {month: 'numeric', day:'numeric', year: 'numeric'} %>
+                        <div class="play-card-dates">
+                            <%= playInstance.dateEnd ? 'From' : '' %>
+                            <%= new Date(playInstance.dateStart).toLocaleDateString('fr-FR', dateOptions) %>
+                            <% if (playInstance.dateEnd) { %>
+                                <br />to <%= new Date(playInstance.dateEnd).toLocaleDateString('fr-FR', dateOptions) %>
+                            <% } %></div>
     
                         <div class="play-card-theater"><%= playInstance.theater.name %></div>
                     </div>
                     <div class="card-row">
                         <div class="">
+                            <% if (playInstance.summary) { %>
                             <div class="play-card-summary"> 
                                 <p><%= playInstance.summary %> <br>
                                 </p>
                                 <button class="play-card-summary-seemore"><i class="fas fa-angle-down"></i></button>
                             </div> 
+                            <% } %>
             
                             <div><%= play.director %></div>  
                             <div><%= play.production ? play.production.length > 100 ? play.production.substr(0, 97) + '...' : play.production : '' %></div>

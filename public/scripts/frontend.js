@@ -237,8 +237,19 @@ const createPlaysCard = (plays, data) => {
       divRow.classList.add("card-row")
       divContent.appendChild(divRow)
       let divDates = document.createElement("div")
+      divDates.classList.add('play-card-dates')
       divRow.appendChild(divDates)
-      divDates.insertAdjacentHTML("beforeend", `${pi.date}`)
+      const dateOptions = { month: 'numeric', day: 'numeric', year: 'numeric' }
+      // console.log(pi.dateStart)
+      // console.log(pi.dateStart.toLocaleString('fr-FR'));
+      // console.log(new Intl.DateTimeFormat('fr-FR').format(pi.dateStart))
+      const dateStart = new Date(pi.dateStart).toLocaleDateString('fr-FR', dateOptions)
+      const dateEnd = new Date(pi.dateEnd)?.toLocaleDateString('fr-FR', dateOptions)
+      if (dateEnd) {
+        divDates.insertAdjacentHTML("beforeend", `From ${dateStart} <br />to ${dateEnd}`)
+      } else {
+        divDates.insertAdjacentHTML('beforeend', `${dateStart}`)  
+      }
       let divTheater = document.createElement("div")
       divTheater.classList.add("play-card-theater")
       divRow.appendChild(divTheater)
@@ -277,8 +288,8 @@ const createPlaysCard = (plays, data) => {
       divPicReviews.classList.add("pic-reviews")
       divRowTwo.appendChild(divPicReviews)
       divPicReviews.insertAdjacentHTML(
-        "beforeend",
-        `<img class="play-card-poster" src= ${pi.image} alt="">`
+        'beforeend',
+        `<img class="play-card-poster" src=${pi.image ? pi.image : '""'} alt="">`
       )
       let divReviews = document.createElement("div")
       divPicReviews.appendChild(divReviews)

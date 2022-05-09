@@ -1,10 +1,11 @@
 const express = require("express")
 const router = express.Router()
-const { ensureAuthenticated } = require("../config/auth.js")
+// const { ensureAuthenticated } = require("../config/auth.js")
 const {
   getAllPlays,
   getOnePlay,
   getMultiplePlaysFromInstances,
+  sortPlayInstancesByDate,
 } = require("../controllers/plays-controller.js")
 const {
   getReviewsOfPlayAndUsers,
@@ -16,39 +17,30 @@ const {
 } = require("../controllers/users-controller.js")
 const { Play } = require("../models/play")
 const { PlayInstance } = require("../models/playInstance")
-const { Review } = require("../models/review")
+// const { Review } = require("../models/review")
 
 // Home page
 router.get("/", async (req, res) => {
-  let allPlays = await getAllPlays()
+  const instances = await sortPlayInstancesByDate('asc', 5)
+  const plays = await getMultiplePlaysFromInstances(instances, true)
   const user = req.user ? await getUserAndWishlist(req.user) : undefined
   const reviews = await getAllReviews()
 
   res.render("index", {
     title: "Home",
     user,
-    plays: allPlays,
+    plays,
     reviews,
   })
 })
 
 // Get 5 plays with infinite scroll
 router.post("/getfiveplays", async (req, res) => {
-  // let fivePlays = await getFivePlays(req.body.limit)
-  // if (req.body.location.pathname === "/") {
-  // console.log(req.body.limit)
   const user = req.user ? await getUserAndWishlist(req.user) : undefined
   let plays = await Play.find({}).populate("playsInstances")
   plays = plays.slice(req.body.limit, req.body.limit + 5)
   const reviews = await getAllReviews()
-  // console.log(plays)
-  // console.log("ready to send next plays")
   res.send({ status: "success", plays, user, reviews })
-  /*
-} else {
-  res.send({ status: "page not needed" })
-}
-*/
 })
 
 // Signup page
@@ -71,7 +63,6 @@ router.get("/signupconfirm", (req, res) => {
 
 // Search for a play
 router.post("/searchplays", async (req, res) => {
-  // console.log(req.body.searchinput)
   const user = req.user ? await getUserAndWishlist(req.user) : undefined
   const reviews = await getAllReviews()
 

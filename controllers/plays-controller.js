@@ -1,8 +1,19 @@
 const { Play }  = require("../models/play")
-const { PlayInstance, PlayInstanceSchema } = require("../models/playInstance")
+const { PlayInstance } = require("../models/playInstance")
 
 const getAllPlays = () => {
-    return Play.find({}).populate("playsInstances").sort({dateStart: 'asc'}).limit(5)
+    return Play.find().populate('playsInstances')
+}
+
+/**
+ * 
+ * @param {number} limit - number of plays retrieved
+ * @param {object} options {sortField, sortOrder} - sort by sortField 
+ * @returns array of plays
+ */
+const getPlays = (limit, options) => {
+    const { sortField, sortOrder } = options
+    return Play.find({}).populate("playsInstances").sort({[sortField]: sortOrder}).limit(limit)
 }
 
 const getOnePlay = async (playId, playInstanceId) => {
@@ -17,7 +28,7 @@ const getOnePlay = async (playId, playInstanceId) => {
  * @param {boolean} [unique] - should the plays be populated only by the given instances? Default: false
  * @returns array of plays
  */
-const getMultiplePlaysFromInstances = async (instances, unique = false) => {
+const getMultiplePlaysFromInstances = async (instances, unique = true) => {
     const plays = []
     for (let play of instances) {
         const currentPlay = unique
@@ -27,15 +38,6 @@ const getMultiplePlaysFromInstances = async (instances, unique = false) => {
             })
           : await Play.findOne({ playsInstances: play._id }).populate('playsInstances')
 
-        // if (currentPlay.playsInstances.length > 1) {
-        //     for (let pi of currentPlay.playsInstances) {
-        //         if (pi._id === play._id) {
-        //             return pi
-        //         }
-        //     }
-        // } 
-        
-        // currentPlay.playsInstances = currentPlay.playsInstances.filter(el => el._id === play._id)
         plays.push(currentPlay)
     }
 
@@ -62,18 +64,28 @@ const sortPlayInstancesByDate = (order, limit) => {
     return PlayInstance.find({ dateStart: { $gte: new Date()}}).sort({ dateStart: order }).limit(limit)
 }
 
-// const SortbyTitle = async () => 
-//     {
-//         let sortedPlays = await Play.find({}).populate("playsInstances").sort({title: 'asc'})
-//         console.log(sortedPlays)
-//         return {play : sortedPlays}
-//      }
+const getPlaysSortedByDate = async (limit) => {
+  const instances = await sortPlayInstancesByDate('asc', limit)
+  const plays = await getMultiplePlaysFromInstances(instances, true)
+
+  return plays
+}
+
+const getPlaysSortedByTheater = async (limit) => {
+  const instances = await PlayInstance.find().sort({'theater.name': 1}).limit(limit)
+  const plays = await getMultiplePlaysFromInstances(instances, true)
+
+  return plays
+}
 
 module.exports = {
   getAllPlays,
+  getPlays,
   getOnePlay,
   getMultiplePlaysFromInstances,
   getMultiplePlaysFromWishlist,
   getAllPlayInstances,
-  sortPlayInstancesByDate
+  sortPlayInstancesByDate,
+  getPlaysSortedByDate,
+  getPlaysSortedByTheater
 }

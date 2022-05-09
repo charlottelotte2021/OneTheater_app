@@ -2,10 +2,11 @@ const express = require("express")
 const router = express.Router()
 // const { ensureAuthenticated } = require("../config/auth.js")
 const {
-  getAllPlays,
+  getPlays,
   getOnePlay,
   getMultiplePlaysFromInstances,
-  sortPlayInstancesByDate,
+  getPlaysSortedByDate,
+  getPlaysSortedByTheater,
 } = require("../controllers/plays-controller.js")
 const {
   getReviewsOfPlayAndUsers,
@@ -21,8 +22,7 @@ const { PlayInstance } = require("../models/playInstance")
 
 // Home page
 router.get("/", async (req, res) => {
-  const instances = await sortPlayInstancesByDate('asc', 5)
-  const plays = await getMultiplePlaysFromInstances(instances, true)
+  const plays = await getPlaysSortedByDate(5)
   const user = req.user ? await getUserAndWishlist(req.user) : undefined
   const reviews = await getAllReviews()
 
@@ -37,10 +37,38 @@ router.get("/", async (req, res) => {
 // Get 5 plays with infinite scroll
 router.post("/getfiveplays", async (req, res) => {
   const user = req.user ? await getUserAndWishlist(req.user) : undefined
-  let plays = await Play.find({}).populate("playsInstances")
-  plays = plays.slice(req.body.limit, req.body.limit + 5)
-  const reviews = await getAllReviews()
-  res.send({ status: "success", plays, user, reviews })
+
+  if (req.body.location.pathname === '/') {
+    let plays = await getPlaysSortedByDate(req.body.limit + 5)
+    plays = plays.slice(req.body.limit, req.body.limit + 5)
+    const reviews = await getAllReviews()
+    
+    res.send({ status: "success", plays, user, reviews })
+  }
+  if (req.body.location.pathname.search(/^\/sortby/) === 0) {
+    if (req.body.location.pathname.search(/\/director$/) > 0) {
+      let plays = await getPlays(req.body.limit + 5, { sortField: 'director', sortOrder: -1 })
+      plays = plays.slice(req.body.limit, req.body.limit + 5)
+      const reviews = await getAllReviews()
+
+      res.send({ status: 'success', plays, user, reviews })
+    }
+    if (req.body.location.pathname.search(/\/theater$/) > 0) {
+      let plays = await getPlaysSortedByTheater(req.body.limit + 5)
+      plays = plays.slice(req.body.limit, req.body.limit + 5)
+      const reviews = await getAllReviews()
+
+      res.send({ status: 'success', plays, user, reviews })
+    }
+    if (req.body.location.pathname.search(/\/title$/) > 0) {
+      let plays = await getPlays(req.body.limit + 5, { sortField: 'title', sortOrder: 1 })
+      plays = plays.slice(req.body.limit, req.body.limit + 5)
+      const reviews = await getAllReviews()
+  
+      res.send({ status: 'success', plays, user, reviews })  
+    }
+    if (req.body.location.pathname.search(/\/reviews$/ > 0)) {}
+  }
 })
 
 // Signup page
@@ -68,49 +96,50 @@ router.post("/searchplays", async (req, res) => {
 
   let searchinput = req.body.searchinput
 
-  if (searchinput != "") {
-    const allplays = await Play.find({
-      $or: [
+  if (searchinput !== '') {
+    let playsFound = await Play.find({
+        $or: [
         { title: { $regex: String(searchinput), $options: 'i'} },
         { production: { $regex: String(searchinput), $options: 'i'} },
       ],
     }).populate("playsInstances")
+    const playInstancesMatchedByTitleOrProduction = playsFound.map(
+      (play) => play.playsInstances
+    ).flat()
 
-    const allplayInstances = await PlayInstance.find({
+    const playInstancesFound = await PlayInstance.find({
       summary: { $regex: String(searchinput), $options: 'i' },
     })
 
-    const totalPlays = await getMultiplePlaysFromInstances(allplayInstances)
-
-    let fullPlays = allplays.concat(totalPlays)
+    const allPlayInstancesFound = [
+      ...playInstancesMatchedByTitleOrProduction,
+      ...playInstancesFound,
+    ]
 
     //remove duplicates
-    const uniquePlays = Array.from(new Set(fullPlays.map((a) => a.id))).map(
-      (id) => {
-        return fullPlays.find((a) => a.id === id)
-      }
-    )
-
+    const uniquePlayInstances = Array.from(new Set(allPlayInstancesFound.map((a) => a.id)))
+      .map((id) => {
+        return allPlayInstancesFound.find((a) => a.id === id)
+      })
+      .sort((a, b) => {
+        return new Date(a.dateStart) > new Date(b.dateStart)
+      })
+    
+    const plays = await getMultiplePlaysFromInstances(uniquePlayInstances)
+    
     res.render("index", {
       title: "Home",
       user,
-      plays: uniquePlays,
+      plays,
       reviews,
     })
   } else {
-    let allPlays = await getAllPlays()
-    res.render("index", {
-      title: "Home",
-      user,
-      plays: allPlays,
-      reviews,
-    })
+    res.redirect('/')
   }
 })
 
 // Sort by
 router.get("/sortby/:query", async (req, res) => {
-  // let allPlays = await getAllPlays()
   const user = req.user ? await getUserAndWishlist(req.user) : undefined
   const reviews = await getAllReviews()
   let sortedByDirector
@@ -120,58 +149,35 @@ router.get("/sortby/:query", async (req, res) => {
 
   // console.log(req.params)
   if (req.params.query === "director") {
-    sortedByDirector = await Play.find({})
-      .populate("playsInstances")
-      .sort({ director: -1 })
-      .limit(5)
-    // console.log(sortedByDirector)
- 
-
-  res.render("index", {
-    title: "Home",
-    user,
-    plays: sortedByDirector,
-    reviews,
-  })
- }
+    sortedByDirector = await getPlays(5, { sortField: 'director', sortOrder: -1 })
+    
+    res.render("index", {
+      title: "Home",
+      user,
+      plays: sortedByDirector,
+      reviews,
+    })
+  }
   if (req.params.query === "title") {
-    sortedByTitle = await Play.find({})
-    .populate("playsInstances")
-    .sort({title: 1})
+    sortedByTitle = await getPlays(5, { sortField: 'title', sortOrder: 1 })
  
-  res.render("index", {
-    title: "Home",
-    user,
-    plays: sortedByTitle,
-    reviews,
-  })
-   }
-if (req.params.query === "theater") {
-      sortedByTheater = await Play.find({})
-      .populate("playsInstances")
-      
-      .sort({name: 1})
+    res.render("index", {
+      title: "Home",
+      user,
+      plays: sortedByTitle,
+      reviews,
+    })
+  }
+  if (req.params.query === "theater") {
+    sortedByTheater = await getPlaysSortedByTheater(5)
 
     res.render("index", {
-    title: "Home",
-    user,
-    plays: sortedByTheater,
-    reviews,
-  }) 
-}
-
-// if (req.params.query === "reviews") {
-//     sortedByReviews = await Review.find({})
-//     .sort({note: 1})
-  
-//   res.render("index", {
-//     title: "Home",
-//     user,
-//     plays: sortedByReviews,
-//     reviews,
-//   }) 
-
-//   }
+      title: "Home",
+      user,
+      plays: sortedByTheater,
+      reviews,
+    }) 
+  }
 })
 
 // Play page

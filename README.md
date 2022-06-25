@@ -1,6 +1,6 @@
 # OneTheater_App
 
-The app is deployed in Heroku 
+The app is deployed on Heroku 
 https://onetheater.herokuapp.com/
 
 ## What is it?
